@@ -3,32 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - MathFun</title>
+    <title>Journal - MathFun</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./blog.css">
 </head>
 <body>
     <nav class="nav-bar">
-        <a href="./" class="nav-logo">MathFun</a>
-        <div class="nav-links">
-            <a href="./monty-hall.html" class="nav-link">Monty Hall</a>
-            <a href="./prisoners-dilemma.html" class="nav-link">Prisoner's Dilemma</a>
-            <a href="./staircase.html" class="nav-link">Staircase</a>
-            <a href="./blog.html" class="nav-link active">Blog</a>
+        <div class="nav-container">
+            <a href="./" class="nav-logo">MathFun</a>
+            <div class="nav-links">
+                <a href="./blog.html" class="nav-link active">Journal</a>
+                <a href="./simulations.html" class="nav-link">Simulations</a>
+            </div>
         </div>
     </nav>
 
     <div class="container">
+        <header class="main-header">
+            <h1>The Journal</h1>
+            <p class="subtitle">Deep dives into the mathematics, paradoxes, and algorithms that shape our world.</p>
+        </header>
+
         <main class="blog-main">
-            <header class="blog-header">
-                <h1>MathFun Blog</h1>
-                <p>Explorations into the mathematics behind the games.</p>
-            </header>
-            <div id="posts-container" class="posts-list">
-                <!-- Blog posts will be dynamically inserted here -->
+            <div id="posts-container" class="posts-list-vertical">
+                <!-- Blog posts will be dynamically inserted here by blog.js -->
                 <div class="loading-spinner"></div>
             </div>
         </main>
+
+        <footer class="main-footer">
+            <p>&copy; 2024 MathFun. Built with curiosity.</p>
+        </footer>
     </div>
 
     <script type="module" src="./blog.js"></script>

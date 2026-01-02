@@ -13,6 +13,7 @@ export default defineConfig({
         staircase: resolve(__dirname, 'staircase.html'),
         blog: resolve(__dirname, 'blog.html'),
         post: resolve(__dirname, 'post.html'),
+        simulations: resolve(__dirname, 'simulations.html'),
       },
     },
   },
