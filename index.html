@@ -3,57 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MathFun - Interactive Math Problems</title>
+    <title>MathFun - Interactive Mathematics Journal</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./blog.css">
 </head>
 <body>
+    <nav class="nav-bar">
+        <div class="nav-container">
+            <a href="./" class="nav-logo">MathFun</a>
+            <div class="nav-links">
+                <a href="./" class="nav-link active">Journal</a>
+                <a href="./monty-hall.html" class="nav-link">Simulations</a>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
         <header class="main-header">
-            <h1>MathFun</h1>
-            <p class="subtitle">Explore mathematics through interactive games and visualizations</p>
+            <h1>MathFun Journal</h1>
+            <p class="subtitle">Exploring the beauty of mathematics through interactive simulations and visual storytelling.</p>
         </header>
 
-        <main class="home-content">
-            <section class="intro">
-                <p class="intro-text">
-                    Welcome! Dive into classic mathematical problems and paradoxes through interactive simulations.
-                    Play the games, gather statistics, and see the math come alive.
-                </p>
-            </section>
-
-            <section class="games-grid">
-                <a href="./monty-hall.html" class="game-card">
-                    <div class="game-icon">🚗🐐</div>
-                    <h2>The Monty Hall Problem</h2>
-                    <p>Should you switch doors? Test the famous probability paradox that stumped even mathematicians.</p>
-                    <span class="game-tag">Probability</span>
-                </a>
-
-                <a href="./prisoners-dilemma.html" class="game-card">
-                    <div class="game-icon">🤝⚔️</div>
-                    <h2>Prisoner's Dilemma</h2>
-                    <p>Cooperate or betray? Explore game theory's most famous scenario and optimal strategies.</p>
-                    <span class="game-tag">Game Theory</span>
-                </a>
-
-                <a href="./staircase.html" class="game-card">
-                    <div class="game-icon">🪜📈</div>
-                    <h2>The Staircase Problem</h2>
-                    <p>How many ways can you climb N stairs? Watch the Fibonacci sequence emerge through animated paths!</p>
-                    <span class="game-tag">Dynamic Programming</span>
-                </a>
-                <a href="./blog.html" class="game-card">
-                    <div class="game-icon">✍️</div>
-                    <h2>Blog</h2>
-                    <p>Explorations into the mathematics behind the games.</p>
-                    <span class="game-tag">Articles</span>
-                </a>
+        <main>
+            <section class="latest-posts">
+                <div class="article-list-header">Latest Articles</div>
+                <div id="posts-container" class="featured-posts">
+                    <!-- Posts will be loaded here dynamically -->
+                    <div class="loading-spinner"></div>
+                </div>
             </section>
         </main>
 
         <footer class="main-footer">
-            <p>Built with curiosity and JavaScript | <a href="https://github.com" target="_blank">View on GitHub</a></p>
+            <p>&copy; 2024 MathFun. Built with curiosity.</p>
         </footer>
     </div>
+
+    <script type="module" src="./blog.js"></script>
 </body>
 </html>

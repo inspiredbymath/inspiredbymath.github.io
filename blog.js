@@ -50,16 +50,20 @@ function displayPosts(posts) {
         postCard.href = `./post.html?slug=${post.slug}`;
         postCard.className = 'post-card';
 
-        const tagsHtml = post.tags.map(tag => `<span class="post-tag">${tag}</span>`).join(' ');
+        const tagsHtml = (post.tags || []).map(tag => `<span class="post-tag">${tag}</span>`).join(' ');
 
         postCard.innerHTML = `
-            <h2>${post.title}</h2>
-            <div class="post-meta">
-                <span>By ${post.author}</span> | <span>${new Date(post.date).toLocaleDateString()}</span>
-            </div>
-            <p class="post-excerpt">${post.excerpt}</p>
-            <div class="post-tags">
-                ${tagsHtml}
+            <div class="post-card-content">
+                <h2>${post.title}</h2>
+                <div class="post-meta">
+                    <span>${new Date(post.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+                    <span>&bull;</span>
+                    <span>${post.author}</span>
+                </div>
+                <p class="post-excerpt">${post.excerpt}</p>
+                <div class="post-tags">
+                    ${tagsHtml}
+                </div>
             </div>
         `;
 

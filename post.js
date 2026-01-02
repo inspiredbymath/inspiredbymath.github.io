@@ -45,18 +45,34 @@ function displayPost(metadata, markdownContent) {
     const tagsHtml = (metadata.tags || []).map(tag => `<span class="post-tag">${tag}</span>`).join(' ');
     const renderedContent = marked(markdownContent);
 
+    // Create Game CTA if a game is linked
+    let ctaHtml = '';
+    if (metadata.game) {
+        const gameUrl = `./${metadata.game}.html`;
+        ctaHtml = `
+            <div class="game-cta-box">
+                <h3>Try the Simulation</h3>
+                <p>Don't just take our word for it. Experience the math firsthand with our interactive simulation.</p>
+                <a href="${gameUrl}" class="cta-button">Launch Simulation →</a>
+            </div>
+        `;
+    }
+
     postContentContainer.innerHTML = `
         <header class="post-header">
             <h1>${metadata.title}</h1>
             <div class="post-meta">
-                <span>By ${metadata.author}</span> | <span>${new Date(metadata.date).toLocaleDateString()}</span>
-            </div>
-            <div class="post-tags" style="margin-top: 15px;">
-                ${tagsHtml}
+                <span>${metadata.author}</span>
+                <span>&bull;</span>
+                <span>${new Date(metadata.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
             </div>
         </header>
         <div class="post-body">
             ${renderedContent}
+            ${ctaHtml}
+        </div>
+        <div class="post-tags" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color);">
+            ${tagsHtml}
         </div>
     `;
 }
