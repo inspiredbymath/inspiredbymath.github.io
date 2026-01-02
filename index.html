@@ -6,8 +6,8 @@
     <title>MathFun - Interactive Mathematics Journal</title>
   <script type="module" crossorigin src="/mathfun/assets/index-BJmpHkU4.js"></script>
   <script type="module" crossorigin src="/mathfun/assets/polyfills-DnxsSoM1.js"></script>
-  <script type="module" crossorigin src="/mathfun/assets/blog-D1T43o2N.js"></script>
-  <link rel="stylesheet" crossorigin href="/mathfun/assets/style-Cf3DmiCa.css">
+  <script type="module" crossorigin src="/mathfun/assets/blog-DPUK084n.js"></script>
+  <link rel="stylesheet" crossorigin href="/mathfun/assets/style-uJes2VEo.css">
   <link rel="stylesheet" crossorigin href="/mathfun/assets/blog-DmTJWg1y.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
         <div class="nav-container">
             <a href="./" class="nav-logo">MathFun</a>
             <div class="nav-links">
-                <a href="./" class="nav-link active">Journal</a>
+                <a href="./blog.html" class="nav-link">Journal</a>
                 <a href="./simulations.html" class="nav-link">Simulations</a>
             </div>
         </div>
@@ -29,7 +29,10 @@
 
         <main>
             <section class="latest-posts">
-                <div class="article-list-header">Latest Articles</div>
+                <div class="article-list-header" style="display: flex; justify-content: space-between; align-items: center;">
+                    <span>Latest Articles</span>
+                    <a href="./blog.html" class="btn btn-secondary" style="font-size: 0.9rem;">View All →</a>
+                </div>
                 <div id="posts-container" class="featured-posts">
                     <!-- Posts will be loaded here dynamically -->
                     <div class="loading-spinner"></div>
