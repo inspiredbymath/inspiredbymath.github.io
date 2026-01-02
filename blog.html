@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - MathFun</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./blog.css">
+</head>
+<body>
+    <nav class="nav-bar">
+        <a href="./" class="nav-logo">MathFun</a>
+        <div class="nav-links">
+            <a href="./monty-hall.html" class="nav-link">Monty Hall</a>
+            <a href="./prisoners-dilemma.html" class="nav-link">Prisoner's Dilemma</a>
+            <a href="./staircase.html" class="nav-link">Staircase</a>
+            <a href="./blog.html" class="nav-link active">Blog</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main class="blog-main">
+            <header class="blog-header">
+                <h1>MathFun Blog</h1>
+                <p>Explorations into the mathematics behind the games.</p>
+            </header>
+            <div id="posts-container" class="posts-list">
+                <!-- Blog posts will be dynamically inserted here -->
+                <div class="loading-spinner"></div>
+            </div>
+        </main>
+    </div>
+
+    <script type="module" src="./blog.js"></script>
+</body>
+</html>

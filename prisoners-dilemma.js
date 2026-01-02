@@ -1,3 +1,5 @@
+import matter from 'gray-matter';
+
 // Prisoner's Dilemma Game Logic
 
 class PrisonersDilemmaGame {
@@ -10,6 +12,7 @@ class PrisonersDilemmaGame {
 
         this.setupEventListeners();
         this.updateDisplay();
+        this.loadRelatedPosts();
     }
 
     setupEventListeners() {
@@ -152,6 +155,44 @@ class PrisonersDilemmaGame {
         document.getElementById('message').textContent = 'Make your choice: Cooperate or Defect?';
 
         this.updateDisplay();
+    }
+
+    async loadRelatedPosts() {
+        const postFiles = import.meta.glob('./posts/*.md', { as: 'raw' });
+        const container = document.getElementById('related-posts-container');
+        const relatedPosts = [];
+
+        for (const path in postFiles) {
+            const rawContent = await postFiles[path]();
+            const { data } = matter(rawContent);
+
+            if (data.game === 'prisoners-dilemma') {
+                relatedPosts.push({
+                    slug: data.slug,
+                    title: data.title,
+                    excerpt: data.excerpt,
+                });
+            }
+        }
+
+        if (relatedPosts.length > 0) {
+            container.innerHTML = '<h3>Related Articles</h3>';
+            const list = document.createElement('div');
+            list.className = 'related-posts-list';
+
+            relatedPosts.forEach(post => {
+                const postLink = document.createElement('a');
+                postLink.href = `./post.html?slug=${post.slug}`;
+                postLink.className = 'related-post-card';
+                postLink.innerHTML = `
+                    <h4>${post.title}</h4>
+                    <p>${post.excerpt}</p>
+                `;
+                list.appendChild(postLink);
+            });
+
+            container.appendChild(list);
+        }
     }
 }
 

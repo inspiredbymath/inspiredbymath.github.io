@@ -11,6 +11,8 @@ export default defineConfig({
         montyHall: resolve(__dirname, 'monty-hall.html'),
         prisonersDilemma: resolve(__dirname, 'prisoners-dilemma.html'),
         staircase: resolve(__dirname, 'staircase.html'),
+        blog: resolve(__dirname, 'blog.html'),
+        post: resolve(__dirname, 'post.html'),
       },
     },
   },
