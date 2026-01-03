@@ -395,3 +395,449 @@ body {
     border-top: 1px solid var(--border-color);
     margin-top: 80px;
 }
+
+/* ========================================
+   GAME-SPECIFIC STYLES
+   ======================================== */
+
+/* Monty Hall Game Styles */
+.game-section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.doors {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    margin: 50px 0;
+    perspective: 1000px;
+}
+
+.door {
+    width: 140px;
+    height: 200px;
+    background: linear-gradient(145deg, var(--surface-color), #f1f5f9);
+    border: 3px solid var(--border-color);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.door:hover:not(.opened):not(.disabled) {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 12px 24px -4px rgba(79, 70, 229, 0.3);
+    border-color: var(--accent-color);
+}
+
+.door-face {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    user-select: none;
+}
+
+.door.selected {
+    border-color: var(--brand-indigo);
+    border-width: 4px;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.2),
+                0 8px 16px -2px rgba(79, 70, 229, 0.4);
+    transform: scale(1.05);
+}
+
+.door.opened {
+    transform: rotateY(15deg) scale(0.95);
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.door.opened .door-face::after {
+    content: ' 🐐';
+    font-size: 2rem;
+    display: block;
+    animation: reveal 0.5s ease-out;
+}
+
+.door.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.door.winner {
+    background: linear-gradient(145deg, #d1fae5, #a7f3d0);
+    border-color: var(--brand-teal);
+    border-width: 4px;
+    animation: winPulse 1s ease-in-out;
+    box-shadow: 0 0 0 6px rgba(13, 148, 136, 0.2),
+                0 12px 24px -4px rgba(13, 148, 136, 0.5);
+}
+
+.door.winner .door-face::after {
+    content: ' 🚗';
+    font-size: 2.5rem;
+    display: block;
+    animation: celebrate 0.6s ease-out;
+}
+
+.door.loser {
+    background: linear-gradient(145deg, #ffe4e6, #fecdd3);
+    border-color: var(--brand-rose);
+    opacity: 0.8;
+}
+
+.door.loser .door-face::after {
+    content: ' 🐐';
+    font-size: 2rem;
+    display: block;
+}
+
+@keyframes reveal {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes winPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+@keyframes celebrate {
+    0% {
+        transform: scale(0) rotate(-30deg);
+        opacity: 0;
+    }
+    60% {
+        transform: scale(1.3) rotate(10deg);
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.message {
+    text-align: center;
+    min-height: 60px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 30px 0;
+}
+
+/* Prisoner's Dilemma Game Styles */
+.choice-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin: 50px 0;
+    flex-wrap: wrap;
+}
+
+.choice-btn {
+    width: 180px;
+    height: 180px;
+    border: none;
+    border-radius: 20px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.choice-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.choice-btn:hover:not(:disabled)::before {
+    opacity: 1;
+}
+
+.choice-btn:hover:not(:disabled) {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.25);
+}
+
+.choice-btn:active:not(:disabled) {
+    transform: translateY(-4px) scale(1.02);
+}
+
+.choice-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.choice-btn.cooperate {
+    background: linear-gradient(145deg, #34d399, #10b981);
+    color: white;
+    box-shadow: 0 8px 16px -4px rgba(16, 185, 129, 0.4);
+}
+
+.choice-btn.cooperate:hover:not(:disabled) {
+    box-shadow: 0 16px 32px -8px rgba(16, 185, 129, 0.5);
+}
+
+.choice-btn.defect {
+    background: linear-gradient(145deg, #f87171, #ef4444);
+    color: white;
+    box-shadow: 0 8px 16px -4px rgba(239, 68, 68, 0.4);
+}
+
+.choice-btn.defect:hover:not(:disabled) {
+    box-shadow: 0 16px 32px -8px rgba(239, 68, 68, 0.5);
+}
+
+.choice-btn .icon {
+    font-size: 3.5rem;
+    line-height: 1;
+}
+
+.strategy-selector {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.strategy-selector label {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-right: 12px;
+}
+
+.strategy-selector select {
+    padding: 10px 16px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--surface-color);
+    color: var(--text-primary);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.strategy-selector select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.opponent-choice {
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 30px 0;
+    border-left: 4px solid var(--accent-color);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.opponent-choice h3 {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.payoff-matrix {
+    margin: 40px 0;
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.payoff-matrix h3 {
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.payoff-matrix table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.payoff-matrix th {
+    background: var(--accent-color);
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.payoff-matrix td {
+    padding: 16px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.payoff-matrix .you {
+    color: var(--brand-teal);
+    font-weight: 700;
+}
+
+.payoff-matrix .opponent {
+    color: var(--brand-rose);
+    font-weight: 700;
+}
+
+/* Shared Game Components */
+.controls {
+    text-align: center;
+    margin: 30px 0;
+}
+
+.stats {
+    background: var(--surface-color);
+    border-radius: 12px;
+    padding: 30px;
+    margin: 40px 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.stats h3 {
+    margin-bottom: 20px;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.stat-box {
+    background: linear-gradient(145deg, #f8fafc, #ffffff);
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.stat-box h4 {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-value {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.stat-percent {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--brand-indigo), var(--brand-teal));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.explanation {
+    background: linear-gradient(145deg, #f0f9ff, #e0f2fe);
+    border-left: 4px solid var(--brand-blue);
+    border-radius: 12px;
+    padding: 25px;
+    margin: 40px 0;
+}
+
+.explanation h3 {
+    color: var(--brand-blue);
+    margin-bottom: 15px;
+}
+
+.explanation p {
+    color: var(--text-primary);
+    line-height: 1.8;
+}
+
+.description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin: 20px 0 40px;
+    line-height: 1.7;
+}
+
+/* Responsive Game Styles */
+@media (max-width: 768px) {
+    .doors {
+        gap: 15px;
+    }
+
+    .door {
+        width: 100px;
+        height: 150px;
+    }
+
+    .door-face {
+        font-size: 0.9rem;
+    }
+
+    .choice-buttons {
+        gap: 20px;
+    }
+
+    .choice-btn {
+        width: 140px;
+        height: 140px;
+        font-size: 1rem;
+    }
+
+    .choice-btn .icon {
+        font-size: 2.5rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .game-section {
+        padding: 20px 10px;
+    }
+}
