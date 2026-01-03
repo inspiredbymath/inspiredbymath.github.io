@@ -110,6 +110,42 @@
                     </table>
                 </div>
 
+                <div class="performance-analysis">
+                    <h3>Performance Analysis</h3>
+
+                    <div class="optimal-strategy-card">
+                        <h4>Optimal Strategy vs <span id="current-opponent">Tit-for-Tat</span></h4>
+                        <p class="strategy-advice" id="strategy-recommendation">
+                            Against Tit-for-Tat, always cooperate to achieve mutual benefit (3 pts/round).
+                        </p>
+                    </div>
+
+                    <div class="performance-metrics">
+                        <div class="metric-box">
+                            <span class="metric-label">Avg Points/Round</span>
+                            <div class="metric-comparison">
+                                <span class="actual">You: <strong id="actual-avg">0</strong></span>
+                                <span class="optimal">Optimal: <strong id="optimal-avg">0</strong></span>
+                            </div>
+                            <div class="efficiency-bar">
+                                <div class="efficiency-fill" id="efficiency-fill" style="width: 0%"></div>
+                            </div>
+                            <span class="efficiency-text" id="efficiency-text">—</span>
+                        </div>
+
+                        <div class="metric-box">
+                            <span class="metric-label">Perfect Play Score</span>
+                            <p class="perfect-play-description">
+                                With perfect knowledge of opponent's moves:
+                            </p>
+                            <div class="metric-comparison">
+                                <span class="actual">Actual: <strong id="actual-score">0</strong></span>
+                                <span class="optimal">Perfect: <strong id="perfect-score">0</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="explanation">
                     <h3>Understanding the Dilemma</h3>
                     <p>

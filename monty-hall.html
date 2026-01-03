@@ -69,6 +69,44 @@
                     <button id="reset-stats" class="btn btn-secondary">Reset Statistics</button>
                 </div>
 
+                <div class="strategy-analysis">
+                    <h3>Strategy Analysis</h3>
+                    <div class="analysis-grid">
+                        <div class="analysis-card">
+                            <h4>Staying Strategy</h4>
+                            <div class="stat-comparison">
+                                <span class="label">Your Win Rate:</span>
+                                <span class="value" id="stay-actual">0%</span>
+                            </div>
+                            <div class="stat-comparison">
+                                <span class="label">Optimal Win Rate:</span>
+                                <span class="value optimal">33.3%</span>
+                            </div>
+                            <div class="variance" id="stay-variance">
+                                <span class="variance-label">Variance:</span>
+                                <span class="variance-value">—</span>
+                            </div>
+                        </div>
+
+                        <div class="analysis-card">
+                            <h4>Switching Strategy</h4>
+                            <div class="stat-comparison">
+                                <span class="label">Your Win Rate:</span>
+                                <span class="value" id="switch-actual">0%</span>
+                            </div>
+                            <div class="stat-comparison">
+                                <span class="label">Optimal Win Rate:</span>
+                                <span class="value optimal">66.7%</span>
+                            </div>
+                            <div class="variance" id="switch-variance">
+                                <span class="variance-label">Variance:</span>
+                                <span class="variance-value">—</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="analysis-note">The Monty Hall paradox shows switching gives you twice the chance of winning!</p>
+                </div>
+
                 <div class="explanation">
                     <h3>Why Switching Works</h3>
                     <p>

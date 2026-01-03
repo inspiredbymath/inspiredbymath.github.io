@@ -31,6 +31,7 @@ class PrisonersDilemmaGame {
         document.getElementById('opponent-strategy').addEventListener('change', (e) => {
             this.opponentStrategy = e.target.value;
             this.resetGame();
+            this.updatePerformanceAnalysis();
         });
     }
 
@@ -143,6 +144,101 @@ class PrisonersDilemmaGame {
         };
 
         document.getElementById('current-strategy').textContent = strategyNames[this.opponentStrategy];
+
+        // Update performance analysis
+        this.updatePerformanceAnalysis();
+    }
+
+    getOptimalPointsPerRound(strategy) {
+        const optimal = {
+            'random': 3.0, // Mixed strategy average
+            'always-cooperate': 5.0, // Always defect
+            'always-defect': 1.0, // Always defect
+            'tit-for-tat': 3.0, // Always cooperate
+            'grudger': 3.0 // Always cooperate
+        };
+        return optimal[strategy] || 3.0;
+    }
+
+    getStrategyRecommendation(strategy) {
+        const recommendations = {
+            'random': 'Against Random, cooperate for mutual benefit when possible, but be prepared to defect.',
+            'always-cooperate': 'Against Always-Cooperate, defecting every round maximizes your score (5 pts/round), but cooperation is kinder (3 pts/round).',
+            'always-defect': 'Against Always-Defect, you must defect to avoid exploitation (1 pt/round each).',
+            'tit-for-tat': 'Against Tit-for-Tat, always cooperate to achieve mutual benefit (3 pts/round).',
+            'grudger': 'Against Grudger, never defect! One betrayal means permanent defection. Cooperate for 3 pts/round.'
+        };
+        return recommendations[strategy] || 'Play cooperatively for mutual benefit.';
+    }
+
+    calculatePerfectPlayScore() {
+        // Calculate what the score WOULD be if user played optimally against opponent's actual choices
+        let perfectScore = 0;
+        this.history.forEach(round => {
+            if (round.opponentChoice === 'cooperate') {
+                // Optimal: defect against cooperation = 5 points
+                perfectScore += 5;
+            } else {
+                // Optimal: defect against defection = 1 point
+                perfectScore += 1;
+            }
+        });
+        return perfectScore;
+    }
+
+    updatePerformanceAnalysis() {
+        // Update opponent name and strategy recommendation (always show these)
+        const strategyNames = {
+            'random': 'Random',
+            'always-cooperate': 'Always-Cooperate',
+            'always-defect': 'Always-Defect',
+            'tit-for-tat': 'Tit-for-Tat',
+            'grudger': 'Grudger'
+        };
+        document.getElementById('current-opponent').textContent = strategyNames[this.opponentStrategy];
+
+        // Update strategy recommendation
+        document.getElementById('strategy-recommendation').textContent =
+            this.getStrategyRecommendation(this.opponentStrategy);
+
+        // Only update performance metrics if rounds have been played
+        if (this.rounds === 0) {
+            // Reset to defaults when no rounds played
+            document.getElementById('actual-avg').textContent = '0';
+            document.getElementById('optimal-avg').textContent = this.getOptimalPointsPerRound(this.opponentStrategy).toFixed(2);
+            document.getElementById('efficiency-fill').style.width = '0%';
+            document.getElementById('efficiency-text').textContent = '—';
+            document.getElementById('actual-score').textContent = '0';
+            document.getElementById('perfect-score').textContent = '0';
+            return;
+        }
+
+        // Calculate averages
+        const actualAvg = (this.yourScore / this.rounds).toFixed(2);
+        const optimalAvg = this.getOptimalPointsPerRound(this.opponentStrategy).toFixed(2);
+
+        document.getElementById('actual-avg').textContent = actualAvg;
+        document.getElementById('optimal-avg').textContent = optimalAvg;
+
+        // Calculate efficiency
+        const efficiency = (actualAvg / optimalAvg * 100);
+        document.getElementById('efficiency-fill').style.width = `${Math.min(efficiency, 100)}%`;
+        document.getElementById('efficiency-text').textContent = `${efficiency.toFixed(1)}% efficiency`;
+
+        // Update efficiency bar color
+        const fillBar = document.getElementById('efficiency-fill');
+        if (efficiency >= 80) {
+            fillBar.style.background = 'linear-gradient(90deg, #10b981, #34d399)';
+        } else if (efficiency >= 60) {
+            fillBar.style.background = 'linear-gradient(90deg, #f59e0b, #fbbf24)';
+        } else {
+            fillBar.style.background = 'linear-gradient(90deg, #ef4444, #f87171)';
+        }
+
+        // Perfect play score
+        const perfectScore = this.calculatePerfectPlayScore();
+        document.getElementById('actual-score').textContent = this.yourScore;
+        document.getElementById('perfect-score').textContent = perfectScore;
     }
 
     resetGame() {

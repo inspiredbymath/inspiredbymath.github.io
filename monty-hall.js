@@ -173,6 +173,53 @@ class MontyHallGame {
 
         document.getElementById('stay-percent').textContent = `${stayPercent}%`;
         document.getElementById('switch-percent').textContent = `${switchPercent}%`;
+
+        // Update strategy analysis
+        this.updateStrategyAnalysis();
+    }
+
+    updateStrategyAnalysis() {
+        const stayRate = this.stats.stayTotal > 0
+            ? (this.stats.stayWins / this.stats.stayTotal * 100)
+            : 0;
+        const switchRate = this.stats.switchTotal > 0
+            ? (this.stats.switchWins / this.stats.switchTotal * 100)
+            : 0;
+
+        // Update display
+        document.getElementById('stay-actual').textContent = `${stayRate.toFixed(1)}%`;
+        document.getElementById('switch-actual').textContent = `${switchRate.toFixed(1)}%`;
+
+        // Calculate variance
+        const stayVariance = stayRate - 33.3;
+        const switchVariance = switchRate - 66.7;
+
+        this.updateVarianceDisplay('stay-variance', stayVariance, this.stats.stayTotal);
+        this.updateVarianceDisplay('switch-variance', switchVariance, this.stats.switchTotal);
+    }
+
+    updateVarianceDisplay(elementId, variance, sampleSize) {
+        const container = document.getElementById(elementId);
+        const valueSpan = container.querySelector('.variance-value');
+
+        if (sampleSize === 0) {
+            valueSpan.textContent = '—';
+            valueSpan.className = 'variance-value';
+            return;
+        }
+
+        const absVariance = Math.abs(variance);
+        const sign = variance >= 0 ? '+' : '';
+        valueSpan.textContent = `${sign}${variance.toFixed(1)}%`;
+
+        // Color code based on how close to optimal
+        if (absVariance < 5) {
+            valueSpan.className = 'variance-value good';
+        } else if (absVariance < 15) {
+            valueSpan.className = 'variance-value okay';
+        } else {
+            valueSpan.className = 'variance-value poor';
+        }
     }
 
     resetStats() {
