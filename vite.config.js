@@ -1,20 +1,6 @@
-import { defineConfig } from 'vite'
-import { resolve } from 'path'
+import { sveltekit } from '@sveltejs/kit/vite';
+import { defineConfig } from 'vite';
 
-// https://vitejs.dev/config/
 export default defineConfig({
-  base: '/',
-  build: {
-    rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-        montyHall: resolve(__dirname, 'monty-hall.html'),
-        prisonersDilemma: resolve(__dirname, 'prisoners-dilemma.html'),
-        staircase: resolve(__dirname, 'staircase.html'),
-        blog: resolve(__dirname, 'blog.html'),
-        post: resolve(__dirname, 'post.html'),
-        simulations: resolve(__dirname, 'simulations.html'),
-      },
-    },
-  },
-})
+	plugins: [sveltekit()]
+});

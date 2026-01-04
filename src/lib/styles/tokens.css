@@ -1,0 +1,152 @@
+/* ========================================
+   DESIGN TOKENS
+   ======================================== */
+
+:root {
+	/* ========== COLOR SYSTEM ========== */
+
+	/* Neutral Grays - Cool Slate Scale */
+	--gray-50: #f8fafc;
+	--gray-100: #f1f5f9;
+	--gray-200: #e2e8f0;
+	--gray-300: #cbd5e1;
+	--gray-400: #94a3b8;
+	--gray-500: #64748b;
+	--gray-600: #475569;
+	--gray-700: #334155;
+	--gray-800: #1e293b;
+	--gray-900: #0f172a;
+
+	/* Brand Colors - Indigo (Primary Accent) */
+	--indigo-50: #eef2ff;
+	--indigo-100: #e0e7ff;
+	--indigo-200: #c7d2fe;
+	--indigo-300: #a5b4fc;
+	--indigo-400: #818cf8;
+	--indigo-500: #6366f1;
+	--indigo-600: #4f46e5;
+	--indigo-700: #4338ca;
+	--indigo-800: #3730a3;
+	--indigo-900: #312e81;
+
+	/* Brand Colors - Teal (Secondary Accent) */
+	--teal-50: #f0fdfa;
+	--teal-100: #ccfbf1;
+	--teal-200: #99f6e4;
+	--teal-300: #5eead4;
+	--teal-400: #2dd4bf;
+	--teal-500: #14b8a6;
+	--teal-600: #0d9488;
+	--teal-700: #0f766e;
+	--teal-800: #115e59;
+	--teal-900: #134e4a;
+
+	/* Brand Colors - Amber (Highlight) */
+	--amber-50: #fffbeb;
+	--amber-100: #fef3c7;
+	--amber-200: #fde68a;
+	--amber-300: #fcd34d;
+	--amber-400: #fbbf24;
+	--amber-500: #f59e0b;
+	--amber-600: #d97706;
+	--amber-700: #b45309;
+	--amber-800: #92400e;
+	--amber-900: #78350f;
+
+	/* Semantic Colors - Error/Red */
+	--red-50: #fef2f2;
+	--red-100: #fee2e2;
+	--red-200: #fecaca;
+	--red-300: #fca5a5;
+	--red-400: #f87171;
+	--red-500: #ef4444;
+	--red-600: #dc2626;
+	--red-700: #b91c1c;
+	--red-800: #991b1b;
+	--red-900: #7f1d1d;
+
+	/* ========== SEMANTIC COLOR ASSIGNMENTS ========== */
+
+	--color-primary: var(--gray-900);
+	--color-secondary: var(--gray-700);
+	--color-accent: var(--indigo-600);
+	--color-accent-hover: var(--indigo-700);
+
+	--color-background: var(--gray-50);
+	--color-surface: #ffffff;
+	--color-surface-elevated: #ffffff;
+
+	--color-text-primary: var(--gray-900); /* Darker for better contrast */
+	--color-text-secondary: var(--gray-600);
+	--color-text-muted: var(--gray-400);
+
+	--color-border: var(--gray-200);
+	--color-border-focus: var(--indigo-500);
+
+	/* ========== SPACING SCALE ========== */
+
+	--space-1: 0.25rem;   /* 4px */
+	--space-2: 0.5rem;    /* 8px */
+	--space-3: 0.75rem;   /* 12px */
+	--space-4: 1rem;      /* 16px */
+	--space-5: 1.25rem;   /* 20px */
+	--space-6: 1.5rem;    /* 24px */
+	--space-8: 2rem;      /* 32px */
+	--space-10: 2.5rem;   /* 40px */
+	--space-12: 3rem;     /* 48px */
+	--space-16: 4rem;     /* 64px */
+	--space-20: 5rem;     /* 80px */
+	--space-24: 6rem;     /* 96px */
+
+	/* ========== TYPOGRAPHY SCALE ========== */
+
+	/* Font Sizes */
+	--text-xs: 0.75rem;
+	--text-sm: 0.875rem;
+	--text-base: 1rem;
+	--text-lg: 1.125rem;
+	--text-xl: 1.25rem;
+	--text-2xl: 1.5rem;
+	--text-3xl: 1.875rem;
+	--text-4xl: 2.25rem;
+	--text-5xl: 3rem;
+	--text-6xl: 3.75rem;
+	--text-7xl: 4.5rem;
+
+	/* ========== SHADOWS (Elevation System - Refined) ========== */
+
+	--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	--shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+	--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+	--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+	--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+	
+	/* Colored Shadows */
+	--shadow-indigo: 0 4px 14px 0 rgba(79, 70, 229, 0.25);
+	
+	/* ========== GLASSMORPHISM (Subtle) ========== */
+	--glass-background: rgba(255, 255, 255, 0.8);
+	--glass-border: rgba(255, 255, 255, 0.5);
+}
+
+/* ========================================
+   DARK MODE THEME
+   ======================================== */
+
+[data-theme="dark"] {
+	--color-primary: var(--gray-50);
+	--color-secondary: var(--gray-300);
+	--color-accent: var(--indigo-400);
+	--color-accent-hover: var(--indigo-300);
+
+	--color-background: #0f172a; /* Slate 900 */
+	--color-surface: #1e293b; /* Slate 800 */
+	
+	--color-text-primary: var(--gray-50);
+	--color-text-secondary: var(--gray-400);
+	
+	--color-border: var(--gray-800);
+	
+	--glass-background: rgba(30, 41, 59, 0.8);
+	--glass-border: rgba(255, 255, 255, 0.05);
+}

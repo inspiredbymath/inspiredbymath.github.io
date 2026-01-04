@@ -1,0 +1,103 @@
+/* ========================================
+   GLASSMORPHISM UTILITIES
+   ======================================== */
+
+/* Base glass effect */
+.glass {
+	background: var(--glass-background);
+	backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+	-webkit-backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+	border: 1px solid var(--glass-border);
+	box-shadow: var(--glass-shadow);
+}
+
+/* Heavy glass effect with more opacity */
+.glass-heavy {
+	background: var(--color-surface-elevated);
+	backdrop-filter: blur(24px) saturate(200%);
+	-webkit-backdrop-filter: blur(24px) saturate(200%);
+	border: 1px solid var(--glass-border);
+	box-shadow: var(--glass-shadow);
+}
+
+/* Frosted glass with gradient overlay */
+.glass-frosted {
+	background: linear-gradient(
+		135deg,
+		rgba(255, 255, 255, 0.1) 0%,
+		rgba(255, 255, 255, 0.05) 100%
+	);
+	backdrop-filter: blur(20px) brightness(1.1);
+	-webkit-backdrop-filter: blur(20px) brightness(1.1);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	box-shadow:
+		0 8px 32px 0 rgba(0, 0, 0, 0.2),
+		inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] .glass-frosted {
+	background: linear-gradient(
+		135deg,
+		rgba(255, 255, 255, 0.05) 0%,
+		rgba(255, 255, 255, 0.02) 100%
+	);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	box-shadow:
+		0 8px 32px 0 rgba(0, 0, 0, 0.6),
+		inset 0 1px 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Glow effects for interactive elements */
+.glow-indigo {
+	box-shadow: var(--glow-indigo), var(--glass-shadow);
+}
+
+.glow-teal {
+	box-shadow: var(--glow-teal), var(--glass-shadow);
+}
+
+.glow-blue {
+	box-shadow: var(--glow-blue), var(--glass-shadow);
+}
+
+/* Floating animation */
+@keyframes float {
+	0%, 100% {
+		transform: translateY(0px);
+	}
+	50% {
+		transform: translateY(-10px);
+	}
+}
+
+.float {
+	animation: float 3s ease-in-out infinite;
+}
+
+/* Gradient text effect */
+.gradient-text {
+	background: linear-gradient(135deg, var(--indigo-600), var(--teal-500), var(--blue-600));
+	background-size: 200% 200%;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	animation: gradientFlow 8s ease infinite;
+}
+
+@keyframes gradientFlow {
+	0%, 100% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+}
+
+[data-theme="dark"] .gradient-text {
+	background: linear-gradient(135deg, var(--indigo-400), var(--teal-400), var(--blue-400));
+	background-size: 200% 200%;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	animation: gradientFlow 8s ease infinite;
+}

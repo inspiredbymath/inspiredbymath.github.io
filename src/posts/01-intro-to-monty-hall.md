@@ -49,6 +49,6 @@ So, by switching, you are betting on the higher probability: that you initially 
 
 Reading about it is one thing, but seeing the statistics in action is another. Our interactive Monty Hall game lets you test this strategy as many times as you want.
 
-> **[Play the Monty Hall Game Now!](./monty-hall.html)**
+> **[Play the Monty Hall Game Now!](../monty-hall)**
 
 Run the simulation, try both staying and switching, and watch how the probabilities converge. You'll see that switching really does pay off two-thirds of the time!

@@ -1,4 +1,4 @@
----
+const e=`---
 slug: 'staircase-fibonacci'
 title: "Climbing Stairs and the Surprising Link to Fibonacci"
 date: "2024-07-29"
@@ -47,7 +47,7 @@ There are no other possibilities. This means that the total number of ways to re
 
 This gives us the famous recursive formula:
 
-`ways(N) = ways(N-1) + ways(N-2)`
+\`ways(N) = ways(N-1) + ways(N-2)\`
 
 This is the exact same formula that defines the Fibonacci sequence.
 
@@ -60,3 +60,4 @@ The best way to get a feel for this is to see it. Our interactive Staircase Prob
 > **[Play the Staircase Problem Game Now!](./staircase.html)**
 
 Watch how the paths for N=3 and N=4 combine to form the paths for N=5. It's the Fibonacci sequence brought to life!
+`;export{e as default};

@@ -1,4 +1,4 @@
----
+const e=`---
 slug: 'prisoners-dilemma-strategies'
 title: "Cooperate or Betray: Strategies in the Prisoner's Dilemma"
 date: "2024-07-27"
@@ -47,3 +47,4 @@ Which strategy works best? It depends on the opponent! Our interactive Prisoner'
 > **[Play the Prisoner's Dilemma Game!](./prisoners-dilemma.html)**
 
 See if you can beat the "Tit-for-Tat" strategy, or discover how quickly the "Grudger" will turn on you. Experimentation is the key to understanding the dynamics of cooperation.
+`;export{e as default};
