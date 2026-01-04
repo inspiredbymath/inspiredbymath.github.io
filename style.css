@@ -33,6 +33,7 @@
     /* Typography */
     --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-serif: "Merriweather", Georgia, serif;
+    --font-mono: "SF Mono", "Cascadia Code", "Fira Code", Menlo, Monaco, "Courier New", monospace;
 }
 
 * {
@@ -44,6 +45,9 @@
 body {
     font-family: var(--font-sans);
     background-color: var(--background-color);
+    background-image: radial-gradient(circle at 15% 10%, rgba(79, 70, 229, 0.08), transparent 35%),
+                      radial-gradient(circle at 85% 0%, rgba(13, 148, 136, 0.08), transparent 35%),
+                      linear-gradient(180deg, rgba(15, 23, 42, 0.02), rgba(248, 250, 252, 0) 40%);
     color: var(--text-primary);
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -71,7 +75,7 @@ body {
     padding: 15px 0;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
@@ -209,7 +213,7 @@ body {
 }
 
 /* Colorful Top Borders */
-.game-card::after, .post-card::after {
+.game-card::after {
     content: '';
     position: absolute;
     top: 0;
@@ -217,6 +221,17 @@ body {
     width: 100%;
     height: 4px;
     background: var(--border-color); /* Default */
+    transition: height 0.2s;
+}
+
+.post-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--post-border, var(--border-color));
     transition: height 0.2s;
 }
 
@@ -325,9 +340,9 @@ body {
     border: 1px solid var(--border-color);
     margin-bottom: 30px;
     transition: transform 0.2s, box-shadow 0.2s;
-    text-decoration: none;
     color: inherit;
     overflow: hidden;
+    cursor: default;
 }
 
 @media (min-width: 768px) {
@@ -337,6 +352,12 @@ body {
 }
 
 .post-list-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    border-color: var(--accent-color);
+}
+
+.post-list-item:focus-within {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(0,0,0,0.08);
     border-color: var(--accent-color);
@@ -352,6 +373,16 @@ body {
 
 .post-list-content {
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.visualization-container canvas,
+.comparison-container canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    pointer-events: none;
 }
 
 .post-list-content h2 {

@@ -48,8 +48,9 @@ function displayPosts(posts) {
     const isVerticalList = postsContainer.classList.contains('posts-list-vertical');
 
     posts.forEach(post => {
-        const postCard = document.createElement('a');
-        postCard.href = `./post.html?slug=${post.slug}`;
+        const postCard = document.createElement('article');
+        const postUrl = `./post.html?slug=${post.slug}`;
+        const gameUrl = post.game ? `./${post.game}.html` : '';
         
         // Define tags HTML safely
         const tagsHtml = (post.tags || []).map(tag => {
@@ -75,15 +76,23 @@ function displayPosts(posts) {
             postCard.innerHTML = `
                 <div class="post-list-image">${icon}</div>
                 <div class="post-list-content">
-                    <h2>${post.title}</h2>
+                    <a class="post-title-link" href="${postUrl}">
+                        <h2>${post.title}</h2>
+                    </a>
                     <div class="post-meta">
                         <span>${new Date(post.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                         <span>&bull;</span>
                         <span>${post.author}</span>
                     </div>
                     <p>${post.excerpt}</p>
-                    <div class="tags-container" style="margin-top: 15px;">
-                        ${tagsHtml}
+                    <div class="post-footer">
+                        <div class="tags-container">
+                            ${tagsHtml}
+                        </div>
+                        <div class="post-actions">
+                            <a class="post-action read" href="${postUrl}">Read article</a>
+                            ${gameUrl ? `<a class="post-action play" href="${gameUrl}">Play simulation</a>` : ''}
+                        </div>
                     </div>
                 </div>
             `;
@@ -99,16 +108,13 @@ function displayPosts(posts) {
                 else if (firstTag.includes('game')) borderColor = 'var(--brand-indigo)';
                 else if (firstTag.includes('dynamic')) borderColor = 'var(--brand-rose)';
             }
-            postCard.style.setProperty('--border-color', borderColor);
-            
-            // Add custom style for the ::after element color override
-            postCard.setAttribute('style', `--border-color: ${borderColor}`); // This relies on the CSS utilizing this var or us manually setting it. 
-            // Better approach for CSS pseudo-element: we set a class or inline style won't reach ::after easily without CSS vars.
-            // Let's use the CSS Variable approach which is clean.
+            postCard.style.setProperty('--post-border', borderColor);
             
             postCard.innerHTML = `
                 <div class="card-content">
-                    <h2>${post.title}</h2>
+                    <a class="post-title-link" href="${postUrl}">
+                        <h2>${post.title}</h2>
+                    </a>
                     <div class="post-meta">
                         <span>${new Date(post.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                     </div>
@@ -116,10 +122,11 @@ function displayPosts(posts) {
                     <div class="tags-container">
                         ${tagsHtml}
                     </div>
+                    <div class="post-actions">
+                        <a class="post-action read" href="${postUrl}">Read article</a>
+                        ${gameUrl ? `<a class="post-action play" href="${gameUrl}">Play simulation</a>` : ''}
+                    </div>
                 </div>
-                <style>
-                    .post-card[href$="${post.slug}"]:after { background: ${borderColor} !important; }
-                </style>
             `;
         }
 
