@@ -12,8 +12,8 @@ const config = {
 			strict: true
 		}),
 		paths: {
-			// Set base path for GitHub Pages: https://username.github.io/mathfun
-			base: process.argv.includes('dev') ? '' : '/mathfun'
+			// Serve from root for GitHub Pages user/organization site
+			base: ''
 		}
 	}
 };

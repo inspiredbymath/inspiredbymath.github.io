@@ -2,6 +2,7 @@
 	import { base } from '$app/paths';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import { browser } from '$app/environment';
 
 	let { data } = $props();
 
@@ -24,7 +25,9 @@
 	};
 
 	const tagOptions = $derived.by(() => buildTagOptions(data.posts));
-	const selectedTag = $derived.by(() => $page.url.searchParams.get('tag'));
+	const selectedTag = $derived.by(() =>
+		browser ? $page.url.searchParams.get('tag') : null
+	);
 	const normalizedTag = $derived.by(() => (selectedTag ? selectedTag.toLowerCase() : ''));
 	const filteredPosts = $derived.by(() => {
 		if (!normalizedTag) return data.posts;

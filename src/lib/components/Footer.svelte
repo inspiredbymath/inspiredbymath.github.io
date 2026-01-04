@@ -1,4 +1,6 @@
 <script>
+	import { base } from '$app/paths';
+
 	const year = new Date().getFullYear();
 </script>
 
@@ -11,8 +13,8 @@
 			</div>
 			<div class="footer-links">
 				<a href="https://github.com" target="_blank" rel="noreferrer">GitHub</a>
-				<a href="/mathfun/blog">Journal</a>
-				<a href="/mathfun/simulations">Simulations</a>
+				<a href="{base}/blog">Journal</a>
+				<a href="{base}/simulations">Simulations</a>
 			</div>
 		</div>
 		<div class="footer-bottom">
