@@ -8,62 +8,66 @@
 
 	// Game state
 	let steps = $state(5);
-	let paths = $state([]);
+	let paths = $derived.by(() => buildPaths(steps));
 	let currentPathIndex = $state(0);
 	let isAnimating = $state(false);
 
-	// Derived stats
-	let totalWays = $derived(paths.length);
-	let fibIndex = $derived(steps + 1);
-	let currentPathStr = $derived(
-		currentPathIndex > 0 && currentPathIndex <= paths.length
-			? `${currentPathIndex}/${totalWays}: ${paths[currentPathIndex - 1].map((s) => `+${s}`).join(' ')}`
-			: '-'
-	);
+	function formatCurrentPath() {
+		if (currentPathIndex > 0 && currentPathIndex <= paths.length) {
+			return `${currentPathIndex}/${paths.length}: ${paths[currentPathIndex - 1].map((s) => `+${s}`).join(' ')}`;
+		}
+		return '-';
+	}
 
 	onMount(() => {
+		if (!canvas || !comparisonCanvas) return;
 		ctx = canvas.getContext('2d');
 		comparisonCtx = comparisonCanvas.getContext('2d');
-		calculatePaths();
+		currentPathIndex = 0;
 		draw();
 	});
 
 	// Recalculate and redraw when steps change
 	$effect(() => {
-		if (ctx && comparisonCtx) {
-			calculatePaths();
-			draw();
-		}
+		steps;
+		currentPathIndex = 0;
 	});
 
-	function calculatePaths() {
-		paths = [];
+	$effect(() => {
+		paths;
+		currentPathIndex;
+		draw();
+	});
+
+	function buildPaths(stepCount) {
+		const result = [];
+		const findPaths = (currentStep, currentPath) => {
+			if (currentStep === stepCount) {
+				result.push([...currentPath]);
+				return;
+			}
+
+			if (currentStep > stepCount) {
+				return;
+			}
+
+			// Take 1 step
+			currentPath.push(1);
+			findPaths(currentStep + 1, currentPath);
+			currentPath.pop();
+
+			// Take 2 steps
+			currentPath.push(2);
+			findPaths(currentStep + 2, currentPath);
+			currentPath.pop();
+		};
+
 		findPaths(0, []);
-	}
-
-	function findPaths(currentStep, currentPath) {
-		if (currentStep === steps) {
-			paths.push([...currentPath]);
-			return;
-		}
-
-		if (currentStep > steps) {
-			return;
-		}
-
-		// Take 1 step
-		currentPath.push(1);
-		findPaths(currentStep + 1, currentPath);
-		currentPath.pop();
-
-		// Take 2 steps
-		currentPath.push(2);
-		findPaths(currentStep + 2, currentPath);
-		currentPath.pop();
+		return result;
 	}
 
 	function draw() {
-		if (!ctx || !comparisonCtx) return;
+		if (!canvas || !comparisonCanvas || !ctx || !comparisonCtx) return;
 
 		// Clear canvases
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -82,6 +86,7 @@
 	}
 
 	function drawStaircase() {
+		if (!canvas) return;
 		const stepWidth = 60;
 		const stepHeight = 40;
 		const startX = 50;
@@ -163,6 +168,7 @@
 	}
 
 	function drawComparison() {
+		if (!comparisonCanvas || !comparisonCtx) return;
 		if (steps === 1) {
 			drawSingleStaircaseComparison();
 		} else if (steps === 2) {
@@ -433,17 +439,17 @@
 				id="steps-slider"
 				min="1"
 				max="10"
-				value={steps}
-				on:input={handleStepsChange}
+				bind:value={steps}
+				oninput={handleStepsChange}
 			/>
 		</div>
 
 		<div class="button-controls">
-			<button class="btn" on:click={showNextPath}>Show Next Path</button>
-			<button class="btn" on:click={animateAllPaths}>
+			<button class="btn" onclick={showNextPath}>Show Next Path</button>
+			<button class="btn" onclick={animateAllPaths}>
 				{isAnimating ? 'Stop Animation' : 'Animate All Paths'}
 			</button>
-			<button class="btn btn-secondary" on:click={reset}>Reset</button>
+			<button class="btn btn-secondary" onclick={reset}>Reset</button>
 		</div>
 	</div>
 
@@ -457,15 +463,15 @@
 	<div class="stats">
 		<div class="stat-box">
 			<h4>Total Ways</h4>
-			<p class="stat-value">{totalWays}</p>
+			<p class="stat-value">{paths.length}</p>
 		</div>
 		<div class="stat-box">
 			<h4>Fibonacci Number</h4>
-			<p class="stat-value">F({fibIndex}) = {totalWays}</p>
+			<p class="stat-value">F({steps + 1}) = {paths.length}</p>
 		</div>
 		<div class="stat-box wide">
 			<h4>Current Path</h4>
-			<p class="stat-value">{currentPathStr}</p>
+			<p class="stat-value">{formatCurrentPath()}</p>
 		</div>
 	</div>
 

@@ -2,7 +2,7 @@ import './polyfills.js';
 import matter from 'gray-matter';
 
 // Vite feature to import all markdown files from a directory
-const postFiles = import.meta.glob('./posts/*.md', { as: 'raw' });
+const postFiles = import.meta.glob('./src/posts/*.md', { as: 'raw' });
 
 const postsContainer = document.getElementById('posts-container');
 

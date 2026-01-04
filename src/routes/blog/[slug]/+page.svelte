@@ -1,8 +1,9 @@
 <script>
 	import { base } from '$app/paths';
+	import { ArrowRight } from 'lucide-svelte';
 
 	let { data } = $props();
-	const { post } = data;
+	let post = $derived.by(() => data.post);
 </script>
 
 <svelte:head>
@@ -21,17 +22,25 @@
 					day: 'numeric'
 				})}
 			</time>
-			{#if post.game}
-				<a href="{base}/{post.game}" class="game-link">
-					Play the {post.game.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')} →
-				</a>
-			{/if}
 		</div>
 	</header>
 
 	<div class="post-content">
 		{@html post.content}
 	</div>
+
+	{#if post.game}
+		<a href="{base}/{post.game}" class="game-cta">
+			<span class="game-cta-label">Interactive simulation</span>
+			<span class="game-cta-title">
+				Play the {post.game.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ')}
+			</span>
+			<span class="game-cta-action">
+				Launch game
+				<ArrowRight size={18} />
+			</span>
+		</a>
+	{/if}
 
 	<footer class="post-footer">
 		<a href="{base}/blog" class="back-link">← Back to Journal</a>
@@ -69,15 +78,46 @@
 		font-size: 0.95rem;
 	}
 
-	.game-link {
-		color: var(--brand-teal);
+	.game-cta {
+		margin-top: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		padding: 1.25rem 1.5rem;
+		border-radius: 16px;
+		border: 1px solid rgba(79, 70, 229, 0.25);
+		background: linear-gradient(135deg, rgba(79, 70, 229, 0.08), rgba(13, 148, 136, 0.08));
 		text-decoration: none;
-		font-weight: 500;
-		transition: color 0.2s;
+		color: var(--text-primary);
+		box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+		transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 	}
 
-	.game-link:hover {
-		color: var(--brand-blue);
+	.game-cta:hover {
+		transform: translateY(-2px);
+		border-color: rgba(79, 70, 229, 0.45);
+		box-shadow: 0 18px 30px rgba(15, 23, 42, 0.12);
+	}
+
+	.game-cta-label {
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--brand-indigo);
+		font-weight: 700;
+	}
+
+	.game-cta-title {
+		font-size: 1.4rem;
+		font-weight: 700;
+	}
+
+	.game-cta-action {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: var(--brand-indigo);
+		font-weight: 600;
 	}
 
 	.post-content {

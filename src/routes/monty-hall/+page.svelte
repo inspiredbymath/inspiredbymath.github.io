@@ -11,42 +11,52 @@
 	let message = $state('Pick a door!');
 
 	// Statistics
-	let stats = $state({
-		stayWins: 0,
-		stayTotal: 0,
-		switchWins: 0,
-		switchTotal: 0
-	});
+	let stayWins = $state(0);
+	let stayTotal = $state(0);
+	let switchWins = $state(0);
+	let switchTotal = $state(0);
 
 	// Related posts
 	let relatedPosts = $state([]);
 
 	// Derived statistics
-	let stayPercent = $derived(
-		stats.stayTotal > 0 ? Math.round((stats.stayWins / stats.stayTotal) * 100) : 0
+	let stayPercent = $derived.by(() =>
+		stayTotal > 0 ? Math.round((stayWins / stayTotal) * 100) : 0
 	);
-	let switchPercent = $derived(
-		stats.switchTotal > 0 ? Math.round((stats.switchWins / stats.switchTotal) * 100) : 0
+	let switchPercent = $derived.by(() =>
+		switchTotal > 0 ? Math.round((switchWins / switchTotal) * 100) : 0
 	);
-	let stayRate = $derived(stats.stayTotal > 0 ? (stats.stayWins / stats.stayTotal) * 100 : 0);
-	let switchRate = $derived(
-		stats.switchTotal > 0 ? (stats.switchWins / stats.switchTotal) * 100 : 0
+	let stayRate = $derived.by(() => (stayTotal > 0 ? (stayWins / stayTotal) * 100 : 0));
+	let switchRate = $derived.by(() =>
+		switchTotal > 0 ? (switchWins / switchTotal) * 100 : 0
 	);
-	let stayVariance = $derived(stayRate - 33.3);
-	let switchVariance = $derived(switchRate - 66.7);
+	let stayVariance = $derived.by(() => stayRate - 33.3);
+	let switchVariance = $derived.by(() => switchRate - 66.7);
 
 	// Load stats from localStorage on mount
 	onMount(() => {
 		const saved = localStorage.getItem('montyHallStats');
 		if (saved) {
-			stats = JSON.parse(saved);
+			const parsed = JSON.parse(saved);
+			stayWins = parsed.stayWins ?? 0;
+			stayTotal = parsed.stayTotal ?? 0;
+			switchWins = parsed.switchWins ?? 0;
+			switchTotal = parsed.switchTotal ?? 0;
 		}
 	});
 
 	// Save stats whenever they change
 	$effect(() => {
 		if (typeof window !== 'undefined') {
-			localStorage.setItem('montyHallStats', JSON.stringify(stats));
+			localStorage.setItem(
+				'montyHallStats',
+				JSON.stringify({
+					stayWins,
+					stayTotal,
+					switchWins,
+					switchTotal
+				})
+			);
 		}
 	});
 
@@ -90,11 +100,11 @@
 
 		// Update statistics
 		if (switched) {
-			stats.switchTotal++;
-			if (won) stats.switchWins++;
+			switchTotal += 1;
+			if (won) switchWins += 1;
 		} else {
-			stats.stayTotal++;
-			if (won) stats.stayWins++;
+			stayTotal += 1;
+			if (won) stayWins += 1;
 		}
 
 		// Update final selection
@@ -114,12 +124,10 @@
 
 	function resetStats() {
 		if (confirm('Are you sure you want to reset all statistics?')) {
-			stats = {
-				stayWins: 0,
-				stayTotal: 0,
-				switchWins: 0,
-				switchTotal: 0
-			};
+			stayWins = 0;
+			stayTotal = 0;
+			switchWins = 0;
+			switchTotal = 0;
 		}
 	}
 
@@ -162,7 +170,7 @@
 					isOpened={revealedDoor === doorNum || gamePhase === 'finished'}
 					isWinner={doorNum === carDoor}
 					isDisabled={revealedDoor === doorNum && gamePhase === 'revealed'}
-					onclick={() => handleDoorClick(doorNum)}
+					onSelect={() => handleDoorClick(doorNum)}
 				/>
 			{/each}
 		</div>
@@ -170,7 +178,7 @@
 		<div class="message">{message}</div>
 
 		<div class="controls">
-			<button class="btn" on:click={resetGame}>New Game</button>
+			<button class="btn" onclick={resetGame}>New Game</button>
 		</div>
 	</div>
 
@@ -180,19 +188,19 @@
 			<div class="stat-box">
 				<h4>Stayed</h4>
 				<p class="stat-value">
-					<span>{stats.stayWins}</span> / <span>{stats.stayTotal}</span>
+					<span>{stayWins}</span> / <span>{stayTotal}</span>
 				</p>
 				<p class="stat-percent">{stayPercent}%</p>
 			</div>
 			<div class="stat-box">
 				<h4>Switched</h4>
 				<p class="stat-value">
-					<span>{stats.switchWins}</span> / <span>{stats.switchTotal}</span>
+					<span>{switchWins}</span> / <span>{switchTotal}</span>
 				</p>
 				<p class="stat-percent">{switchPercent}%</p>
 			</div>
 		</div>
-		<button class="btn btn-secondary" on:click={resetStats}>Reset Statistics</button>
+		<button class="btn btn-secondary" onclick={resetStats}>Reset Statistics</button>
 	</div>
 
 	<div class="strategy-analysis">
@@ -210,8 +218,8 @@
 				</div>
 				<div class="variance">
 					<span class="variance-label">Variance:</span>
-					<span class="variance-value {getVarianceClass(stayVariance, stats.stayTotal)}">
-						{formatVariance(stayVariance, stats.stayTotal)}
+					<span class="variance-value {getVarianceClass(stayVariance, stayTotal)}">
+						{formatVariance(stayVariance, stayTotal)}
 					</span>
 				</div>
 			</div>
@@ -228,8 +236,8 @@
 				</div>
 				<div class="variance">
 					<span class="variance-label">Variance:</span>
-					<span class="variance-value {getVarianceClass(switchVariance, stats.switchTotal)}">
-						{formatVariance(switchVariance, stats.switchTotal)}
+					<span class="variance-value {getVarianceClass(switchVariance, switchTotal)}">
+						{formatVariance(switchVariance, switchTotal)}
 					</span>
 				</div>
 			</div>

@@ -32,7 +32,7 @@
 	}
 </script>
 
-<svelte:window on:mousemove={handleMouseMove} />
+<svelte:window onmousemove={handleMouseMove} />
 
 <Motion
 	let:motion
@@ -43,8 +43,8 @@
 		bind:this={buttonRef}
 		use:motion
 		class="magnetic-btn magnetic-btn-{variant}"
-		on:click={onclick}
-		on:mouseleave={handleMouseLeave}
+		onclick={onclick}
+		onmouseleave={handleMouseLeave}
 		{...rest}
 	>
 		{@render children()}
@@ -97,12 +97,12 @@
 		outline-offset: 2px;
 	}
 
-	[data-theme="dark"] .magnetic-btn-primary {
+	:global([data-theme="dark"]) .magnetic-btn-primary {
 		background: linear-gradient(135deg, var(--indigo-500), var(--indigo-300));
 		box-shadow: 0 4px 16px rgba(99, 102, 241, 0.5);
 	}
 
-	[data-theme="dark"] .magnetic-btn-primary:hover {
+	:global([data-theme="dark"]) .magnetic-btn-primary:hover {
 		box-shadow: 0 8px 32px rgba(99, 102, 241, 0.7);
 	}
 </style>

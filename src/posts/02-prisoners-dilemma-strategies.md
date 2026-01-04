@@ -44,6 +44,6 @@ Things get much more interesting when the game is played repeatedly. In this sce
 
 Which strategy works best? It depends on the opponent! Our interactive Prisoner's Dilemma simulation lets you play against various computer-controlled opponents, each using a different strategy.
 
-> **[Play the Prisoner's Dilemma Game!](../prisoners-dilemma)**
+
 
 See if you can beat the "Tit-for-Tat" strategy, or discover how quickly the "Grudger" will turn on you. Experimentation is the key to understanding the dynamics of cooperation.

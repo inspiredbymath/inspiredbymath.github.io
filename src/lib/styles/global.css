@@ -9,13 +9,16 @@
 /* Import Design Tokens */
 @import './tokens.css';
 
+/* Load Serif Font */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap');
+
 :root {
 	--font-family-serif: "Merriweather", "Georgia", serif;
 	--font-family-sans: "Inter", system-ui, sans-serif;
+	--brand-teal: var(--teal-600);
+	--brand-blue: var(--indigo-600);
+	--brand-amber: var(--amber-600);
 }
-
-/* Load Serif Font */
-@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap');
 
 * {
 	margin: 0;

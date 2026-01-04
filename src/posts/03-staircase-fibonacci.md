@@ -57,6 +57,6 @@ This recursive relationship is the foundation of a technique called dynamic prog
 
 The best way to get a feel for this is to see it. Our interactive Staircase Problem visualizer lets you pick the number of steps and then animates every possible path you can take.
 
-> **[Play the Staircase Problem Game Now!](../staircase)**
+
 
 Watch how the paths for N=3 and N=4 combine to form the paths for N=5. It's the Fibonacci sequence brought to life!

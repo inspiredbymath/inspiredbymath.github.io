@@ -3,7 +3,7 @@ import matter from 'gray-matter';
 import { marked } from 'marked';
 
 // Vite feature to import all markdown files from a directory
-const postFiles = import.meta.glob('./posts/*.md', { as: 'raw' });
+const postFiles = import.meta.glob('./src/posts/*.md', { as: 'raw' });
 
 const postContentContainer = document.getElementById('post-content');
 

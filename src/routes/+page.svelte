@@ -1,32 +1,55 @@
 <script>
 	import { base } from '$app/paths';
 	import { Motion } from 'svelte-motion';
-	import { ArrowRight, Sparkles, Brain, Zap, BookOpen } from 'lucide-svelte';
+	import { ArrowRight, Brain, Zap, BookOpen } from 'lucide-svelte';
 	import MagneticButton from '$lib/components/MagneticButton.svelte';
 	import { goto } from '$app/navigation';
 
 	let { data } = $props();
 
-	const features = [
-		{
-			icon: Brain,
-			title: 'Interactive Learning',
-			description: 'Don\'t just read equations. Manipulate variables and watch the logic unfold in real-time.',
-			color: 'indigo'
-		},
-		{
-			icon: Sparkles,
-			title: 'Visual Intuition',
-			description: 'Build deep understanding through carefully crafted data visualizations and animations.',
-			color: 'teal'
-		},
-		{
-			icon: Zap,
-			title: 'Game Theory',
-			description: 'Explore the mathematics of decision making through playable scenarios.',
-			color: 'amber'
-		}
+	const fallbackTopics = [
+		{ label: 'Probability', count: 0 },
+		{ label: 'Algorithms', count: 0 }
 	];
+
+	const posts = $derived.by(() => data.posts ?? []);
+	const topicsData = $derived.by(() => data.topics ?? []);
+	const featuredSimulation = $derived.by(() => data.featuredSimulation ?? null);
+
+	const buildTopicTiles = (topicsSource) => {
+		const topics = topicsSource.length ? topicsSource : fallbackTopics;
+		const selected = [...topics, ...fallbackTopics].slice(0, 2);
+		const icons = [BookOpen, Brain];
+		const colors = ['indigo', 'teal'];
+
+		return selected.map((topic, index) => ({
+			icon: icons[index],
+			title: topic.label,
+			kicker: `${topic.count} articles`,
+			description: `Explore ${topic.label.toLowerCase()} through interactive essays and hands-on simulations.`,
+			color: colors[index],
+			href: `${base}/blog?tag=${encodeURIComponent(topic.label)}`
+		}));
+	};
+
+	const tiles = $derived.by(() => {
+		const simulation = featuredSimulation ?? {
+			title: 'The Monty Hall Problem',
+			description: 'Run the switch-or-stay experiment and watch the odds flip.',
+			game: 'monty-hall'
+		};
+
+		const simulationTile = {
+			icon: Zap,
+			title: simulation.title,
+			kicker: 'Featured simulation',
+			description: simulation.description,
+			color: 'amber',
+			href: `${base}/${simulation.game}`
+		};
+
+		return [...buildTopicTiles(topicsData), simulationTile];
+	});
 </script>
 
 <svelte:head>
@@ -69,8 +92,13 @@
 <!-- Features Grid (Bento Style) -->
 <section class="features-section">
 	<div class="container">
+		<div class="features-header">
+			<h2>Start with a path</h2>
+			<p>Two popular topics plus a featured simulation, refreshed as new posts land.</p>
+		</div>
 		<div class="features-grid">
-			{#each features as feature, i}
+			{#each tiles as feature, i}
+				{@const Icon = feature.icon}
 				<Motion
 					let:motion
 					initial={{ opacity: 0, y: 20 }}
@@ -78,13 +106,18 @@
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.5, delay: i * 0.1 }}
 				>
-					<div use:motion class="feature-card">
+					<a use:motion class="feature-card" href={feature.href}>
 						<div class="feature-icon bg-{feature.color}">
-							<svelte:component this={feature.icon} size={28} strokeWidth={2} />
+							<Icon size={28} strokeWidth={2} />
 						</div>
+						<span class="feature-kicker">{feature.kicker}</span>
 						<h3>{feature.title}</h3>
 						<p>{feature.description}</p>
-					</div>
+						<span class="feature-action">
+							Explore
+							<ArrowRight size={18} />
+						</span>
+					</a>
 				</Motion>
 			{/each}
 		</div>
@@ -103,7 +136,7 @@
 		</div>
 
 		<div class="articles-list">
-			{#each data.posts as post, i}
+			{#each posts as post, i}
 				<Motion
 					let:motion
 					initial={{ opacity: 0, x: -20 }}
@@ -168,7 +201,7 @@
 		border-radius: 99px;
 	}
 
-	[data-theme="dark"] .eyebrow {
+	:global([data-theme="dark"]) .eyebrow {
 		background: var(--indigo-900);
 		color: var(--indigo-200);
 	}
@@ -188,7 +221,7 @@
 		font-family: var(--font-family-serif);
 	}
 
-	[data-theme="dark"] .highlight {
+	:global([data-theme="dark"]) .highlight {
 		color: var(--indigo-400);
 	}
 
@@ -203,7 +236,7 @@
 		margin-right: auto;
 	}
 
-	[data-theme="dark"] .hero-subtitle {
+	:global([data-theme="dark"]) .hero-subtitle {
 		color: var(--gray-400);
 	}
 
@@ -216,6 +249,25 @@
 	/* Features Section */
 	.features-section {
 		padding: 4rem 0;
+	}
+
+	.features-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-end;
+		gap: 2rem;
+		margin-bottom: 2.5rem;
+	}
+
+	.features-header h2 {
+		font-size: 2.25rem;
+		margin: 0;
+	}
+
+	.features-header p {
+		color: var(--gray-600);
+		max-width: 420px;
+		margin: 0;
 	}
 
 	.features-grid {
@@ -231,9 +283,14 @@
 		border-radius: 16px;
 		box-shadow: var(--shadow-sm);
 		transition: border-color 0.3s ease;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		text-decoration: none;
+		color: inherit;
 	}
 
-	[data-theme="dark"] .feature-card {
+	:global([data-theme="dark"]) .feature-card {
 		border-color: var(--gray-800);
 	}
 
@@ -256,6 +313,14 @@
 	.bg-teal { background: var(--teal-600); }
 	.bg-amber { background: var(--amber-500); }
 
+	.feature-kicker {
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		font-weight: 700;
+		color: var(--gray-500);
+	}
+
 	.feature-card h3 {
 		font-size: 1.5rem;
 		margin-bottom: 1rem;
@@ -267,8 +332,17 @@
 		line-height: 1.6;
 	}
 
-	[data-theme="dark"] .feature-card p {
+	:global([data-theme="dark"]) .feature-card p {
 		color: var(--gray-400);
+	}
+
+	.feature-action {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-weight: 600;
+		color: var(--indigo-600);
+		margin-top: auto;
 	}
 
 	/* Latest Posts Section */
@@ -285,7 +359,7 @@
 		padding-bottom: 1rem;
 	}
 
-	[data-theme="dark"] .section-header {
+	:global([data-theme="dark"]) .section-header {
 		border-color: var(--gray-800);
 	}
 
@@ -317,7 +391,7 @@
 		border-bottom: 1px solid var(--gray-200);
 	}
 
-	[data-theme="dark"] .article-item {
+	:global([data-theme="dark"]) .article-item {
 		border-color: var(--gray-800);
 	}
 
@@ -365,7 +439,7 @@
 		max-width: 600px;
 	}
 
-	[data-theme="dark"] .article-content p {
+	:global([data-theme="dark"]) .article-content p {
 		color: var(--gray-400);
 	}
 
@@ -385,6 +459,11 @@
 	@media (max-width: 768px) {
 		.hero-actions {
 			flex-direction: column;
+		}
+
+		.features-header {
+			flex-direction: column;
+			align-items: flex-start;
 		}
 
 		.article-link {

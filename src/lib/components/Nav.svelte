@@ -18,17 +18,17 @@
 
 <nav class="nav-bar" class:scrolled>
 	<div class="nav-container">
-		<a href="{base}/" class="nav-logo">Inspired By Math</a>
+		<a href={`${base}/`} class="nav-logo">Inspired By Math</a>
 		<div class="nav-links">
 			<a
-				href="{base}/blog"
+				href={`${base}/blog`}
 				class="nav-link"
 				class:active={$page.url.pathname.startsWith(`${base}/blog`)}
 			>
 				Journal
 			</a>
 			<a
-				href="{base}/simulations"
+				href={`${base}/simulations`}
 				class="nav-link"
 				class:active={$page.url.pathname.startsWith(`${base}/simulations`) ||
 					$page.url.pathname.includes('/monty-hall') ||

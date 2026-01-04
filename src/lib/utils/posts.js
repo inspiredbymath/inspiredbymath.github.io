@@ -1,34 +1,35 @@
 import matter from 'gray-matter';
 import { marked } from 'marked';
 import { readdir, readFile } from 'fs/promises';
-import { join } from 'path';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+async function loadPostContents() {
+	const postsDir = join(process.cwd(), 'src/posts');
+	const files = await readdir(postsDir);
+	const mdFiles = files.filter((file) => file.endsWith('.md'));
+	return Promise.all(mdFiles.map((file) => readFile(join(postsDir, file), 'utf-8')));
+}
 
 /**
  * Load all blog posts from the posts directory
  * @returns {Promise<Array>} Array of post metadata
  */
 export async function loadPosts() {
-	const postsDir = join(process.cwd(), 'src/posts');
-
 	try {
-		const files = await readdir(postsDir);
-		const mdFiles = files.filter((file) => file.endsWith('.md'));
+		const contents = await loadPostContents();
+		const posts = contents.map((rawContent) => {
+			const { data } = matter(rawContent);
 
-		const posts = await Promise.all(
-			mdFiles.map(async (file) => {
-				const filePath = join(postsDir, file);
-				const rawContent = await readFile(filePath, 'utf-8');
-				const { data } = matter(rawContent);
-
-				return {
-					slug: data.slug,
-					title: data.title,
-					date: data.date,
-					excerpt: data.excerpt,
-					game: data.game || null
-				};
-			})
-		);
+			return {
+				slug: data.slug,
+				title: data.title,
+				date: data.date,
+				excerpt: data.excerpt,
+				game: data.game || null,
+				tags: data.tags || []
+			};
+		});
 
 		// Sort by date, newest first
 		return posts.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -44,14 +45,9 @@ export async function loadPosts() {
  * @returns {Promise<Object|null>} Post data with HTML content
  */
 export async function loadPost(slug) {
-	const postsDir = join(process.cwd(), 'src/posts');
-
 	try {
-		const files = await readdir(postsDir);
-
-		for (const file of files) {
-			const filePath = join(postsDir, file);
-			const rawContent = await readFile(filePath, 'utf-8');
+		const contents = await loadPostContents();
+		for (const rawContent of contents) {
 			const { data, content } = matter(rawContent);
 
 			if (data.slug === slug) {
@@ -61,6 +57,7 @@ export async function loadPost(slug) {
 					date: data.date,
 					excerpt: data.excerpt,
 					game: data.game || null,
+					tags: data.tags || [],
 					content: marked(content)
 				};
 			}

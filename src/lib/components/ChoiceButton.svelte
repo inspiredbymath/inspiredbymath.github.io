@@ -1,11 +1,11 @@
 <script>
-	let { choice, icon, onclick, disabled = false } = $props();
+	let { choice, icon, onSelect, disabled = false } = $props();
 
 	const choiceClass = choice === 'cooperate' ? 'cooperate' : 'defect';
 	const label = choice === 'cooperate' ? 'Cooperate' : 'Defect';
 </script>
 
-<button class="choice-btn {choiceClass}" on:click={onclick} {disabled}>
+<button class="choice-btn {choiceClass}" on:click={onSelect} {disabled}>
 	<span class="icon">{icon}</span>
 	<span class="label">{label}</span>
 </button>

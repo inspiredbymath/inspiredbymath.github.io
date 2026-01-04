@@ -113,7 +113,7 @@
 		transform: scale(1.1);
 	}
 
-	[data-theme="dark"] .card-icon {
+:global([data-theme="dark"]) .card-icon {
 		color: var(--indigo-400);
 	}
 

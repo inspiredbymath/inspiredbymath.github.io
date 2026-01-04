@@ -1,7 +1,44 @@
 <script>
 	import { base } from '$app/paths';
+	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 
 	let { data } = $props();
+
+	const buildTagOptions = (posts) => {
+		const counts = new Map();
+		posts.forEach((post) => {
+			(post.tags || []).forEach((tag) => {
+				const label = String(tag || '').trim();
+				if (!label) return;
+				const key = label.toLowerCase();
+				const entry = counts.get(key) || { label, count: 0 };
+				entry.count += 1;
+				counts.set(key, entry);
+			});
+		});
+
+		return Array.from(counts.values()).sort(
+			(a, b) => b.count - a.count || a.label.localeCompare(b.label)
+		);
+	};
+
+	const tagOptions = $derived.by(() => buildTagOptions(data.posts));
+	const selectedTag = $derived.by(() => $page.url.searchParams.get('tag'));
+	const normalizedTag = $derived.by(() => (selectedTag ? selectedTag.toLowerCase() : ''));
+	const filteredPosts = $derived.by(() => {
+		if (!normalizedTag) return data.posts;
+		const matches = data.posts.filter((post) =>
+			(post.tags || []).some((tag) => tag.toLowerCase() === normalizedTag)
+		);
+		return matches.length ? matches : data.posts;
+	});
+
+	const handleTagChange = (event) => {
+		const value = event.target.value;
+		const target = value ? `${base}/blog?tag=${encodeURIComponent(value)}` : `${base}/blog`;
+		goto(target);
+	};
 </script>
 
 <svelte:head>
@@ -16,23 +53,41 @@
 		</p>
 	</header>
 
+	{#if tagOptions.length}
+		<div class="filter-bar">
+			<label for="topic-filter">Filter by topic</label>
+			<div class="filter-control">
+				<select id="topic-filter" value={selectedTag ?? ''} onchange={handleTagChange}>
+					<option value="">All topics</option>
+					{#each tagOptions as tag}
+						<option value={tag.label}>{tag.label} ({tag.count})</option>
+					{/each}
+				</select>
+			</div>
+		</div>
+	{/if}
+
 	<div class="article-list">
-		{#each data.posts as post}
-			<article class="article-card">
-				<div class="article-header">
-					<h2>
-						<a href="{base}/blog/{post.slug}">{post.title}</a>
-					</h2>
-					<time class="article-date">{new Date(post.date).toLocaleDateString('en-US', {
-						year: 'numeric',
-						month: 'long',
-						day: 'numeric'
-					})}</time>
-				</div>
-				<p class="article-excerpt">{post.excerpt}</p>
-				<a href="{base}/blog/{post.slug}" class="read-more">Read more →</a>
-			</article>
-		{/each}
+		{#if filteredPosts.length === 0}
+			<p class="empty-state">No posts match this topic yet. Try another tag.</p>
+		{:else}
+			{#each filteredPosts as post}
+				<article class="article-card">
+					<div class="article-header">
+						<h2>
+							<a href="{base}/blog/{post.slug}">{post.title}</a>
+						</h2>
+						<time class="article-date">{new Date(post.date).toLocaleDateString('en-US', {
+							year: 'numeric',
+							month: 'long',
+							day: 'numeric'
+						})}</time>
+					</div>
+					<p class="article-excerpt">{post.excerpt}</p>
+					<a href="{base}/blog/{post.slug}" class="read-more">Read more →</a>
+				</article>
+			{/each}
+		{/if}
 	</div>
 </section>
 
@@ -64,6 +119,38 @@
 		display: flex;
 		flex-direction: column;
 		gap: 2rem;
+	}
+
+	.filter-bar {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 2.5rem;
+		flex-wrap: wrap;
+	}
+
+	.filter-bar label {
+		font-weight: 600;
+		color: var(--text-primary);
+	}
+
+	.filter-control select {
+		min-width: 240px;
+		padding: 0.6rem 1rem;
+		border-radius: 999px;
+		border: 1px solid var(--border-color);
+		background: var(--surface-color);
+		color: var(--text-primary);
+		font-size: 0.95rem;
+		cursor: pointer;
+		transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.filter-control select:focus {
+		outline: none;
+		border-color: var(--brand-teal);
+		box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
 	}
 
 	.article-card {
@@ -113,5 +200,11 @@
 
 	.read-more:hover {
 		color: var(--brand-blue);
+	}
+
+	.empty-state {
+		text-align: center;
+		color: var(--text-secondary);
+		font-style: italic;
 	}
 </style>

@@ -1,13 +1,12 @@
 <script>
 	import { scale, fly } from 'svelte/transition';
-
 	let {
 		doorNumber,
 		isSelected = $bindable(false),
 		isOpened = $bindable(false),
 		isWinner = $bindable(false),
 		isDisabled = $bindable(false),
-		onclick
+		onSelect
 	} = $props();
 
 	const displayNumber = doorNumber + 1;
@@ -21,7 +20,7 @@
 	class:loser={isOpened && !isWinner}
 	class:disabled={isDisabled}
 	disabled={isDisabled}
-	on:click={onclick}
+	on:click={() => onSelect?.(doorNumber)}
 	in:scale={{ duration: 300, delay: doorNumber * 100 }}
 >
 	<div class="door-face">
