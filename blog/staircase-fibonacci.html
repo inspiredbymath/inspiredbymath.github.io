@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<link href="../_app/immutable/assets/0.D5af9UOT.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/4.BCg9oAqX.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.DjjJvarn.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/CSIts_Dy.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/S0j79fAV.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/6ZKg6wwJ.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BRqp26Ta.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/D-VuiLkk.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.Btz29fGy.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/C4Rmm3-g.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BoZOt_zT.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/D79M_r9y.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BJ7ExLRq.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/B69TH7Ic.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BGesh79d.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/CCrNe9oD.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.B_-EUgcD.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/CDuHY5ZQ.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BtV_MRxN.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/B_tZDBCa.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/WcKA6lq0.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/DcueZdpX.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BEFwWJU1.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/Ddwxhlgq.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/4.D-wINmgK.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/DOZJe9QW.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/CFkCXnri.js"><!--12qhfyh--><meta name="description" content="Explore mathematics through interactive games and simulations"/><!----><!--1teoznn--><meta name="description" content="How many ways can you climb a staircase? The answer reveals one of the most famous sequences in mathematics."/><!----><title>Climbing Stairs and the Surprising Link to Fibonacci - MathFun</title>
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents"><!--[--><!--[--><!----><nav class="nav-bar"><div class="nav-container"><a href="../" class="nav-logo">Inspired By Math</a> <div class="nav-links"><a href="../blog" class="nav-link">Journal</a> <a href="../simulations" class="nav-link active">Simulations</a> <!--[--><!--[--><!--[--><!--[--><!--[--><!--[--><!--[--><!----><!--[--><!--[--><!--[--><!--[--><!--[--><button class="theme-toggle glass svelte-1cmi4dh" aria-label="Toggle theme"><!--[--><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon lucide lucide-moon"><!--[--><!----><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--></button><!--]--><!--]--><!--]--><!--]--><!--]--><!----><!--]--><!----> <!--[!--><!--]--><!--]--><!--]--><!--]--><!--]--><!--]--><!--]--><!----></div></div></nav><!----> <div class="container"><main><!----><div class="page-transition svelte-12qhfyh"><!----><article class="blog-post svelte-1teoznn"><header class="post-header svelte-1teoznn"><h1 class="svelte-1teoznn">Climbing Stairs and the Surprising Link to Fibonacci</h1> <div class="post-meta svelte-1teoznn"><time class="post-date svelte-1teoznn">July 28, 2024</time></div></header> <div class="post-content svelte-1teoznn"><!----><h2>The Staircase Challenge</h2>
+<p>Here&#39;s a simple puzzle: you are at the bottom of a staircase with <em>N</em> steps. You are allowed to climb either 1 or 2 steps at a time. How many distinct ways are there to reach the top?</p>
+<p>Let&#39;s work it out for a few small values of N:</p>
+<ul>
+<li><p><strong>N = 1:</strong> You can only take one 1-step.  </p>
+<ul>
+<li>Path: (1)</li>
+<li><strong>Total ways: 1</strong></li>
+</ul>
+</li>
+<li><p><strong>N = 2:</strong> You can take two 1-steps, or one 2-step.</p>
+<ul>
+<li>Paths: (1, 1), (2)</li>
+<li><strong>Total ways: 2</strong></li>
+</ul>
+</li>
+<li><p><strong>N = 3:</strong> You can take three 1-steps, a 1-step then a 2-step, or a 2-step then a 1-step.</p>
+<ul>
+<li>Paths: (1, 1, 1), (1, 2), (2, 1)</li>
+<li><strong>Total ways: 3</strong></li>
+</ul>
+</li>
+<li><p><strong>N = 4:</strong></p>
+<ul>
+<li>Paths: (1, 1, 1, 1), (1, 1, 2), (1, 2, 1), (2, 1, 1), (2, 2)</li>
+<li><strong>Total ways: 5</strong></li>
+</ul>
+</li>
+</ul>
+<p>The sequence of the number of ways is: <strong>1, 2, 3, 5, ...</strong> Does that look familiar?</p>
+<hr>
+<h3>Unveiling the Fibonacci Sequence</h3>
+<p>This is the Fibonacci sequence, starting from its second term! (The full sequence is 0, 1, 1, 2, 3, 5, 8, 13, ...)</p>
+<p>Why does this happen? Let&#39;s think about the very last move you make to get to the Nth step.</p>
+<ol>
+<li>You could have come from <strong>step N-1</strong> by taking a single 1-step.</li>
+<li>You could have come from <strong>step N-2</strong> by taking a single 2-step.</li>
+</ol>
+<p>There are no other possibilities. This means that the total number of ways to reach step N is the sum of the ways to reach step N-1 and the ways to reach step N-2.</p>
+<p>This gives us the famous recursive formula:</p>
+<p><code>ways(N) = ways(N-1) + ways(N-2)</code></p>
+<p>This is the exact same formula that defines the Fibonacci sequence.</p>
+<h3>Visualize the Pattern</h3>
+<p>This recursive relationship is the foundation of a technique called dynamic programming. By breaking a larger problem down into smaller, overlapping subproblems, we can find an efficient solution.</p>
+<p>The best way to get a feel for this is to see it. Our interactive Staircase Problem visualizer lets you pick the number of steps and then animates every possible path you can take.</p>
+<p>Watch how the paths for N=3 and N=4 combine to form the paths for N=5. It&#39;s the Fibonacci sequence brought to life!</p>
+<!----></div> <!--[--><a href="../staircase" class="game-cta svelte-1teoznn"><span class="game-cta-label svelte-1teoznn">Interactive simulation</span> <span class="game-cta-title svelte-1teoznn">Play the Staircase</span> <span class="game-cta-action svelte-1teoznn">Launch game <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon lucide lucide-arrow-right"><!--[--><!----><path d="M5 12h14"><!----></path><!----><!----><path d="m12 5 7 7-7 7"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!----></span></a><!--]--> <footer class="post-footer svelte-1teoznn"><a href="../blog" class="back-link svelte-1teoznn">← Back to Journal</a></footer></article><!----><!----></div><!----></main></div> <footer class="site-footer svelte-jz8lnl"><div class="container"><div class="footer-content svelte-jz8lnl"><div class="footer-brand svelte-jz8lnl"><h3 class="svelte-jz8lnl">Inspired By Math</h3> <p class="svelte-jz8lnl">Exploring the beauty of mathematics through interactive play.</p></div> <div class="footer-links svelte-jz8lnl"><a href="https://github.com" target="_blank" rel="noreferrer" class="svelte-jz8lnl">GitHub</a> <a href="/mathfun/blog" class="svelte-jz8lnl">Journal</a> <a href="/mathfun/simulations" class="svelte-jz8lnl">Simulations</a></div></div> <div class="footer-bottom svelte-jz8lnl"><p>© 2026 Built with curiosity.</p></div></div></footer><!----><!----><!--]--> <!--[!--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_1uv79g3 = {
+						base: new URL("..", location).pathname.slice(0, -1),
+						assets: "/mathfun"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../_app/immutable/entry/start.DjjJvarn.js"),
+						import("../_app/immutable/entry/app.Btz29fGy.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 4],
+							data: [null,{type:"data",data:{post:{slug:"staircase-fibonacci",title:"Climbing Stairs and the Surprising Link to Fibonacci",date:"2024-07-29",excerpt:"How many ways can you climb a staircase? The answer reveals one of the most famous sequences in mathematics.",game:"staircase",tags:["Dynamic Programming","Recursion","Fibonacci"],content:"\u003Ch2>The Staircase Challenge\u003C/h2>\n\u003Cp>Here&#39;s a simple puzzle: you are at the bottom of a staircase with \u003Cem>N\u003C/em> steps. You are allowed to climb either 1 or 2 steps at a time. How many distinct ways are there to reach the top?\u003C/p>\n\u003Cp>Let&#39;s work it out for a few small values of N:\u003C/p>\n\u003Cul>\n\u003Cli>\u003Cp>\u003Cstrong>N = 1:\u003C/strong> You can only take one 1-step.  \u003C/p>\n\u003Cul>\n\u003Cli>Path: (1)\u003C/li>\n\u003Cli>\u003Cstrong>Total ways: 1\u003C/strong>\u003C/li>\n\u003C/ul>\n\u003C/li>\n\u003Cli>\u003Cp>\u003Cstrong>N = 2:\u003C/strong> You can take two 1-steps, or one 2-step.\u003C/p>\n\u003Cul>\n\u003Cli>Paths: (1, 1), (2)\u003C/li>\n\u003Cli>\u003Cstrong>Total ways: 2\u003C/strong>\u003C/li>\n\u003C/ul>\n\u003C/li>\n\u003Cli>\u003Cp>\u003Cstrong>N = 3:\u003C/strong> You can take three 1-steps, a 1-step then a 2-step, or a 2-step then a 1-step.\u003C/p>\n\u003Cul>\n\u003Cli>Paths: (1, 1, 1), (1, 2), (2, 1)\u003C/li>\n\u003Cli>\u003Cstrong>Total ways: 3\u003C/strong>\u003C/li>\n\u003C/ul>\n\u003C/li>\n\u003Cli>\u003Cp>\u003Cstrong>N = 4:\u003C/strong>\u003C/p>\n\u003Cul>\n\u003Cli>Paths: (1, 1, 1, 1), (1, 1, 2), (1, 2, 1), (2, 1, 1), (2, 2)\u003C/li>\n\u003Cli>\u003Cstrong>Total ways: 5\u003C/strong>\u003C/li>\n\u003C/ul>\n\u003C/li>\n\u003C/ul>\n\u003Cp>The sequence of the number of ways is: \u003Cstrong>1, 2, 3, 5, ...\u003C/strong> Does that look familiar?\u003C/p>\n\u003Chr>\n\u003Ch3>Unveiling the Fibonacci Sequence\u003C/h3>\n\u003Cp>This is the Fibonacci sequence, starting from its second term! (The full sequence is 0, 1, 1, 2, 3, 5, 8, 13, ...)\u003C/p>\n\u003Cp>Why does this happen? Let&#39;s think about the very last move you make to get to the Nth step.\u003C/p>\n\u003Col>\n\u003Cli>You could have come from \u003Cstrong>step N-1\u003C/strong> by taking a single 1-step.\u003C/li>\n\u003Cli>You could have come from \u003Cstrong>step N-2\u003C/strong> by taking a single 2-step.\u003C/li>\n\u003C/ol>\n\u003Cp>There are no other possibilities. This means that the total number of ways to reach step N is the sum of the ways to reach step N-1 and the ways to reach step N-2.\u003C/p>\n\u003Cp>This gives us the famous recursive formula:\u003C/p>\n\u003Cp>\u003Ccode>ways(N) = ways(N-1) + ways(N-2)\u003C/code>\u003C/p>\n\u003Cp>This is the exact same formula that defines the Fibonacci sequence.\u003C/p>\n\u003Ch3>Visualize the Pattern\u003C/h3>\n\u003Cp>This recursive relationship is the foundation of a technique called dynamic programming. By breaking a larger problem down into smaller, overlapping subproblems, we can find an efficient solution.\u003C/p>\n\u003Cp>The best way to get a feel for this is to see it. Our interactive Staircase Problem visualizer lets you pick the number of steps and then animates every possible path you can take.\u003C/p>\n\u003Cp>Watch how the paths for N=3 and N=4 combine to form the paths for N=5. It&#39;s the Fibonacci sequence brought to life!\u003C/p>\n"}},uses:{params:["slug"]}}],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>

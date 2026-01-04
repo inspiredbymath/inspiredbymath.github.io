@@ -1,130 +1,66 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monty Hall Problem - MathFun</title>
-  <script type="module" crossorigin src="/assets/montyHall-DazfpxTC.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index-pHnGcn-R.js">
-  <link rel="stylesheet" crossorigin href="/assets/style-DLKcZlXz.css">
-  <link rel="stylesheet" crossorigin href="/assets/related-posts-C96CcVhV.css">
-</head>
-<body>
-    <nav class="nav-bar">
-        <div class="nav-container">
-            <a href="./" class="nav-logo">MathFun</a>
-            <div class="nav-links">
-                <a href="./blog.html" class="nav-link">Journal</a>
-                <a href="./simulations.html" class="nav-link active">Simulations</a>
-            </div>
-        </div>
-    </nav>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<link href="./_app/immutable/assets/0.D5af9UOT.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/5.BGIeUFhh.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.DjjJvarn.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/CSIts_Dy.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/S0j79fAV.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/6ZKg6wwJ.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BRqp26Ta.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/D-VuiLkk.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.Btz29fGy.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/C4Rmm3-g.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BoZOt_zT.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/D79M_r9y.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BJ7ExLRq.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/B69TH7Ic.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BGesh79d.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/CCrNe9oD.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.B_-EUgcD.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/CDuHY5ZQ.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BtV_MRxN.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/B_tZDBCa.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/WcKA6lq0.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/DcueZdpX.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BEFwWJU1.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/Ddwxhlgq.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/5.nih05Gox.js"><!--12qhfyh--><meta name="description" content="Explore mathematics through interactive games and simulations"/><!----><!--1n5xzgk--><!----><title>Monty Hall Problem - MathFun</title>
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents"><!--[--><!--[--><!----><nav class="nav-bar"><div class="nav-container"><a href="./" class="nav-logo">Inspired By Math</a> <div class="nav-links"><a href="./blog" class="nav-link">Journal</a> <a href="./simulations" class="nav-link active">Simulations</a> <!--[--><!--[--><!--[--><!--[--><!--[--><!--[--><!--[--><!----><!--[--><!--[--><!--[--><!--[--><!--[--><button class="theme-toggle glass svelte-1cmi4dh" aria-label="Toggle theme"><!--[--><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon lucide lucide-moon"><!--[--><!----><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--></button><!--]--><!--]--><!--]--><!--]--><!--]--><!----><!--]--><!----> <!--[!--><!--]--><!--]--><!--]--><!--]--><!--]--><!--]--><!--]--><!----></div></div></nav><!----> <div class="container"><main><!----><div class="page-transition svelte-12qhfyh"><!----><section class="game-section svelte-1n5xzgk"><h1>The Monty Hall Problem</h1> <p class="description svelte-1n5xzgk">You're on a game show with 3 doors. Behind one is a car, behind the others are goats. You pick
+		a door, then the host opens one of the other doors revealing a goat. Should you switch your
+		choice or stay with your original pick?</p> <div id="game-container" class="svelte-1n5xzgk"><div class="doors svelte-1n5xzgk"><!--[--><button class="door svelte-ejn62k"><div class="door-face svelte-ejn62k"><!--[!--><span class="door-label svelte-ejn62k">Door 1</span><!--]--></div></button><button class="door svelte-ejn62k"><div class="door-face svelte-ejn62k"><!--[!--><span class="door-label svelte-ejn62k">Door 2</span><!--]--></div></button><button class="door svelte-ejn62k winner"><div class="door-face svelte-ejn62k"><!--[!--><span class="door-label svelte-ejn62k">Door 3</span><!--]--></div></button><!--]--></div> <div class="message svelte-1n5xzgk">Pick a door!</div> <div class="controls svelte-1n5xzgk"><button class="btn">New Game</button></div></div> <div class="stats svelte-1n5xzgk"><h3 class="svelte-1n5xzgk">Statistics</h3> <div class="stats-grid svelte-1n5xzgk"><div class="stat-box svelte-1n5xzgk"><h4 class="svelte-1n5xzgk">Stayed</h4> <p class="stat-value svelte-1n5xzgk"><span>0</span> / <span>0</span></p> <p class="stat-percent svelte-1n5xzgk">0%</p></div> <div class="stat-box svelte-1n5xzgk"><h4 class="svelte-1n5xzgk">Switched</h4> <p class="stat-value svelte-1n5xzgk"><span>0</span> / <span>0</span></p> <p class="stat-percent svelte-1n5xzgk">0%</p></div></div> <button class="btn btn-secondary">Reset Statistics</button></div> <div class="strategy-analysis svelte-1n5xzgk"><h3 class="svelte-1n5xzgk">Strategy Analysis</h3> <div class="analysis-grid svelte-1n5xzgk"><div class="analysis-card svelte-1n5xzgk"><h4 class="svelte-1n5xzgk">Staying Strategy</h4> <div class="stat-comparison svelte-1n5xzgk"><span class="label svelte-1n5xzgk">Your Win Rate:</span> <span class="value svelte-1n5xzgk">0.0%</span></div> <div class="stat-comparison svelte-1n5xzgk"><span class="label svelte-1n5xzgk">Optimal Win Rate:</span> <span class="value optimal svelte-1n5xzgk">33.3%</span></div> <div class="variance svelte-1n5xzgk"><span class="variance-label svelte-1n5xzgk">Variance:</span> <span class="variance-value  svelte-1n5xzgk">—</span></div></div> <div class="analysis-card svelte-1n5xzgk"><h4 class="svelte-1n5xzgk">Switching Strategy</h4> <div class="stat-comparison svelte-1n5xzgk"><span class="label svelte-1n5xzgk">Your Win Rate:</span> <span class="value svelte-1n5xzgk">0.0%</span></div> <div class="stat-comparison svelte-1n5xzgk"><span class="label svelte-1n5xzgk">Optimal Win Rate:</span> <span class="value optimal svelte-1n5xzgk">66.7%</span></div> <div class="variance svelte-1n5xzgk"><span class="variance-label svelte-1n5xzgk">Variance:</span> <span class="variance-value  svelte-1n5xzgk">—</span></div></div></div> <p class="analysis-note svelte-1n5xzgk">The Monty Hall paradox shows switching gives you twice the chance of winning!</p></div> <div class="explanation svelte-1n5xzgk"><h3 class="svelte-1n5xzgk">Why Switching Works</h3> <p class="svelte-1n5xzgk">Counterintuitively, switching gives you a 2/3 chance of winning! Here's why: When you first
+			pick, you have a 1/3 chance of choosing the car and a 2/3 chance of choosing a goat. The host
+			always opens a goat door from the remaining doors. If you picked a goat initially (2/3
+			probability), switching will always win. If you picked the car (1/3 probability), switching
+			loses. So switching wins 2/3 of the time!</p></div> <!--[!--><!--]--></section><!----><!----></div><!----></main></div> <footer class="site-footer svelte-jz8lnl"><div class="container"><div class="footer-content svelte-jz8lnl"><div class="footer-brand svelte-jz8lnl"><h3 class="svelte-jz8lnl">Inspired By Math</h3> <p class="svelte-jz8lnl">Exploring the beauty of mathematics through interactive play.</p></div> <div class="footer-links svelte-jz8lnl"><a href="https://github.com" target="_blank" rel="noreferrer" class="svelte-jz8lnl">GitHub</a> <a href="/mathfun/blog" class="svelte-jz8lnl">Journal</a> <a href="/mathfun/simulations" class="svelte-jz8lnl">Simulations</a></div></div> <div class="footer-bottom svelte-jz8lnl"><p>© 2026 Built with curiosity.</p></div></div></footer><!----><!----><!--]--> <!--[!--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_1uv79g3 = {
+						base: new URL(".", location).pathname.slice(0, -1),
+						assets: "/mathfun"
+					};
 
-    <div class="container">
-        <main>
-            <section class="game-section">
-                <h1>The Monty Hall Problem</h1>
-                <p class="description">
-                    You're on a game show with 3 doors. Behind one is a car, behind the others are goats.
-                    You pick a door, then the host opens one of the other doors revealing a goat.
-                    Should you switch your choice or stay with your original pick?
-                </p>
+					const element = document.currentScript.parentElement;
 
-                <div id="game-container">
-                    <div class="doors" id="doors">
-                        <div class="door" data-door="0">
-                            <div class="door-face">Door 1</div>
-                        </div>
-                        <div class="door" data-door="1">
-                            <div class="door-face">Door 2</div>
-                        </div>
-                        <div class="door" data-door="2">
-                            <div class="door-face">Door 3</div>
-                        </div>
-                    </div>
-
-                    <div id="message" class="message"></div>
-
-                    <div id="controls" class="controls">
-                        <button id="reset-btn" class="btn">New Game</button>
-                    </div>
-                </div>
-
-                <div class="stats">
-                    <h3>Statistics</h3>
-                    <div class="stats-grid">
-                        <div class="stat-box">
-                            <h4>Stayed</h4>
-                            <p class="stat-value">
-                                <span id="stay-wins">0</span> / <span id="stay-total">0</span>
-                            </p>
-                            <p class="stat-percent" id="stay-percent">0%</p>
-                        </div>
-                        <div class="stat-box">
-                            <h4>Switched</h4>
-                            <p class="stat-value">
-                                <span id="switch-wins">0</span> / <span id="switch-total">0</span>
-                            </p>
-                            <p class="stat-percent" id="switch-percent">0%</p>
-                        </div>
-                    </div>
-                    <button id="reset-stats" class="btn btn-secondary">Reset Statistics</button>
-                </div>
-
-                <div class="strategy-analysis">
-                    <h3>Strategy Analysis</h3>
-                    <div class="analysis-grid">
-                        <div class="analysis-card">
-                            <h4>Staying Strategy</h4>
-                            <div class="stat-comparison">
-                                <span class="label">Your Win Rate:</span>
-                                <span class="value" id="stay-actual">0%</span>
-                            </div>
-                            <div class="stat-comparison">
-                                <span class="label">Optimal Win Rate:</span>
-                                <span class="value optimal">33.3%</span>
-                            </div>
-                            <div class="variance" id="stay-variance">
-                                <span class="variance-label">Variance:</span>
-                                <span class="variance-value">—</span>
-                            </div>
-                        </div>
-
-                        <div class="analysis-card">
-                            <h4>Switching Strategy</h4>
-                            <div class="stat-comparison">
-                                <span class="label">Your Win Rate:</span>
-                                <span class="value" id="switch-actual">0%</span>
-                            </div>
-                            <div class="stat-comparison">
-                                <span class="label">Optimal Win Rate:</span>
-                                <span class="value optimal">66.7%</span>
-                            </div>
-                            <div class="variance" id="switch-variance">
-                                <span class="variance-label">Variance:</span>
-                                <span class="variance-value">—</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="analysis-note">The Monty Hall paradox shows switching gives you twice the chance of winning!</p>
-                </div>
-
-                <div class="explanation">
-                    <h3>Why Switching Works</h3>
-                    <p>
-                        Counterintuitively, switching gives you a 2/3 chance of winning! Here's why:
-                        When you first pick, you have a 1/3 chance of choosing the car and a 2/3 chance
-                        of choosing a goat. The host always opens a goat door from the remaining doors.
-                        If you picked a goat initially (2/3 probability), switching will always win.
-                        If you picked the car (1/3 probability), switching loses. So switching wins 2/3 of the time!
-                    </p>
-                </div>
-                <div class="related-posts" id="related-posts-container">
-                    <!-- Related posts will be injected here -->
-                </div>
-            </section>
-        </main>
-    </div>
-
-</body>
+					Promise.all([
+						import("./_app/immutable/entry/start.DjjJvarn.js"),
+						import("./_app/immutable/entry/app.Btz29fGy.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 5],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
 </html>

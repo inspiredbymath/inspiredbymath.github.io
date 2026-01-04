@@ -1,174 +1,69 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prisoner's Dilemma - MathFun</title>
-  <script type="module" crossorigin src="/assets/prisonersDilemma-BISRhqrL.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/index-pHnGcn-R.js">
-  <link rel="stylesheet" crossorigin href="/assets/style-DLKcZlXz.css">
-  <link rel="stylesheet" crossorigin href="/assets/related-posts-C96CcVhV.css">
-</head>
-<body>
-    <nav class="nav-bar">
-        <div class="nav-container">
-            <a href="./" class="nav-logo">MathFun</a>
-            <div class="nav-links">
-                <a href="./blog.html" class="nav-link">Journal</a>
-                <a href="./simulations.html" class="nav-link active">Simulations</a>
-            </div>
-        </div>
-    </nav>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<link href="./_app/immutable/assets/0.D5af9UOT.css" rel="stylesheet">
+		<link href="./_app/immutable/assets/6.D3onj0Oj.css" rel="stylesheet">
+		<link rel="modulepreload" href="./_app/immutable/entry/start.DjjJvarn.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/CSIts_Dy.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/S0j79fAV.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/6ZKg6wwJ.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BRqp26Ta.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/D-VuiLkk.js">
+		<link rel="modulepreload" href="./_app/immutable/entry/app.Btz29fGy.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/C4Rmm3-g.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BoZOt_zT.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/D79M_r9y.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BJ7ExLRq.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/B69TH7Ic.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BGesh79d.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/CCrNe9oD.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/0.B_-EUgcD.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/CDuHY5ZQ.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BtV_MRxN.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/B_tZDBCa.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/WcKA6lq0.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/DcueZdpX.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/BEFwWJU1.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/Ddwxhlgq.js">
+		<link rel="modulepreload" href="./_app/immutable/nodes/6.D1hagRO-.js">
+		<link rel="modulepreload" href="./_app/immutable/chunks/DOZJe9QW.js"><!--12qhfyh--><meta name="description" content="Explore mathematics through interactive games and simulations"/><!----><!--2mvl5a--><!----><title>Prisoner's Dilemma - MathFun</title>
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents"><!--[--><!--[--><!----><nav class="nav-bar"><div class="nav-container"><a href="./" class="nav-logo">Inspired By Math</a> <div class="nav-links"><a href="./blog" class="nav-link">Journal</a> <a href="./simulations" class="nav-link active">Simulations</a> <!--[--><!--[--><!--[--><!--[--><!--[--><!--[--><!--[--><!----><!--[--><!--[--><!--[--><!--[--><!--[--><button class="theme-toggle glass svelte-1cmi4dh" aria-label="Toggle theme"><!--[--><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon lucide lucide-moon"><!--[--><!----><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--></button><!--]--><!--]--><!--]--><!--]--><!--]--><!----><!--]--><!----> <!--[!--><!--]--><!--]--><!--]--><!--]--><!--]--><!--]--><!--]--><!----></div></div></nav><!----> <div class="container"><main><!----><div class="page-transition svelte-12qhfyh"><!----><section class="game-section svelte-2mvl5a"><h1>Prisoner's Dilemma</h1> <p class="description svelte-2mvl5a">Two prisoners are arrested and interrogated separately. Each has two choices: cooperate with
+		the other (stay silent) or defect (betray the other). The outcome depends on what both choose.
+		What's the optimal strategy?</p> <div class="strategy-selector svelte-2mvl5a"><label for="opponent-strategy" class="svelte-2mvl5a">Opponent Strategy:</label> <select id="opponent-strategy" class="svelte-2mvl5a"><option value="random">Random</option><option value="always-cooperate">Always Cooperate</option><option value="always-defect">Always Defect</option><option value="tit-for-tat" selected>Tit-for-Tat (Copycat)</option><option value="grudger">Grudger (One Strike)</option></select></div> <div id="game-container" class="svelte-2mvl5a"><div class="choice-buttons svelte-2mvl5a"><button class="choice-btn cooperate svelte-2mvl5a"><span class="icon svelte-2mvl5a">🤝</span> <span class="label svelte-2mvl5a">Cooperate</span></button> <button class="choice-btn defect svelte-2mvl5a"><span class="icon svelte-2mvl5a">⚔️</span> <span class="label svelte-2mvl5a">Defect</span></button></div> <!--[!--><!--]--> <div class="message svelte-2mvl5a">Make your choice: Cooperate or Defect?</div> <div class="controls svelte-2mvl5a"><button class="btn">Reset Game</button></div></div> <div class="stats svelte-2mvl5a"><h3 class="svelte-2mvl5a">Game Statistics</h3> <div class="stats-grid svelte-2mvl5a"><div class="stat-box svelte-2mvl5a"><h4 class="svelte-2mvl5a">Your Score</h4> <p class="stat-percent svelte-2mvl5a">0</p></div> <div class="stat-box svelte-2mvl5a"><h4 class="svelte-2mvl5a">Opponent Score</h4> <p class="stat-percent svelte-2mvl5a">0</p></div> <div class="stat-box svelte-2mvl5a"><h4 class="svelte-2mvl5a">Rounds Played</h4> <p class="stat-percent svelte-2mvl5a">0</p></div> <div class="stat-box svelte-2mvl5a"><h4 class="svelte-2mvl5a">Current Strategy</h4> <p class="stat-value svelte-2mvl5a">Tit-for-Tat</p></div></div></div> <div class="payoff-matrix svelte-2mvl5a"><h3 class="svelte-2mvl5a">Payoff Matrix</h3> <table class="svelte-2mvl5a"><thead><tr><th class="svelte-2mvl5a"></th><th class="svelte-2mvl5a">Opponent Cooperates</th><th class="svelte-2mvl5a">Opponent Defects</th></tr></thead><tbody><tr><th class="svelte-2mvl5a">You Cooperate</th><td class="svelte-2mvl5a"><span class="you svelte-2mvl5a">+3</span> / <span class="opponent svelte-2mvl5a">+3</span></td><td class="svelte-2mvl5a"><span class="you svelte-2mvl5a">0</span> / <span class="opponent svelte-2mvl5a">+5</span></td></tr><tr><th class="svelte-2mvl5a">You Defect</th><td class="svelte-2mvl5a"><span class="you svelte-2mvl5a">+5</span> / <span class="opponent svelte-2mvl5a">0</span></td><td class="svelte-2mvl5a"><span class="you svelte-2mvl5a">+1</span> / <span class="opponent svelte-2mvl5a">+1</span></td></tr></tbody></table></div> <div class="performance-analysis svelte-2mvl5a"><h3 class="svelte-2mvl5a">Performance Analysis</h3> <div class="optimal-strategy-card svelte-2mvl5a"><h4 class="svelte-2mvl5a">Optimal Strategy vs Tit-for-Tat</h4> <p class="strategy-advice svelte-2mvl5a">Against Tit-for-Tat, always cooperate to achieve mutual benefit (3 pts/round).</p></div> <div class="performance-metrics svelte-2mvl5a"><div class="metric-box svelte-2mvl5a"><span class="metric-label svelte-2mvl5a">Avg Points/Round</span> <div class="metric-comparison svelte-2mvl5a"><span class="actual svelte-2mvl5a">You: <strong class="svelte-2mvl5a">0</strong></span> <span class="optimal svelte-2mvl5a">Optimal: <strong class="svelte-2mvl5a">3.00</strong></span></div> <div class="efficiency-bar svelte-2mvl5a"><div class="efficiency-fill svelte-2mvl5a" style="width: 0%; background: linear-gradient(90deg, #ef4444, #f87171)"></div></div> <span class="efficiency-text svelte-2mvl5a">—</span></div> <div class="metric-box svelte-2mvl5a"><span class="metric-label svelte-2mvl5a">Perfect Play Score</span> <p class="perfect-play-description svelte-2mvl5a">With perfect knowledge of opponent's moves:</p> <div class="metric-comparison svelte-2mvl5a"><span class="actual svelte-2mvl5a">Actual: <strong class="svelte-2mvl5a">0</strong></span> <span class="optimal svelte-2mvl5a">Perfect: <strong class="svelte-2mvl5a">0</strong></span></div></div></div></div> <div class="explanation svelte-2mvl5a"><h3 class="svelte-2mvl5a">Understanding the Dilemma</h3> <p class="svelte-2mvl5a">The Prisoner's Dilemma demonstrates why two rational individuals might not cooperate, even
+			when it's in their best interest. In a single round, defecting is always better regardless of
+			what the opponent does. However, in repeated games, strategies like "Tit-for-Tat" (cooperate
+			first, then copy opponent's last move) often perform best because they encourage mutual
+			cooperation while punishing defection.</p> <p style="margin-top: 15px;" class="svelte-2mvl5a"><strong>Try different strategies:</strong> Random plays unpredictably, Always Cooperate is nice
+			but exploitable, Always Defect is selfish, Tit-for-Tat is forgiving but firm, and Grudger cooperates
+			until betrayed once, then defects forever.</p></div></section><!----><!----></div><!----></main></div> <footer class="site-footer svelte-jz8lnl"><div class="container"><div class="footer-content svelte-jz8lnl"><div class="footer-brand svelte-jz8lnl"><h3 class="svelte-jz8lnl">Inspired By Math</h3> <p class="svelte-jz8lnl">Exploring the beauty of mathematics through interactive play.</p></div> <div class="footer-links svelte-jz8lnl"><a href="https://github.com" target="_blank" rel="noreferrer" class="svelte-jz8lnl">GitHub</a> <a href="/mathfun/blog" class="svelte-jz8lnl">Journal</a> <a href="/mathfun/simulations" class="svelte-jz8lnl">Simulations</a></div></div> <div class="footer-bottom svelte-jz8lnl"><p>© 2026 Built with curiosity.</p></div></div></footer><!----><!----><!--]--> <!--[!--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_1uv79g3 = {
+						base: new URL(".", location).pathname.slice(0, -1),
+						assets: "/mathfun"
+					};
 
-    <div class="container">
-        <main>
-            <section class="game-section">
-                <h1>Prisoner's Dilemma</h1>
-                <p class="description">
-                    Two prisoners are arrested and interrogated separately. Each has two choices:
-                    cooperate with the other (stay silent) or defect (betray the other).
-                    The outcome depends on what both choose. What's the optimal strategy?
-                </p>
+					const element = document.currentScript.parentElement;
 
-                <div class="strategy-selector">
-                    <label for="opponent-strategy">Opponent Strategy:</label>
-                    <select id="opponent-strategy">
-                        <option value="random">Random</option>
-                        <option value="always-cooperate">Always Cooperate</option>
-                        <option value="always-defect">Always Defect</option>
-                        <option value="tit-for-tat" selected>Tit-for-Tat (Copycat)</option>
-                        <option value="grudger">Grudger (One Strike)</option>
-                    </select>
-                </div>
-
-                <div id="game-container">
-                    <div class="choice-buttons">
-                        <button id="cooperate-btn" class="choice-btn cooperate">
-                            <span class="icon">🤝</span>
-                            <span>Cooperate</span>
-                        </button>
-                        <button id="defect-btn" class="choice-btn defect">
-                            <span class="icon">⚔️</span>
-                            <span>Defect</span>
-                        </button>
-                    </div>
-
-                    <div id="result-area" class="opponent-choice" style="display: none;">
-                        <h3>Round Result</h3>
-                        <div id="round-result"></div>
-                    </div>
-
-                    <div id="message" class="message"></div>
-
-                    <div class="controls">
-                        <button id="reset-btn" class="btn">Reset Game</button>
-                    </div>
-                </div>
-
-                <div class="stats">
-                    <h3>Game Statistics</h3>
-                    <div class="stats-grid">
-                        <div class="stat-box">
-                            <h4>Your Score</h4>
-                            <p class="stat-percent" id="your-score">0</p>
-                        </div>
-                        <div class="stat-box">
-                            <h4>Opponent Score</h4>
-                            <p class="stat-percent" id="opponent-score">0</p>
-                        </div>
-                        <div class="stat-box">
-                            <h4>Rounds Played</h4>
-                            <p class="stat-percent" id="rounds-played">0</p>
-                        </div>
-                        <div class="stat-box">
-                            <h4>Current Strategy</h4>
-                            <p class="stat-value" id="current-strategy">Tit-for-Tat</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="payoff-matrix">
-                    <h3>Payoff Matrix</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Opponent Cooperates</th>
-                                <th>Opponent Defects</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th>You Cooperate</th>
-                                <td><span class="you">+3</span> / <span class="opponent">+3</span></td>
-                                <td><span class="you">0</span> / <span class="opponent">+5</span></td>
-                            </tr>
-                            <tr>
-                                <th>You Defect</th>
-                                <td><span class="you">+5</span> / <span class="opponent">0</span></td>
-                                <td><span class="you">+1</span> / <span class="opponent">+1</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="performance-analysis">
-                    <h3>Performance Analysis</h3>
-
-                    <div class="optimal-strategy-card">
-                        <h4>Optimal Strategy vs <span id="current-opponent">Tit-for-Tat</span></h4>
-                        <p class="strategy-advice" id="strategy-recommendation">
-                            Against Tit-for-Tat, always cooperate to achieve mutual benefit (3 pts/round).
-                        </p>
-                    </div>
-
-                    <div class="performance-metrics">
-                        <div class="metric-box">
-                            <span class="metric-label">Avg Points/Round</span>
-                            <div class="metric-comparison">
-                                <span class="actual">You: <strong id="actual-avg">0</strong></span>
-                                <span class="optimal">Optimal: <strong id="optimal-avg">0</strong></span>
-                            </div>
-                            <div class="efficiency-bar">
-                                <div class="efficiency-fill" id="efficiency-fill" style="width: 0%"></div>
-                            </div>
-                            <span class="efficiency-text" id="efficiency-text">—</span>
-                        </div>
-
-                        <div class="metric-box">
-                            <span class="metric-label">Perfect Play Score</span>
-                            <p class="perfect-play-description">
-                                With perfect knowledge of opponent's moves:
-                            </p>
-                            <div class="metric-comparison">
-                                <span class="actual">Actual: <strong id="actual-score">0</strong></span>
-                                <span class="optimal">Perfect: <strong id="perfect-score">0</strong></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="explanation">
-                    <h3>Understanding the Dilemma</h3>
-                    <p>
-                        The Prisoner's Dilemma demonstrates why two rational individuals might not cooperate,
-                        even when it's in their best interest. In a single round, defecting is always better
-                        regardless of what the opponent does. However, in repeated games, strategies like
-                        "Tit-for-Tat" (cooperate first, then copy opponent's last move) often perform best
-                        because they encourage mutual cooperation while punishing defection.
-                    </p>
-                    <p style="margin-top: 15px;">
-                        <strong>Try different strategies:</strong> Random plays unpredictably, Always Cooperate
-                        is nice but exploitable, Always Defect is selfish, Tit-for-Tat is forgiving but firm,
-                        and Grudger cooperates until betrayed once, then defects forever.
-                    </p>
-                </div>
-                <div class="related-posts" id="related-posts-container">
-                    <!-- Related posts will be injected here -->
-                </div>
-            </section>
-        </main>
-    </div>
-
-</body>
+					Promise.all([
+						import("./_app/immutable/entry/start.DjjJvarn.js"),
+						import("./_app/immutable/entry/app.Btz29fGy.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 6],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
 </html>

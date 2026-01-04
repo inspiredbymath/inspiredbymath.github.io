@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		
+		<link href="../_app/immutable/assets/0.D5af9UOT.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/4.BCg9oAqX.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.DjjJvarn.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/CSIts_Dy.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/S0j79fAV.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/6ZKg6wwJ.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BRqp26Ta.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/D-VuiLkk.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.Btz29fGy.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/C4Rmm3-g.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BoZOt_zT.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/D79M_r9y.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BJ7ExLRq.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/B69TH7Ic.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BGesh79d.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/CCrNe9oD.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.B_-EUgcD.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/CDuHY5ZQ.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BtV_MRxN.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/B_tZDBCa.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/WcKA6lq0.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/DcueZdpX.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BEFwWJU1.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/Ddwxhlgq.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/4.D-wINmgK.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/DOZJe9QW.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/CFkCXnri.js"><!--12qhfyh--><meta name="description" content="Explore mathematics through interactive games and simulations"/><!----><!--1teoznn--><meta name="description" content="An exploration of the most effective strategies in the famous Prisoner's Dilemma, from 'Always Defect' to the surprisingly robust 'Tit-for-Tat'."/><!----><title>Cooperate or Betray: Strategies in the Prisoner's Dilemma - MathFun</title>
+	</head>
+	<body data-sveltekit-preload-data="hover">
+		<div style="display: contents"><!--[--><!--[--><!----><nav class="nav-bar"><div class="nav-container"><a href="../" class="nav-logo">Inspired By Math</a> <div class="nav-links"><a href="../blog" class="nav-link">Journal</a> <a href="../simulations" class="nav-link active">Simulations</a> <!--[--><!--[--><!--[--><!--[--><!--[--><!--[--><!--[--><!----><!--[--><!--[--><!--[--><!--[--><!--[--><button class="theme-toggle glass svelte-1cmi4dh" aria-label="Toggle theme"><!--[--><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon lucide lucide-moon"><!--[--><!----><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!--]--></button><!--]--><!--]--><!--]--><!--]--><!--]--><!----><!--]--><!----> <!--[!--><!--]--><!--]--><!--]--><!--]--><!--]--><!--]--><!--]--><!----></div></div></nav><!----> <div class="container"><main><!----><div class="page-transition svelte-12qhfyh"><!----><article class="blog-post svelte-1teoznn"><header class="post-header svelte-1teoznn"><h1 class="svelte-1teoznn">Cooperate or Betray: Strategies in the Prisoner's Dilemma</h1> <div class="post-meta svelte-1teoznn"><time class="post-date svelte-1teoznn">July 26, 2024</time></div></header> <div class="post-content svelte-1teoznn"><!----><h2>The Setup</h2>
+<p>The Prisoner&#39;s Dilemma is a classic problem in game theory. Two members of a criminal gang are arrested and imprisoned in separate cells, with no way to communicate. The prosecutors lack sufficient evidence to convict them on the principal charge, but they have enough to convict both on a lesser charge.</p>
+<p>Each prisoner is offered a deal:</p>
+<ul>
+<li>If you <strong>betray</strong> your partner (defect) and they stay silent (cooperate), you go free and they get 5 years in prison.</li>
+<li>If you both <strong>stay silent</strong> (cooperate), you each get 1 year on the lesser charge.</li>
+<li>If you both <strong>betray</strong> each other (defect), you each get 3 years.</li>
+</ul>
+<p>What would you do?</p>
+<hr>
+<h3>The &quot;Rational&quot; Choice</h3>
+<p>From a purely individualistic standpoint, defecting seems like the best move regardless of what your partner does:</p>
+<ul>
+<li>If they cooperate, your best move is to defect (0 years vs. 1 year).</li>
+<li>If they defect, your best move is <em>still</em> to defect (3 years vs. 5 years).</li>
+</ul>
+<p>This is the &quot;dilemma&quot;: if both prisoners act &quot;rationally&quot; and defect, they both end up with a worse outcome (3 years each) than if they had trusted each other and cooperated (1 year each).</p>
+<h3>Strategies in a Repeated Game</h3>
+<p>Things get much more interesting when the game is played repeatedly. In this scenario, your reputation matters. Several strategies have been studied:</p>
+<ol>
+<li><strong>Always Cooperate:</strong> A &quot;nice&quot; strategy, but very easy to exploit. A defector will win every round against you.</li>
+<li><strong>Always Defect:</strong> A &quot;mean&quot; strategy. It does well against naive cooperators but fails to achieve the mutually beneficial outcomes of cooperation.</li>
+<li><strong>Tit-for-Tat:</strong> This is one of the most famous and effective strategies. It starts by cooperating and then simply copies the opponent&#39;s previous move. It&#39;s &quot;nice&quot; (it starts cooperatively), &quot;retaliatory&quot; (it punishes defection), and &quot;forgiving&quot; (it will cooperate again if the opponent does).</li>
+<li><strong>Grudger:</strong> This strategy starts by cooperating but will defect forever if the opponent defects even once. It&#39;s less forgiving than Tit-for-Tat.</li>
+</ol>
+<h3>Find the Best Strategy</h3>
+<p>Which strategy works best? It depends on the opponent! Our interactive Prisoner&#39;s Dilemma simulation lets you play against various computer-controlled opponents, each using a different strategy.</p>
+<p>See if you can beat the &quot;Tit-for-Tat&quot; strategy, or discover how quickly the &quot;Grudger&quot; will turn on you. Experimentation is the key to understanding the dynamics of cooperation.</p>
+<!----></div> <!--[--><a href="../prisoners-dilemma" class="game-cta svelte-1teoznn"><span class="game-cta-label svelte-1teoznn">Interactive simulation</span> <span class="game-cta-title svelte-1teoznn">Play the Prisoners Dilemma</span> <span class="game-cta-action svelte-1teoznn">Launch game <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon lucide lucide-arrow-right"><!--[--><!----><path d="M5 12h14"><!----></path><!----><!----><path d="m12 5 7 7-7 7"><!----></path><!----><!--]--><!--[--><!--[--><!--]--><!--]--></svg><!----></span></a><!--]--> <footer class="post-footer svelte-1teoznn"><a href="../blog" class="back-link svelte-1teoznn">← Back to Journal</a></footer></article><!----><!----></div><!----></main></div> <footer class="site-footer svelte-jz8lnl"><div class="container"><div class="footer-content svelte-jz8lnl"><div class="footer-brand svelte-jz8lnl"><h3 class="svelte-jz8lnl">Inspired By Math</h3> <p class="svelte-jz8lnl">Exploring the beauty of mathematics through interactive play.</p></div> <div class="footer-links svelte-jz8lnl"><a href="https://github.com" target="_blank" rel="noreferrer" class="svelte-jz8lnl">GitHub</a> <a href="/mathfun/blog" class="svelte-jz8lnl">Journal</a> <a href="/mathfun/simulations" class="svelte-jz8lnl">Simulations</a></div></div> <div class="footer-bottom svelte-jz8lnl"><p>© 2026 Built with curiosity.</p></div></div></footer><!----><!----><!--]--> <!--[!--><!--]--><!--]-->
+			
+			<script>
+				{
+					__sveltekit_1uv79g3 = {
+						base: new URL("..", location).pathname.slice(0, -1),
+						assets: "/mathfun"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../_app/immutable/entry/start.DjjJvarn.js"),
+						import("../_app/immutable/entry/app.Btz29fGy.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 4],
+							data: [null,{type:"data",data:{post:{slug:"prisoners-dilemma-strategies",title:"Cooperate or Betray: Strategies in the Prisoner's Dilemma",date:"2024-07-27",excerpt:"An exploration of the most effective strategies in the famous Prisoner's Dilemma, from 'Always Defect' to the surprisingly robust 'Tit-for-Tat'.",game:"prisoners-dilemma",tags:["Game Theory","Strategy","Cooperation"],content:"\u003Ch2>The Setup\u003C/h2>\n\u003Cp>The Prisoner&#39;s Dilemma is a classic problem in game theory. Two members of a criminal gang are arrested and imprisoned in separate cells, with no way to communicate. The prosecutors lack sufficient evidence to convict them on the principal charge, but they have enough to convict both on a lesser charge.\u003C/p>\n\u003Cp>Each prisoner is offered a deal:\u003C/p>\n\u003Cul>\n\u003Cli>If you \u003Cstrong>betray\u003C/strong> your partner (defect) and they stay silent (cooperate), you go free and they get 5 years in prison.\u003C/li>\n\u003Cli>If you both \u003Cstrong>stay silent\u003C/strong> (cooperate), you each get 1 year on the lesser charge.\u003C/li>\n\u003Cli>If you both \u003Cstrong>betray\u003C/strong> each other (defect), you each get 3 years.\u003C/li>\n\u003C/ul>\n\u003Cp>What would you do?\u003C/p>\n\u003Chr>\n\u003Ch3>The &quot;Rational&quot; Choice\u003C/h3>\n\u003Cp>From a purely individualistic standpoint, defecting seems like the best move regardless of what your partner does:\u003C/p>\n\u003Cul>\n\u003Cli>If they cooperate, your best move is to defect (0 years vs. 1 year).\u003C/li>\n\u003Cli>If they defect, your best move is \u003Cem>still\u003C/em> to defect (3 years vs. 5 years).\u003C/li>\n\u003C/ul>\n\u003Cp>This is the &quot;dilemma&quot;: if both prisoners act &quot;rationally&quot; and defect, they both end up with a worse outcome (3 years each) than if they had trusted each other and cooperated (1 year each).\u003C/p>\n\u003Ch3>Strategies in a Repeated Game\u003C/h3>\n\u003Cp>Things get much more interesting when the game is played repeatedly. In this scenario, your reputation matters. Several strategies have been studied:\u003C/p>\n\u003Col>\n\u003Cli>\u003Cstrong>Always Cooperate:\u003C/strong> A &quot;nice&quot; strategy, but very easy to exploit. A defector will win every round against you.\u003C/li>\n\u003Cli>\u003Cstrong>Always Defect:\u003C/strong> A &quot;mean&quot; strategy. It does well against naive cooperators but fails to achieve the mutually beneficial outcomes of cooperation.\u003C/li>\n\u003Cli>\u003Cstrong>Tit-for-Tat:\u003C/strong> This is one of the most famous and effective strategies. It starts by cooperating and then simply copies the opponent&#39;s previous move. It&#39;s &quot;nice&quot; (it starts cooperatively), &quot;retaliatory&quot; (it punishes defection), and &quot;forgiving&quot; (it will cooperate again if the opponent does).\u003C/li>\n\u003Cli>\u003Cstrong>Grudger:\u003C/strong> This strategy starts by cooperating but will defect forever if the opponent defects even once. It&#39;s less forgiving than Tit-for-Tat.\u003C/li>\n\u003C/ol>\n\u003Ch3>Find the Best Strategy\u003C/h3>\n\u003Cp>Which strategy works best? It depends on the opponent! Our interactive Prisoner&#39;s Dilemma simulation lets you play against various computer-controlled opponents, each using a different strategy.\u003C/p>\n\u003Cp>See if you can beat the &quot;Tit-for-Tat&quot; strategy, or discover how quickly the &quot;Grudger&quot; will turn on you. Experimentation is the key to understanding the dynamics of cooperation.\u003C/p>\n"}},uses:{params:["slug"]}}],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+	</body>
+</html>
