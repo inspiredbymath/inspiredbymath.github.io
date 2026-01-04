@@ -9,7 +9,7 @@
 		onSelect
 	} = $props();
 
-	const displayNumber = doorNumber + 1;
+	const displayNumber = $derived.by(() => doorNumber + 1);
 </script>
 
 <button
@@ -20,7 +20,7 @@
 	class:loser={isOpened && !isWinner}
 	class:disabled={isDisabled}
 	disabled={isDisabled}
-	on:click={() => onSelect?.(doorNumber)}
+	onclick={() => onSelect?.(doorNumber)}
 	in:scale={{ duration: 300, delay: doorNumber * 100 }}
 >
 	<div class="door-face">
@@ -131,13 +131,13 @@
 		filter: grayscale(0.5);
 	}
 
-	[data-theme="dark"] .door {
+	:global([data-theme="dark"]) .door {
 		box-shadow:
 			0 10px 40px rgba(0, 0, 0, 0.5),
 			inset 0 1px 1px rgba(255, 255, 255, 0.1);
 	}
 
-	[data-theme="dark"] .door:hover:not(.disabled):not(.opened) {
+	:global([data-theme="dark"]) .door:hover:not(.disabled):not(.opened) {
 		box-shadow:
 			0 20px 60px rgba(99, 102, 241, 0.5),
 			inset 0 1px 1px rgba(255, 255, 255, 0.15);
