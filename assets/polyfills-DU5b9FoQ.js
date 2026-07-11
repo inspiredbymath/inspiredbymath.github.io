@@ -1,0 +1,1 @@
+import{r as e}from"./preload-helper-Bgavk1X0.js";var t=e();typeof window<`u`&&(window.Buffer=t.Buffer);
