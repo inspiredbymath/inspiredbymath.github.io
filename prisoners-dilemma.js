@@ -254,7 +254,7 @@ class PrisonersDilemmaGame {
     }
 
     async loadRelatedPosts() {
-        const postFiles = import.meta.glob('./posts/*.md', { as: 'raw' });
+        const postFiles = import.meta.glob('./posts/*.md', { query: '?raw', import: 'default' });
         const container = document.getElementById('related-posts-container');
         const relatedPosts = [];
 

@@ -5,7 +5,7 @@ import renderMathInElement from 'katex/contrib/auto-render';
 import 'katex/dist/katex.min.css';
 
 // Vite feature to import all markdown files from a directory
-const postFiles = import.meta.glob('./posts/*.md', { as: 'raw' });
+const postFiles = import.meta.glob('./posts/*.md', { query: '?raw', import: 'default' });
 
 /**
  * marked (and Markdown in general) will happily mangle LaTeX, since
