@@ -10,7 +10,7 @@
     "deploy": "vite build && npx --yes gh-pages -d dist"
   },
   "devDependencies": {
-    "vite": "^5.0.0"
+    "vite": "^8.1.4"
   },
   "dependencies": {
     "buffer": "^6.0.3",
