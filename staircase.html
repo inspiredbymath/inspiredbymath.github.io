@@ -3,115 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staircase Problem - MathFun</title>
-  <script type="module" crossorigin src="/assets/staircase-Bpxiu3ES.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/preload-helper-Bgavk1X0.js">
-  <link rel="stylesheet" crossorigin href="/assets/style-Cb84kpG9.css">
-  <link rel="stylesheet" crossorigin href="/assets/related-posts-C2kpqTvj.css">
+    <title>The Staircase Problem — MathFun</title>
+  <script type="module" crossorigin src="/assets/staircase-BHephmEd.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/content-Df8tUZl-.js">
+  <link rel="stylesheet" crossorigin href="/assets/style-CNAHMQJH.css">
+  <link rel="stylesheet" crossorigin href="/assets/games-BhRCmlaC.css">
 </head>
 <body>
-    <nav class="nav-bar">
-        <div class="nav-container">
-            <a href="./" class="nav-logo">MathFun</a>
+    <div class="page">
+        <nav class="nav">
+            <a href="./" class="nav-logo">MathFun<span class="dot">.</span></a>
             <div class="nav-links">
-                <a href="./blog.html" class="nav-link">Journal</a>
-                <a href="./simulations.html" class="nav-link active">Simulations</a>
+                <a href="./blog.html">Journal</a>
+                <a href="./simulations.html" class="active">Simulations</a>
             </div>
-        </div>
-    </nav>
+            <div class="nav-issue">ISSUE Nº 07 · JUL 2026</div>
+        </nav>
 
-    <div class="container">
-        <main>
-            <section class="game-section">
-                <h1>The Staircase Problem</h1>
-                <p class="description">
-                    You're at the bottom of a staircase with N steps. You can climb either 1 or 2 steps at a time.
-                    How many different ways can you reach the top? Watch the visualization to discover the pattern!
-                </p>
+        <main class="game-column" style="max-width: 820px;">
+            <div class="game-kicker" style="color: var(--accent);">Dynamic Programming · Simulation 03</div>
+            <h1>The Staircase Problem</h1>
+            <p class="game-intro">You can climb 1 or 2 steps at a time. How many distinct ways are there to reach the top of an <em>N</em>-step staircase? Slide to change N and step through every path.</p>
 
-                <div class="staircase-controls">
-                    <div class="slider-control">
-                        <label for="steps-slider">Number of Steps: <strong id="steps-value">5</strong></label>
-                        <input type="range" id="steps-slider" min="1" max="10" value="5">
-                    </div>
-                    <div class="animation-controls">
-                        <button id="animate-btn" class="btn">Animate All Paths</button>
-                        <button id="step-btn" class="btn btn-secondary">Show Next Path</button>
-                        <button id="reset-btn" class="btn btn-secondary">Reset</button>
-                    </div>
-                </div>
+            <div class="card control-row">
+                <span class="control-label">Steps (N)</span>
+                <input type="range" id="steps-slider" min="1" max="10" value="5">
+                <span id="steps-value" style="font-family: var(--font-serif); font-size: 32px; width: 44px; text-align: center;">5</span>
+            </div>
 
-                <div class="visualization-container">
-                    <canvas id="staircase-canvas" width="800" height="500"></canvas>
-                </div>
+            <div class="card canvas-card">
+                <canvas id="staircase-canvas" width="760" height="420"></canvas>
+            </div>
 
-                <div class="comparison-container">
-                    <h3>Fibonacci Recurrence Relationship</h3>
-                    <p class="comparison-description">
-                        See how ways(N) = ways(N-1) + ways(N-2). Each staircase shows all possible paths.
-                    </p>
-                    <canvas id="comparison-canvas" width="1000" height="400"></canvas>
-                    <div class="comparison-legend">
-                        <div class="legend-item">
-                            <span class="legend-color" style="background: #ef4444;"></span>
-                            <span>N-2 paths</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color" style="background: #f59e0b;"></span>
-                            <span>N-1 paths</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-color" style="background: #10b981;"></span>
-                            <span>N paths (combined)</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="game-controls">
+                <button id="animate-btn" class="btn-primary">Animate all paths</button>
+                <button id="step-btn" class="btn-ghost">Step through →</button>
+                <button id="reset-btn" class="btn-ghost">Reset</button>
+            </div>
 
-                <div class="stats">
-                    <h3>Results</h3>
-                    <div class="stats-grid">
-                        <div class="stat-box">
-                            <h4>Total Ways</h4>
-                            <p class="stat-percent" id="total-ways">8</p>
-                        </div>
-                        <div class="stat-box">
-                            <h4>Current Path</h4>
-                            <p class="stat-value" id="current-path">-</p>
-                        </div>
-                        <div class="stat-box">
-                            <h4>Fibonacci Number</h4>
-                            <p class="stat-value" id="fibonacci-info">F(6) = 8</p>
-                        </div>
-                    </div>
+            <div class="stat-grid" style="grid-template-columns: 1fr 1fr 1.3fr;">
+                <div class="card stat-card">
+                    <div class="stat-label">Total ways</div>
+                    <div class="stat-value" id="total-ways" style="color: var(--accent);">8</div>
                 </div>
+                <div class="card stat-card">
+                    <div class="stat-label">Fibonacci</div>
+                    <div class="stat-value" id="fibonacci-info" style="font-size: 28px;">F(6) = 8</div>
+                </div>
+                <div class="card stat-card">
+                    <div class="stat-label">Current path</div>
+                    <div class="stat-value" id="current-path" style="font-family: var(--font-mono); font-size: 15px;">—</div>
+                </div>
+            </div>
 
-                <div class="paths-list">
-                    <h3>All Possible Paths</h3>
-                    <div id="paths-container"></div>
-                </div>
+            <div class="game-explain">
+                <h2>Why it's Fibonacci</h2>
+                <p>To reach step <em>N</em>, your last move was either a single step (from <em>N–1</em>) or a double step (from <em>N–2</em>). Every way of reaching the top therefore splits cleanly into those two groups, so</p>
+                <div class="card formula-box">ways(N) <span style="color: var(--accent);">=</span> ways(N–1) + ways(N–2)</div>
+                <p>— which is exactly the rule that generates the Fibonacci sequence. Blue segments below are +1 moves; terracotta segments are +2 moves.</p>
+            </div>
 
-                <div class="explanation">
-                    <h3>The Fibonacci Connection</h3>
-                    <p>
-                        This problem follows the Fibonacci sequence! For N steps, the number of ways equals
-                        the (N+1)th Fibonacci number. Here's why: To reach step N, you either came from step N-1
-                        (taking 1 step) or from step N-2 (taking 2 steps). So: ways(N) = ways(N-1) + ways(N-2).
-                    </p>
-                    <p style="margin-top: 15px;">
-                        <strong>Pattern:</strong>
-                        1 step → 1 way (F₂) |
-                        2 steps → 2 ways (F₃) |
-                        3 steps → 3 ways (F₄) |
-                        4 steps → 5 ways (F₅) |
-                        5 steps → 8 ways (F₆) |
-                        6 steps → 13 ways (F₇)
-                    </p>
-                </div>
-                <div class="related-posts" id="related-posts-container">
-                    <!-- Related posts will be injected here -->
-                </div>
-            </section>
+            <div id="related-posts-container"></div>
         </main>
+
+        <footer class="site-footer">
+            <span>© 2026 MathFun · Built with curiosity</span>
+            <span>MADE FOR STUDENTS, BY A STUDENT</span>
+        </footer>
     </div>
 
 </body>

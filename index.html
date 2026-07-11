@@ -3,45 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MathFun - Interactive Mathematics Journal</title>
-  <script type="module" crossorigin src="/assets/preload-helper-Bgavk1X0.js"></script>
-  <script type="module" crossorigin src="/assets/polyfills-DU5b9FoQ.js"></script>
-  <script type="module" crossorigin src="/assets/blog-D4RTNsYE.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/style-Cb84kpG9.css">
-  <link rel="stylesheet" crossorigin href="/assets/blog-CouSvca-.css">
+    <title>MathFun — A Journal &amp; Playground for Middle + High School Math</title>
+  <script type="module" crossorigin src="/assets/content-Df8tUZl-.js"></script>
+  <script type="module" crossorigin src="/assets/katex.min-CYJG-A9F.js"></script>
+  <script type="module" crossorigin src="/assets/blog-Co-9oCzN.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/katex-CYlHEDRF.css">
+  <link rel="stylesheet" crossorigin href="/assets/style-CNAHMQJH.css">
 </head>
 <body>
-    <nav class="nav-bar">
-        <div class="nav-container">
-            <a href="./" class="nav-logo">MathFun</a>
+    <div class="page">
+        <nav class="nav">
+            <a href="./" class="nav-logo">MathFun<span class="dot">.</span></a>
             <div class="nav-links">
-                <a href="./blog.html" class="nav-link">Journal</a>
-                <a href="./simulations.html" class="nav-link">Simulations</a>
+                <a href="./blog.html">Journal</a>
+                <a href="./simulations.html">Simulations</a>
             </div>
-        </div>
-    </nav>
+            <div class="nav-issue" id="issue-tag">ISSUE Nº 01</div>
+        </nav>
 
-    <div class="container">
-        <header class="main-header">
-            <h1>MathFun Journal</h1>
-            <p class="subtitle">Competition math, high school research, using AI responsibly, and problems I find fascinating — written for fellow middle and high school students.</p>
+        <header class="hero">
+            <div class="eyebrow">A journal &amp; playground for middle + high school math</div>
+            <h1>Mathematics, the way it <em>actually</em> feels when it finally clicks.</h1>
+            <p>Competition math, high-school research, using AI responsibly, and the problems I can't stop thinking about — written for fellow students, not textbooks.</p>
+            <div class="hero-actions">
+                <a href="./blog.html" class="btn-primary">Read the journal</a>
+                <a href="./simulations.html" class="btn-ghost">Play a simulation →</a>
+            </div>
         </header>
 
-        <main>
-            <section class="latest-posts">
-                <div class="article-list-header" style="display: flex; justify-content: space-between; align-items: center;">
-                    <span>Latest Articles</span>
-                    <a href="./blog.html" class="btn btn-secondary" style="font-size: 0.9rem;">View All →</a>
-                </div>
-                <div id="posts-container" class="featured-posts">
-                    <!-- Posts will be loaded here dynamically -->
-                    <div class="loading-spinner"></div>
-                </div>
-            </section>
-        </main>
+        <section class="home-band" id="home-band">
+            <div class="loading-spinner">Loading posts…</div>
+        </section>
 
-        <footer class="main-footer">
-            <p>&copy; 2026 MathFun. Built with curiosity.</p>
+        <section class="playground">
+            <div class="playground-header">
+                <h2>From the Playground</h2>
+                <span class="meta-mono">3 INTERACTIVE SIMULATIONS</span>
+            </div>
+            <a href="./monty-hall.html" class="game-row">
+                <span class="row-number">01</span>
+                <div class="row-body">
+                    <div class="row-title">The Monty Hall Problem</div>
+                    <div class="row-desc">Should you switch doors? Test the paradox that stumped mathematicians.</div>
+                </div>
+                <span class="row-tag" style="color: var(--cat-probability);">Probability →</span>
+            </a>
+            <a href="./prisoners-dilemma.html" class="game-row">
+                <span class="row-number">02</span>
+                <div class="row-body">
+                    <div class="row-title">Prisoner's Dilemma</div>
+                    <div class="row-desc">Cooperate or betray? Explore game theory's most famous standoff.</div>
+                </div>
+                <span class="row-tag" style="color: var(--cat-game-theory);">Game Theory →</span>
+            </a>
+            <a href="./staircase.html" class="game-row">
+                <span class="row-number">03</span>
+                <div class="row-body">
+                    <div class="row-title">The Staircase Problem</div>
+                    <div class="row-desc">How many ways to climb N stairs? Watch Fibonacci emerge.</div>
+                </div>
+                <span class="row-tag" style="color: var(--accent);">Dynamic Programming →</span>
+            </a>
+        </section>
+
+        <footer class="site-footer">
+            <span>© 2026 MathFun · Built with curiosity</span>
+            <span>MADE FOR STUDENTS, BY A STUDENT</span>
         </footer>
     </div>
 

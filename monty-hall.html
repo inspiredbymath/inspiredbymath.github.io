@@ -3,127 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monty Hall Problem - MathFun</title>
-  <script type="module" crossorigin src="/assets/montyHall-TGO0MLaW.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/preload-helper-Bgavk1X0.js">
-  <link rel="stylesheet" crossorigin href="/assets/style-Cb84kpG9.css">
-  <link rel="stylesheet" crossorigin href="/assets/related-posts-C2kpqTvj.css">
+    <title>The Monty Hall Problem — MathFun</title>
+  <script type="module" crossorigin src="/assets/montyHall-ejJyz_Qb.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/content-Df8tUZl-.js">
+  <link rel="stylesheet" crossorigin href="/assets/style-CNAHMQJH.css">
+  <link rel="stylesheet" crossorigin href="/assets/games-BhRCmlaC.css">
 </head>
 <body>
-    <nav class="nav-bar">
-        <div class="nav-container">
-            <a href="./" class="nav-logo">MathFun</a>
+    <div class="page">
+        <nav class="nav">
+            <a href="./" class="nav-logo">MathFun<span class="dot">.</span></a>
             <div class="nav-links">
-                <a href="./blog.html" class="nav-link">Journal</a>
-                <a href="./simulations.html" class="nav-link active">Simulations</a>
+                <a href="./blog.html">Journal</a>
+                <a href="./simulations.html" class="active">Simulations</a>
             </div>
-        </div>
-    </nav>
+            <div class="nav-issue">ISSUE Nº 07 · JUL 2026</div>
+        </nav>
 
-    <div class="container">
-        <main>
-            <section class="game-section">
-                <h1>The Monty Hall Problem</h1>
-                <p class="description">
-                    You're on a game show with 3 doors. Behind one is a car, behind the others are goats.
-                    You pick a door, then the host opens one of the other doors revealing a goat.
-                    Should you switch your choice or stay with your original pick?
-                </p>
+        <main class="game-column">
+            <div class="game-kicker" style="color: var(--cat-probability);">Probability · Simulation 01</div>
+            <h1>The Monty Hall Problem</h1>
+            <p class="game-intro">Three doors — one hides a car, two hide goats. Pick a door; the host opens another to reveal a goat. Should you switch, or stay? Play a few rounds and watch the statistics settle.</p>
 
-                <div id="game-container">
-                    <div class="doors" id="doors">
-                        <div class="door" data-door="0">
-                            <div class="door-face">Door 1</div>
-                        </div>
-                        <div class="door" data-door="1">
-                            <div class="door-face">Door 2</div>
-                        </div>
-                        <div class="door" data-door="2">
-                            <div class="door-face">Door 3</div>
-                        </div>
-                    </div>
+            <div id="message" class="game-message"></div>
 
-                    <div id="message" class="message"></div>
-
-                    <div id="controls" class="controls">
-                        <button id="reset-btn" class="btn">New Game</button>
-                    </div>
+            <div class="doors-row" id="doors">
+                <div class="door" data-door="0">
+                    <div class="door-label">Door 1</div>
+                    <div class="door-mark"></div>
                 </div>
-
-                <div class="stats">
-                    <h3>Statistics</h3>
-                    <div class="stats-grid">
-                        <div class="stat-box">
-                            <h4>Stayed</h4>
-                            <p class="stat-value">
-                                <span id="stay-wins">0</span> / <span id="stay-total">0</span>
-                            </p>
-                            <p class="stat-percent" id="stay-percent">0%</p>
-                        </div>
-                        <div class="stat-box">
-                            <h4>Switched</h4>
-                            <p class="stat-value">
-                                <span id="switch-wins">0</span> / <span id="switch-total">0</span>
-                            </p>
-                            <p class="stat-percent" id="switch-percent">0%</p>
-                        </div>
-                    </div>
-                    <button id="reset-stats" class="btn btn-secondary">Reset Statistics</button>
+                <div class="door" data-door="1">
+                    <div class="door-label">Door 2</div>
+                    <div class="door-mark"></div>
                 </div>
-
-                <div class="strategy-analysis">
-                    <h3>Strategy Analysis</h3>
-                    <div class="analysis-grid">
-                        <div class="analysis-card">
-                            <h4>Staying Strategy</h4>
-                            <div class="stat-comparison">
-                                <span class="label">Your Win Rate:</span>
-                                <span class="value" id="stay-actual">0%</span>
-                            </div>
-                            <div class="stat-comparison">
-                                <span class="label">Optimal Win Rate:</span>
-                                <span class="value optimal">33.3%</span>
-                            </div>
-                            <div class="variance" id="stay-variance">
-                                <span class="variance-label">Variance:</span>
-                                <span class="variance-value">—</span>
-                            </div>
-                        </div>
-
-                        <div class="analysis-card">
-                            <h4>Switching Strategy</h4>
-                            <div class="stat-comparison">
-                                <span class="label">Your Win Rate:</span>
-                                <span class="value" id="switch-actual">0%</span>
-                            </div>
-                            <div class="stat-comparison">
-                                <span class="label">Optimal Win Rate:</span>
-                                <span class="value optimal">66.7%</span>
-                            </div>
-                            <div class="variance" id="switch-variance">
-                                <span class="variance-label">Variance:</span>
-                                <span class="variance-value">—</span>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="analysis-note">The Monty Hall paradox shows switching gives you twice the chance of winning!</p>
+                <div class="door" data-door="2">
+                    <div class="door-label">Door 3</div>
+                    <div class="door-mark"></div>
                 </div>
+            </div>
 
-                <div class="explanation">
-                    <h3>Why Switching Works</h3>
-                    <p>
-                        Counterintuitively, switching gives you a 2/3 chance of winning! Here's why:
-                        When you first pick, you have a 1/3 chance of choosing the car and a 2/3 chance
-                        of choosing a goat. The host always opens a goat door from the remaining doors.
-                        If you picked a goat initially (2/3 probability), switching will always win.
-                        If you picked the car (1/3 probability), switching loses. So switching wins 2/3 of the time!
-                    </p>
+            <div class="game-controls">
+                <button id="reset-btn" class="btn-primary">New game</button>
+            </div>
+
+            <div class="stat-grid stat-grid--2">
+                <div class="card stat-card">
+                    <div class="stat-label">Stayed</div>
+                    <div class="stat-value" id="stay-percent">0<span class="unit">%</span></div>
+                    <div class="stat-sub"><span id="stay-wins">0</span> / <span id="stay-total">0</span> won · optimal 33%</div>
                 </div>
-                <div class="related-posts" id="related-posts-container">
-                    <!-- Related posts will be injected here -->
+                <div class="card stat-card">
+                    <div class="stat-label" style="color: var(--accent);">Switched</div>
+                    <div class="stat-value" id="switch-percent" style="color: var(--accent);">0<span class="unit">%</span></div>
+                    <div class="stat-sub"><span id="switch-wins">0</span> / <span id="switch-total">0</span> won · optimal 67%</div>
                 </div>
-            </section>
+            </div>
+
+            <div class="game-controls">
+                <button id="reset-stats" class="btn-ghost">Reset statistics</button>
+            </div>
+
+            <div class="game-explain">
+                <h2>Why switching works</h2>
+                <p>When you first pick, you have a <strong>1/3</strong> chance of choosing the car and a <strong>2/3</strong> chance of choosing a goat. The host always opens a goat door from the rest. If you picked a goat initially (2/3 of the time), switching always wins. If you picked the car (1/3 of the time), switching loses. So switching wins <strong>two-thirds</strong> of the time — twice as often as staying.</p>
+            </div>
+
+            <div id="related-posts-container"></div>
         </main>
+
+        <footer class="site-footer">
+            <span>© 2026 MathFun · Built with curiosity</span>
+            <span>MADE FOR STUDENTS, BY A STUDENT</span>
+        </footer>
     </div>
 
 </body>

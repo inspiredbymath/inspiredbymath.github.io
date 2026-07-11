@@ -3,39 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Journal - MathFun</title>
-  <script type="module" crossorigin src="/assets/preload-helper-Bgavk1X0.js"></script>
-  <script type="module" crossorigin src="/assets/polyfills-DU5b9FoQ.js"></script>
-  <script type="module" crossorigin src="/assets/blog-D4RTNsYE.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/style-Cb84kpG9.css">
-  <link rel="stylesheet" crossorigin href="/assets/blog-CouSvca-.css">
+    <title>The Journal — MathFun</title>
+  <script type="module" crossorigin src="/assets/content-Df8tUZl-.js"></script>
+  <script type="module" crossorigin src="/assets/katex.min-CYJG-A9F.js"></script>
+  <script type="module" crossorigin src="/assets/blog-Co-9oCzN.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/katex-CYlHEDRF.css">
+  <link rel="stylesheet" crossorigin href="/assets/style-CNAHMQJH.css">
+  <link rel="stylesheet" crossorigin href="/assets/blog-DzeJngN1.css">
 </head>
 <body>
-    <nav class="nav-bar">
-        <div class="nav-container">
-            <a href="./" class="nav-logo">MathFun</a>
+    <div class="page">
+        <nav class="nav">
+            <a href="./" class="nav-logo">MathFun<span class="dot">.</span></a>
             <div class="nav-links">
-                <a href="./blog.html" class="nav-link active">Journal</a>
-                <a href="./simulations.html" class="nav-link">Simulations</a>
+                <a href="./blog.html" class="active">Journal</a>
+                <a href="./simulations.html">Simulations</a>
             </div>
-        </div>
-    </nav>
+            <div class="nav-issue" id="issue-tag">ISSUE Nº 01</div>
+        </nav>
 
-    <div class="container">
-        <header class="main-header">
-            <h1>The Journal</h1>
-            <p class="subtitle">My competition math journey, research experiences, thoughts on using AI responsibly, and problems I can't stop thinking about.</p>
+        <header class="journal-header">
+            <div class="eyebrow">The Journal</div>
+            <h1>Everything I'm thinking about, written down.</h1>
+            <p>My competition-math journey, research experiences, thoughts on using AI responsibly, and the problems I can't stop thinking about. <span id="journal-count"></span></p>
         </header>
 
-        <main class="blog-main">
-            <div id="posts-container" class="posts-list-vertical">
-                <!-- Blog posts will be dynamically inserted here by blog.js -->
-                <div class="loading-spinner"></div>
-            </div>
+        <main id="journal-list" class="journal-list">
+            <div class="loading-spinner">Loading posts…</div>
         </main>
 
-        <footer class="main-footer">
-            <p>&copy; 2026 MathFun. Built with curiosity.</p>
+        <footer class="site-footer">
+            <span>© 2026 MathFun · Built with curiosity</span>
+            <span>MADE FOR STUDENTS, BY A STUDENT</span>
         </footer>
     </div>
 
