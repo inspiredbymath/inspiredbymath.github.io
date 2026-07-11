@@ -55,10 +55,15 @@ function displayPosts(posts) {
         const tagsHtml = (post.tags || []).map(tag => {
             // Assign class based on tag content for coloring
             let tagClass = 'post-tag';
-            if (tag.toLowerCase().includes('probability')) tagClass += ' tag-probability';
-            else if (tag.toLowerCase().includes('game')) tagClass += ' tag-game-theory';
-            else if (tag.toLowerCase().includes('dynamic')) tagClass += ' tag-dynamic-programming';
-            
+            const t = tag.toLowerCase();
+            if (t.includes('probability')) tagClass += ' tag-probability';
+            else if (t.includes('game')) tagClass += ' tag-game-theory';
+            else if (t.includes('dynamic')) tagClass += ' tag-dynamic-programming';
+            else if (t.includes('competition') || t.includes('olympiad')) tagClass += ' tag-competition';
+            else if (t.includes('research')) tagClass += ' tag-research';
+            else if (t.includes('ai')) tagClass += ' tag-ai';
+            else if (t.includes('problem')) tagClass += ' tag-problems';
+
             return `<span class="${tagClass}">${tag}</span>`;
         }).join(' ');
 
@@ -98,6 +103,10 @@ function displayPosts(posts) {
                 if (firstTag.includes('probability')) borderColor = 'var(--brand-teal)';
                 else if (firstTag.includes('game')) borderColor = 'var(--brand-indigo)';
                 else if (firstTag.includes('dynamic')) borderColor = 'var(--brand-rose)';
+                else if (firstTag.includes('competition') || firstTag.includes('olympiad')) borderColor = 'var(--brand-amber)';
+                else if (firstTag.includes('research')) borderColor = 'var(--brand-green)';
+                else if (firstTag.includes('ai')) borderColor = 'var(--brand-violet)';
+                else if (firstTag.includes('problem')) borderColor = 'var(--brand-cyan)';
             }
             postCard.style.setProperty('--border-color', borderColor);
             

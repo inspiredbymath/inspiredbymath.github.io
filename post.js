@@ -1,9 +1,38 @@
 import './polyfills.js';
 import matter from 'gray-matter';
 import { marked } from 'marked';
+import renderMathInElement from 'katex/contrib/auto-render';
+import 'katex/dist/katex.min.css';
 
 // Vite feature to import all markdown files from a directory
 const postFiles = import.meta.glob('./posts/*.md', { as: 'raw' });
+
+/**
+ * marked (and Markdown in general) will happily mangle LaTeX, since
+ * underscores/asterisks inside math ($x_1$, $2*3$, etc.) look like
+ * emphasis syntax to it. To avoid that, we pull every math segment out
+ * of the raw markdown *before* handing it to marked, replace it with a
+ * plain-text placeholder token, then swap the original LaTeX back into
+ * the rendered HTML afterwards (untouched by markdown parsing). KaTeX's
+ * auto-render extension then finds the $...$ / $$...$$ delimiters in the
+ * final DOM and typesets them.
+ */
+function protectMath(markdownContent) {
+    const stash = [];
+    const withPlaceholders = markdownContent.replace(
+        /\$\$[\s\S]+?\$\$|\$[^\$\n]+?\$/g,
+        (match) => {
+            const token = `@@MATH${stash.length}@@`;
+            stash.push(match);
+            return token;
+        }
+    );
+    return { withPlaceholders, stash };
+}
+
+function restoreMath(html, stash) {
+    return html.replace(/@@MATH(\d+)@@/g, (_, i) => stash[Number(i)]);
+}
 
 const postContentContainer = document.getElementById('post-content');
 
@@ -43,7 +72,8 @@ function displayPost(metadata, markdownContent) {
     postContentContainer.innerHTML = '';
 
     const tagsHtml = (metadata.tags || []).map(tag => `<span class="post-tag">${tag}</span>`).join(' ');
-    const renderedContent = marked(markdownContent);
+    const { withPlaceholders, stash } = protectMath(markdownContent);
+    const renderedContent = restoreMath(marked(withPlaceholders), stash);
 
     // Create Game CTA if a game is linked
     let ctaHtml = '';
@@ -75,6 +105,16 @@ function displayPost(metadata, markdownContent) {
             ${tagsHtml}
         </div>
     `;
+
+    // Typeset any LaTeX ($...$ inline, $$...$$ display) now that the
+    // content is in the DOM.
+    renderMathInElement(postContentContainer, {
+        delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+        ],
+        throwOnError: false,
+    });
 }
 
 function displayError(message) {
