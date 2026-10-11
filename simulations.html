@@ -3,13 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- The simulations section is now "Math Fun" and lives on the home page.
-         This page is kept only so existing links and bookmarks keep working. -->
-    <title>Math Fun - Inspired by Math</title>
-    <meta http-equiv="refresh" content="0; url=/">
-    <script>window.location.replace('/');</script>
+    <title>The Playground — MathFun</title>
+  <link rel="stylesheet" crossorigin href="/assets/style-CNAHMQJH.css">
 </head>
 <body>
-    <p>Redirecting to <a href="/">Math Fun</a>&hellip;</p>
+    <div class="page">
+        <nav class="nav">
+            <a href="./" class="nav-logo">MathFun<span class="dot">.</span></a>
+            <div class="nav-links">
+                <a href="./blog.html">Journal</a>
+                <a href="./simulations.html" class="active">Simulations</a>
+            </div>
+            <div class="nav-issue">ISSUE Nº 07 · JUL 2026</div>
+        </nav>
+
+        <header class="sim-header">
+            <div class="eyebrow">The Playground</div>
+            <h1>Some ideas are easier to <em>play</em> than to read.</h1>
+            <p>Hands-on experiments that let you feel a mathematical idea before you prove it. Run them as many times as you like and watch the numbers converge.</p>
+        </header>
+
+        <main class="sim-list">
+            <a href="./monty-hall.html" class="sim-row">
+                <span class="row-number">01</span>
+                <div class="row-body">
+                    <span class="category-label" style="color: var(--cat-probability);">Probability</span>
+                    <div class="sim-title">The Monty Hall Problem</div>
+                    <p>Should you switch doors? Test the famous probability paradox that stumped even mathematicians — and watch your win rate settle at 2/3.</p>
+                </div>
+                <span class="row-play">Play →</span>
+            </a>
+            <a href="./prisoners-dilemma.html" class="sim-row">
+                <span class="row-number">02</span>
+                <div class="row-body">
+                    <span class="category-label" style="color: var(--cat-game-theory);">Game Theory</span>
+                    <div class="sim-title">Prisoner's Dilemma</div>
+                    <p>Cooperate or betray? Play repeated rounds against classic strategies and discover why "Tit-for-Tat" is so hard to beat.</p>
+                </div>
+                <span class="row-play">Play →</span>
+            </a>
+            <a href="./staircase.html" class="sim-row">
+                <span class="row-number">03</span>
+                <div class="row-body">
+                    <span class="category-label" style="color: var(--accent);">Dynamic Programming</span>
+                    <div class="sim-title">The Staircase Problem</div>
+                    <p>How many ways can you climb N stairs taking 1 or 2 steps at a time? Watch the Fibonacci sequence emerge through animated paths.</p>
+                </div>
+                <span class="row-play">Play →</span>
+            </a>
+        </main>
+
+        <footer class="site-footer">
+            <span>© 2026 MathFun · Built with curiosity</span>
+            <span>MADE FOR STUDENTS, BY A STUDENT</span>
+        </footer>
+    </div>
 </body>
 </html>
