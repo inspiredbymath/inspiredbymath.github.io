@@ -15,7 +15,8 @@ class MontyHallGame {
         this.initializeGame();
         this.setupEventListeners();
         this.updateStatsDisplay();
-        this.loadRelatedPosts();
+        // Journal is hidden; related-article links are disabled.
+        // this.loadRelatedPosts();
     }
 
     loadStats() {

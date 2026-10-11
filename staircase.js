@@ -17,7 +17,8 @@ class StaircaseVisualizer {
         this.setupEventListeners();
         this.calculatePaths();
         this.draw();
-        this.loadRelatedPosts();
+        // Journal is hidden; related-article links are disabled.
+        // this.loadRelatedPosts();
     }
 
     setupEventListeners() {

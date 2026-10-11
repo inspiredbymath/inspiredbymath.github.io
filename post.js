@@ -53,7 +53,7 @@ async function loadPost() {
 
             if (data.slug === slug) {
                 postFound = true;
-                document.title = `${data.title} - MathFun`;
+                document.title = `${data.title} - Inspired by Math`;
                 displayPost(data, content);
                 break; // Exit loop once post is found
             }

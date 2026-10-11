@@ -3,45 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MathFun - Interactive Mathematics Journal</title>
+    <title>Inspired by Math - Math Fun</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./blog.css">
 </head>
 <body>
     <nav class="nav-bar">
         <div class="nav-container">
-            <a href="./" class="nav-logo">MathFun</a>
+            <a href="./" class="nav-logo">Inspired by Math</a>
             <div class="nav-links">
-                <a href="./blog.html" class="nav-link">Journal</a>
-                <a href="./simulations.html" class="nav-link">Simulations</a>
+                <a href="./" class="nav-link active">Math Fun</a>
             </div>
         </div>
     </nav>
 
     <div class="container">
         <header class="main-header">
-            <h1>MathFun Journal</h1>
-            <p class="subtitle">Competition math, high school research, using AI responsibly, and problems I find fascinating — written for fellow middle and high school students.</p>
+            <h1>Math Fun</h1>
+            <p class="subtitle">Hands-on experiments to visualize and understand complex mathematical concepts.</p>
         </header>
 
         <main>
-            <section class="latest-posts">
-                <div class="article-list-header" style="display: flex; justify-content: space-between; align-items: center;">
-                    <span>Latest Articles</span>
-                    <a href="./blog.html" class="btn btn-secondary" style="font-size: 0.9rem;">View All →</a>
-                </div>
-                <div id="posts-container" class="featured-posts">
-                    <!-- Posts will be loaded here dynamically -->
-                    <div class="loading-spinner"></div>
-                </div>
+            <section class="games-grid">
+                <a href="./monty-hall.html" class="game-card">
+                    <div class="game-icon">🚗</div>
+                    <h2>The Monty Hall Problem</h2>
+                    <p>Should you switch doors? Test the famous probability paradox that stumped even mathematicians.</p>
+                    <span class="game-tag tag-probability">Probability</span>
+                </a>
+
+                <a href="./prisoners-dilemma.html" class="game-card">
+                    <div class="game-icon">⚔️</div>
+                    <h2>Prisoner's Dilemma</h2>
+                    <p>Cooperate or betray? Explore game theory's most famous scenario and optimal strategies.</p>
+                    <span class="game-tag tag-game-theory">Game Theory</span>
+                </a>
+
+                <a href="./staircase.html" class="game-card">
+                    <div class="game-icon">🪜</div>
+                    <h2>The Staircase Problem</h2>
+                    <p>How many ways can you climb N stairs? Watch the Fibonacci sequence emerge through animated paths!</p>
+                    <span class="game-tag tag-dynamic-programming">Dynamic Programming</span>
+                </a>
             </section>
         </main>
 
         <footer class="main-footer">
-            <p>&copy; 2026 MathFun. Built with curiosity.</p>
+            <p>&copy; 2026 Inspired by Math. Built with curiosity.</p>
         </footer>
     </div>
-
-    <script type="module" src="./blog.js"></script>
 </body>
 </html>
