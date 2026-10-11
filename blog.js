@@ -1,142 +1,121 @@
-import './polyfills.js';
-import matter from 'gray-matter';
+import katex from 'katex';
+import { loadAllPosts, formatDate, categoryColor } from './content.js';
 
-// Vite feature to import all markdown files from a directory
-const postFiles = import.meta.glob('./posts/*.md', { query: '?raw', import: 'default' });
+// Pull the first display-math block out of a post so the home page can show it.
+function featuredMath(post) {
+    const match = post.content.match(/\$\$([\s\S]+?)\$\$/);
+    if (!match) return null;
 
-const postsContainer = document.getElementById('posts-container');
-
-async function loadPosts() {
-    const posts = [];
-
-    for (const path in postFiles) {
-        const rawContent = await postFiles[path]();
-        const { data, content } = matter(rawContent);
-
-        // Skip if essential data is missing
-        if (!data.slug || !data.title) {
-            console.warn(`Skipping post with path: ${path} due to missing slug or title.`);
-            continue;
-        }
-
-        posts.push({
-            slug: data.slug,
-            title: data.title,
-            date: data.date,
-            author: data.author,
-            excerpt: data.excerpt,
-            tags: data.tags || [],
-            game: data.game
-        });
+    try {
+        return katex.renderToString(match[1].trim(), { throwOnError: false, displayMode: true });
+    } catch {
+        return null;
     }
-
-    // Sort posts by date, newest first
-    posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-    displayPosts(posts);
 }
 
-function displayPosts(posts) {
-    // Clear loading spinner
-    postsContainer.innerHTML = '';
+function renderHomeBand(posts) {
+    const container = document.getElementById('home-band');
+    if (!container) return;
+
+    const [featured, ...rest] = posts;
+    const latest = rest.slice(0, 4);
+    const math = featuredMath(featured);
+
+    container.innerHTML = `
+        <div class="home-featured">
+            <div class="kicker">Featured</div>
+            ${math ? `<div class="featured-box">${math}</div>` : ''}
+            <a href="./post.html?slug=${featured.slug}" class="featured-post">
+                <span class="category-label" style="color: ${categoryColor(featured.tags[0])};">${featured.tags[0] || ''}</span>
+                <h2>${featured.title}</h2>
+                <p>${featured.excerpt}</p>
+                <div class="meta-mono">${formatDate(featured.date)} · ${featured.minutes} MIN READ</div>
+            </a>
+        </div>
+        <div class="home-latest">
+            <div class="kicker">Latest</div>
+            ${latest
+                .map(
+                    (post) => `
+                <a href="./post.html?slug=${post.slug}" class="latest-post">
+                    <span class="category-label" style="color: ${categoryColor(post.tags[0])};">${post.tags[0] || ''}</span>
+                    <h3>${post.title}</h3>
+                </a>
+            `
+                )
+                .join('')}
+        </div>
+    `;
+}
+
+function renderJournalList(posts) {
+    const container = document.getElementById('journal-list');
+    if (!container) return;
 
     if (posts.length === 0) {
-        postsContainer.innerHTML = '<p>No blog posts found.</p>';
+        container.innerHTML = '<p class="loading-spinner">No posts yet.</p>';
         return;
     }
 
-    const isVerticalList = postsContainer.classList.contains('posts-list-vertical');
-
-    posts.forEach(post => {
-        const postCard = document.createElement('a');
-        postCard.href = `./post.html?slug=${post.slug}`;
-        
-        // Define tags HTML safely
-        const tagsHtml = (post.tags || []).map(tag => {
-            // Assign class based on tag content for coloring
-            let tagClass = 'post-tag';
-            const t = tag.toLowerCase();
-            if (t.includes('probability')) tagClass += ' tag-probability';
-            else if (t.includes('game')) tagClass += ' tag-game-theory';
-            else if (t.includes('dynamic')) tagClass += ' tag-dynamic-programming';
-            else if (t.includes('competition') || t.includes('olympiad')) tagClass += ' tag-competition';
-            else if (t.includes('research')) tagClass += ' tag-research';
-            else if (t.includes('ai')) tagClass += ' tag-ai';
-            else if (t.includes('problem')) tagClass += ' tag-problems';
-
-            return `<span class="${tagClass}">${tag}</span>`;
-        }).join(' ');
-
-        if (isVerticalList) {
-            // Classic Blog List Layout
-            postCard.className = 'post-list-item';
-            
-            // Map game to emoji for list view
-            let icon = '📝';
-            if (post.game === 'monty-hall') icon = '🚗';
-            if (post.game === 'prisoners-dilemma') icon = '⚔️';
-            if (post.game === 'staircase') icon = '🪜';
-
-            postCard.innerHTML = `
-                <div class="post-list-image">${icon}</div>
-                <div class="post-list-content">
-                    <h2>${post.title}</h2>
-                    <div class="post-meta">
-                        <span>${new Date(post.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                        <span>&bull;</span>
-                        <span>${post.author}</span>
-                    </div>
-                    <p>${post.excerpt}</p>
-                    <div class="tags-container" style="margin-top: 15px;">
-                        ${tagsHtml}
-                    </div>
-                </div>
-            `;
-        } else {
-            // Card Grid Layout (Homepage/Related)
-            postCard.className = 'post-card';
-            
-            // Apply top border color based on first tag
-            let borderColor = 'var(--brand-blue)';
-            if (post.tags && post.tags.length > 0) {
-                const firstTag = post.tags[0].toLowerCase();
-                if (firstTag.includes('probability')) borderColor = 'var(--brand-teal)';
-                else if (firstTag.includes('game')) borderColor = 'var(--brand-indigo)';
-                else if (firstTag.includes('dynamic')) borderColor = 'var(--brand-rose)';
-                else if (firstTag.includes('competition') || firstTag.includes('olympiad')) borderColor = 'var(--brand-amber)';
-                else if (firstTag.includes('research')) borderColor = 'var(--brand-green)';
-                else if (firstTag.includes('ai')) borderColor = 'var(--brand-violet)';
-                else if (firstTag.includes('problem')) borderColor = 'var(--brand-cyan)';
-            }
-            postCard.style.setProperty('--border-color', borderColor);
-            
-            // Add custom style for the ::after element color override
-            postCard.setAttribute('style', `--border-color: ${borderColor}`); // This relies on the CSS utilizing this var or us manually setting it. 
-            // Better approach for CSS pseudo-element: we set a class or inline style won't reach ::after easily without CSS vars.
-            // Let's use the CSS Variable approach which is clean.
-            
-            postCard.innerHTML = `
-                <div class="card-content">
-                    <h2>${post.title}</h2>
-                    <div class="post-meta">
-                        <span>${new Date(post.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-                    </div>
-                    <p>${post.excerpt}</p>
-                    <div class="tags-container">
-                        ${tagsHtml}
-                    </div>
-                </div>
-                <style>
-                    .post-card[href$="${post.slug}"]:after { background: ${borderColor} !important; }
-                </style>
-            `;
-        }
-
-        postsContainer.appendChild(postCard);
-    });
+    container.innerHTML = posts
+        .map(
+            (post, index) => `
+        <a href="./post.html?slug=${post.slug}" class="journal-row">
+            <span class="row-number">${String(index + 1).padStart(2, '0')}</span>
+            <div class="row-body">
+                <span class="category-label" style="color: ${categoryColor(post.tags[0])};">${post.tags.slice(0, 2).join(' · ')}</span>
+                <h2>${post.title}</h2>
+                <p>${post.excerpt}</p>
+            </div>
+            <div class="row-meta">${formatDate(post.date)}<br>${post.minutes} MIN READ</div>
+        </a>
+    `
+        )
+        .join('');
 }
 
-loadPosts().catch(err => {
-    console.error("Failed to load blog posts:", err);
-    postsContainer.innerHTML = `<p style="color: red;">Error loading blog posts. Check the browser console for details. <br><br>Error: ${err.message}</p>`;
-});
+const NUMBER_WORDS = [
+    'zero', 'one', 'two', 'three', 'four', 'five',
+    'six', 'seven', 'eight', 'nine', 'ten',
+];
+
+function renderJournalCount(posts) {
+    const element = document.getElementById('journal-count');
+    if (!element) return;
+
+    const count = posts.length;
+    const word = NUMBER_WORDS[count] || String(count);
+    element.textContent = `${word.charAt(0).toUpperCase()}${word.slice(1)} piece${count === 1 ? '' : 's'} so far.`;
+}
+
+export function renderIssueTag(posts) {
+    const element = document.getElementById('issue-tag');
+    if (!element) return;
+
+    const issue = String(posts.length).padStart(2, '0');
+    const date = posts.length ? new Date(posts[0].date) : new Date();
+    const month = date
+        .toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' })
+        .toUpperCase();
+
+    element.textContent = `ISSUE Nº ${issue} · ${month} ${date.getUTCFullYear()}`;
+}
+
+async function init() {
+    try {
+        const posts = await loadAllPosts();
+        renderIssueTag(posts);
+        renderJournalCount(posts);
+        renderHomeBand(posts);
+        renderJournalList(posts);
+    } catch (error) {
+        console.error('Failed to load blog posts:', error);
+        const container =
+            document.getElementById('home-band') || document.getElementById('journal-list');
+        if (container) {
+            container.innerHTML = `<p class="loading-spinner">Error loading posts. Check the console for details.<br><br>${error.message}</p>`;
+        }
+    }
+}
+
+init();

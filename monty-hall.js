@@ -1,35 +1,21 @@
-import matter from 'gray-matter';
-
-// Monty Hall Game Logic
-
 class MontyHallGame {
     constructor() {
         this.carDoor = null;
         this.selectedDoor = null;
         this.revealedDoor = null;
-        this.gamePhase = 'initial'; // initial, revealed, finished
-
-        // Statistics
+        this.gamePhase = 'initial';
         this.stats = this.loadStats();
 
         this.initializeGame();
         this.setupEventListeners();
         this.updateStatsDisplay();
-        // Journal is hidden; related-article links are disabled.
-        // this.loadRelatedPosts();
     }
 
     loadStats() {
         const saved = localStorage.getItem('montyHallStats');
-        if (saved) {
-            return JSON.parse(saved);
-        }
-        return {
-            stayWins: 0,
-            stayTotal: 0,
-            switchWins: 0,
-            switchTotal: 0
-        };
+        return saved
+            ? JSON.parse(saved)
+            : { stayWins: 0, stayTotal: 0, switchWins: 0, switchTotal: 0 };
     }
 
     saveStats() {
@@ -37,26 +23,24 @@ class MontyHallGame {
     }
 
     initializeGame() {
-        // Randomly place the car behind one of the three doors
         this.carDoor = Math.floor(Math.random() * 3);
         this.selectedDoor = null;
         this.revealedDoor = null;
         this.gamePhase = 'initial';
 
-        // Reset door appearances
-        const doors = document.querySelectorAll('.door');
-        doors.forEach(door => {
+        document.querySelectorAll('.door').forEach((door) => {
             door.className = 'door';
-            door.querySelector('.door-face').textContent = `Door ${parseInt(door.dataset.door) + 1}`;
+            door.querySelector('.door-mark').textContent = '';
         });
 
-        this.updateMessage("Pick a door!");
+        this.updateMessage('Pick a door.');
     }
 
     setupEventListeners() {
-        const doors = document.querySelectorAll('.door');
-        doors.forEach(door => {
-            door.addEventListener('click', () => this.handleDoorClick(parseInt(door.dataset.door)));
+        document.querySelectorAll('.door').forEach((door) => {
+            door.addEventListener('click', () =>
+                this.handleDoorClick(parseInt(door.dataset.door, 10))
+            );
         });
 
         document.getElementById('reset-btn').addEventListener('click', () => {
@@ -70,53 +54,39 @@ class MontyHallGame {
         });
     }
 
-    handleDoorClick(doorNumber) {
+    handleDoorClick(doorIndex) {
         if (this.gamePhase === 'initial') {
-            this.selectDoor(doorNumber);
+            this.selectDoor(doorIndex);
         } else if (this.gamePhase === 'revealed') {
-            this.makeFinalChoice(doorNumber);
+            this.makeFinalChoice(doorIndex);
         }
     }
 
-    selectDoor(doorNumber) {
-        this.selectedDoor = doorNumber;
-
-        // Update visual
-        const doors = document.querySelectorAll('.door');
-        doors[doorNumber].classList.add('selected');
-
-        // Host reveals a door with a goat
+    selectDoor(doorIndex) {
+        this.selectedDoor = doorIndex;
+        document.querySelectorAll('.door')[doorIndex].classList.add('is-selected');
         this.revealGoatDoor();
-
         this.gamePhase = 'revealed';
-        this.updateMessage("A goat is revealed! Do you want to switch or stay with your choice?");
+        this.updateMessage('A goat! Switch to the other door, or stay?');
     }
 
     revealGoatDoor() {
-        // Find a door that is not the selected door and not the car door
-        const availableDoors = [0, 1, 2].filter(door =>
-            door !== this.selectedDoor && door !== this.carDoor
+        const candidates = [0, 1, 2].filter(
+            (door) => door !== this.selectedDoor && door !== this.carDoor
         );
+        this.revealedDoor = candidates[Math.floor(Math.random() * candidates.length)];
 
-        // Randomly pick one of the available doors to reveal
-        this.revealedDoor = availableDoors[Math.floor(Math.random() * availableDoors.length)];
-
-        // Update visual
         const doors = document.querySelectorAll('.door');
-        doors[this.revealedDoor].classList.add('opened');
-        doors[this.revealedDoor].classList.add('disabled');
+        doors[this.revealedDoor].classList.add('is-revealed');
+        doors[this.revealedDoor].querySelector('.door-mark').textContent = '🐐';
     }
 
-    makeFinalChoice(doorNumber) {
-        // Can't pick the revealed door
-        if (doorNumber === this.revealedDoor) {
-            return;
-        }
+    makeFinalChoice(doorIndex) {
+        if (doorIndex === this.revealedDoor) return;
 
-        const switched = doorNumber !== this.selectedDoor;
-        const won = doorNumber === this.carDoor;
+        const switched = doorIndex !== this.selectedDoor;
+        const won = doorIndex === this.carDoor;
 
-        // Update statistics
         if (switched) {
             this.stats.switchTotal++;
             if (won) this.stats.switchWins++;
@@ -127,32 +97,28 @@ class MontyHallGame {
 
         this.saveStats();
         this.updateStatsDisplay();
-
-        // Show results
-        this.revealAllDoors(won, switched);
-
+        this.revealAllDoors();
         this.gamePhase = 'finished';
-    }
-
-    revealAllDoors(won, switched) {
-        const doors = document.querySelectorAll('.door');
-
-        doors.forEach((door) => {
-            const doorNumber = parseInt(door.dataset.door);
-            door.classList.remove('selected', 'disabled');
-
-            if (doorNumber === this.carDoor) {
-                door.classList.add('winner');
-            } else {
-                door.classList.add('loser');
-            }
-        });
 
         const action = switched ? 'switched' : 'stayed';
-        const result = won ? 'won' : 'lost';
-        const emoji = won ? '🎉' : '😞';
+        this.updateMessage(
+            won ? `You ${action} and won the car.` : `You ${action} and got a goat.`
+        );
+    }
 
-        this.updateMessage(`You ${action} and ${result}! ${emoji}`);
+    revealAllDoors() {
+        document.querySelectorAll('.door').forEach((door) => {
+            const index = parseInt(door.dataset.door, 10);
+            door.classList.remove('is-selected', 'is-revealed');
+
+            if (index === this.carDoor) {
+                door.classList.add('is-car');
+                door.querySelector('.door-mark').textContent = '🚗';
+            } else {
+                door.classList.add('is-goat');
+                door.querySelector('.door-mark').textContent = '🐐';
+            }
+        });
     }
 
     updateMessage(text) {
@@ -165,113 +131,22 @@ class MontyHallGame {
         document.getElementById('switch-wins').textContent = this.stats.switchWins;
         document.getElementById('switch-total').textContent = this.stats.switchTotal;
 
-        const stayPercent = this.stats.stayTotal > 0
-            ? Math.round((this.stats.stayWins / this.stats.stayTotal) * 100)
-            : 0;
-        const switchPercent = this.stats.switchTotal > 0
-            ? Math.round((this.stats.switchWins / this.stats.switchTotal) * 100)
-            : 0;
+        const stayPct = this.pct(this.stats.stayWins, this.stats.stayTotal);
+        const switchPct = this.pct(this.stats.switchWins, this.stats.switchTotal);
 
-        document.getElementById('stay-percent').textContent = `${stayPercent}%`;
-        document.getElementById('switch-percent').textContent = `${switchPercent}%`;
-
-        // Update strategy analysis
-        this.updateStrategyAnalysis();
+        document.getElementById('stay-percent').innerHTML = `${stayPct}<span class="unit">%</span>`;
+        document.getElementById('switch-percent').innerHTML = `${switchPct}<span class="unit">%</span>`;
     }
 
-    updateStrategyAnalysis() {
-        const stayRate = this.stats.stayTotal > 0
-            ? (this.stats.stayWins / this.stats.stayTotal * 100)
-            : 0;
-        const switchRate = this.stats.switchTotal > 0
-            ? (this.stats.switchWins / this.stats.switchTotal * 100)
-            : 0;
-
-        // Update display
-        document.getElementById('stay-actual').textContent = `${stayRate.toFixed(1)}%`;
-        document.getElementById('switch-actual').textContent = `${switchRate.toFixed(1)}%`;
-
-        // Calculate variance
-        const stayVariance = stayRate - 33.3;
-        const switchVariance = switchRate - 66.7;
-
-        this.updateVarianceDisplay('stay-variance', stayVariance, this.stats.stayTotal);
-        this.updateVarianceDisplay('switch-variance', switchVariance, this.stats.switchTotal);
-    }
-
-    updateVarianceDisplay(elementId, variance, sampleSize) {
-        const container = document.getElementById(elementId);
-        const valueSpan = container.querySelector('.variance-value');
-
-        if (sampleSize === 0) {
-            valueSpan.textContent = '—';
-            valueSpan.className = 'variance-value';
-            return;
-        }
-
-        const absVariance = Math.abs(variance);
-        const sign = variance >= 0 ? '+' : '';
-        valueSpan.textContent = `${sign}${variance.toFixed(1)}%`;
-
-        // Color code based on how close to optimal
-        if (absVariance < 5) {
-            valueSpan.className = 'variance-value good';
-        } else if (absVariance < 15) {
-            valueSpan.className = 'variance-value okay';
-        } else {
-            valueSpan.className = 'variance-value poor';
-        }
+    pct(wins, total) {
+        return total > 0 ? Math.round((wins / total) * 100) : 0;
     }
 
     resetStats() {
-        this.stats = {
-            stayWins: 0,
-            stayTotal: 0,
-            switchWins: 0,
-            switchTotal: 0
-        };
+        this.stats = { stayWins: 0, stayTotal: 0, switchWins: 0, switchTotal: 0 };
         this.saveStats();
         this.updateStatsDisplay();
     }
-
-    async loadRelatedPosts() {
-        const postFiles = import.meta.glob('./posts/*.md', { query: '?raw', import: 'default' });
-        const container = document.getElementById('related-posts-container');
-        const relatedPosts = [];
-
-        for (const path in postFiles) {
-            const rawContent = await postFiles[path]();
-            const { data } = matter(rawContent);
-
-            if (data.game === 'monty-hall') {
-                relatedPosts.push({
-                    slug: data.slug,
-                    title: data.title,
-                    excerpt: data.excerpt,
-                });
-            }
-        }
-
-        if (relatedPosts.length > 0) {
-            container.innerHTML = '<h3>Related Articles</h3>';
-            const list = document.createElement('div');
-            list.className = 'related-posts-list';
-
-            relatedPosts.forEach(post => {
-                const postLink = document.createElement('a');
-                postLink.href = `./post.html?slug=${post.slug}`;
-                postLink.className = 'related-post-card';
-                postLink.innerHTML = `
-                    <h4>${post.title}</h4>
-                    <p>${post.excerpt}</p>
-                `;
-                list.appendChild(postLink);
-            });
-
-            container.appendChild(list);
-        }
-    }
 }
 
-// Initialize the game when the page loads
 new MontyHallGame();

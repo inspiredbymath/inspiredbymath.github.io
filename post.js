@@ -1,114 +1,89 @@
-import './polyfills.js';
-import matter from 'gray-matter';
 import { marked } from 'marked';
 import renderMathInElement from 'katex/contrib/auto-render';
 import 'katex/dist/katex.min.css';
+import { loadAllPosts, formatDate, categoryColor } from './content.js';
 
-// Vite feature to import all markdown files from a directory
-const postFiles = import.meta.glob('./posts/*.md', { query: '?raw', import: 'default' });
+const GAME_CALLOUTS = {
+    'monty-hall': {
+        title: 'Play the Monty Hall Problem yourself',
+        desc: 'Pick a door, watch the host reveal a goat, and see whether switching really doubles your odds.',
+        cta: 'Play the simulation →',
+    },
+    'prisoners-dilemma': {
+        title: 'Play a few rounds of the Dilemma',
+        desc: 'Try each strategy yourself and see how close you can get to optimal play.',
+        cta: 'Play the simulation →',
+    },
+    'staircase': {
+        title: 'Watch the Staircase build itself',
+        desc: 'The same "one layer at a time" idea powers our dynamic-programming simulation. Watch the counts grow.',
+        cta: 'Open the simulation →',
+    },
+};
 
-/**
- * marked (and Markdown in general) will happily mangle LaTeX, since
- * underscores/asterisks inside math ($x_1$, $2*3$, etc.) look like
- * emphasis syntax to it. To avoid that, we pull every math segment out
- * of the raw markdown *before* handing it to marked, replace it with a
- * plain-text placeholder token, then swap the original LaTeX back into
- * the rendered HTML afterwards (untouched by markdown parsing). KaTeX's
- * auto-render extension then finds the $...$ / $$...$$ delimiters in the
- * final DOM and typesets them.
- */
-function protectMath(markdownContent) {
+const postContainer = document.getElementById('post-content');
+
+// Markdown and KaTeX fight over $…$, so hold the math aside while marked runs.
+function stashMath(markdown) {
     const stash = [];
-    const withPlaceholders = markdownContent.replace(
+    const withPlaceholders = markdown.replace(
         /\$\$[\s\S]+?\$\$|\$[^\$\n]+?\$/g,
         (match) => {
-            const token = `@@MATH${stash.length}@@`;
+            const placeholder = `@@MATH${stash.length}@@`;
             stash.push(match);
-            return token;
+            return placeholder;
         }
     );
     return { withPlaceholders, stash };
 }
 
 function restoreMath(html, stash) {
-    return html.replace(/@@MATH(\d+)@@/g, (_, i) => stash[Number(i)]);
+    return html.replace(/@@MATH(\d+)@@/g, (_, index) => stash[Number(index)]);
 }
 
-const postContentContainer = document.getElementById('post-content');
+function renderIssueTag(posts) {
+    const element = document.getElementById('issue-tag');
+    if (!element) return;
 
-async function loadPost() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const slug = urlParams.get('slug');
-    let postFound = false;
+    const issue = String(posts.length).padStart(2, '0');
+    const date = posts.length ? new Date(posts[0].date) : new Date();
+    const month = date
+        .toLocaleDateString('en-US', { month: 'short', timeZone: 'UTC' })
+        .toUpperCase();
 
-    if (!slug) {
-        displayError("No post specified.");
-        return;
-    }
-
-    try {
-        for (const path in postFiles) {
-            const rawContent = await postFiles[path]();
-            const { data, content } = matter(rawContent);
-
-            if (data.slug === slug) {
-                postFound = true;
-                document.title = `${data.title} - Inspired by Math`;
-                displayPost(data, content);
-                break; // Exit loop once post is found
-            }
-        }
-
-        if (!postFound) {
-            displayError(`Post not found: ${slug}`);
-        }
-    } catch (err) {
-        console.error("Error during post loading:", err);
-        displayError(`An error occurred while loading the post. Check the browser console for details. <br><br>Error: ${err.message}`);
-    }
+    element.textContent = `ISSUE Nº ${issue} · ${month} ${date.getUTCFullYear()}`;
 }
-function displayPost(metadata, markdownContent) {
-    // Clear loading spinner
-    postContentContainer.innerHTML = '';
 
-    const tagsHtml = (metadata.tags || []).map(tag => `<span class="post-tag">${tag}</span>`).join(' ');
-    const { withPlaceholders, stash } = protectMath(markdownContent);
-    const renderedContent = restoreMath(marked(withPlaceholders), stash);
+function renderPost(post) {
+    const tags = post.tags.map((tag) => `<span class="category-label">${tag}</span>`).join('');
+    const { withPlaceholders, stash } = stashMath(post.content);
+    const body = restoreMath(marked.parse(withPlaceholders), stash);
 
-    // Create Game CTA if a game is linked
-    let ctaHtml = '';
-    if (metadata.game) {
-        const gameUrl = `./${metadata.game}.html`;
-        ctaHtml = `
-            <div class="game-cta-box">
-                <h3>Try the Simulation</h3>
-                <p>Don't just take our word for it. Experience the math firsthand with our interactive simulation.</p>
-                <a href="${gameUrl}" class="cta-button">Launch Simulation →</a>
-            </div>
-        `;
-    }
+    const callout = GAME_CALLOUTS[post.game];
+    const calloutHtml = callout
+        ? `
+        <div class="related-game">
+            <div class="kicker">See it in motion</div>
+            <h3>${callout.title}</h3>
+            <p>${callout.desc}</p>
+            <a href="./${post.game}.html" class="btn-primary">${callout.cta}</a>
+        </div>
+    `
+        : '';
 
-    postContentContainer.innerHTML = `
+    postContainer.innerHTML = `
+        <a href="./blog.html" class="post-back">← Back to the Journal</a>
         <header class="post-header">
-            <h1>${metadata.title}</h1>
-            <div class="post-meta">
-                <span>${metadata.author}</span>
-                <span>&bull;</span>
-                <span>${new Date(metadata.date).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</span>
-            </div>
+            <div class="category-label" style="color: ${categoryColor(post.tags[0])};">${post.tags.slice(0, 2).join(' · ')}</div>
+            <h1>${post.title}</h1>
+            <div class="post-byline">BY ${(post.author || '').toUpperCase()} · ${formatDate(post.date)} · ${post.minutes} MIN READ</div>
         </header>
-        <div class="post-body">
-            ${renderedContent}
-            ${ctaHtml}
-        </div>
-        <div class="post-tags" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color);">
-            ${tagsHtml}
-        </div>
+        <div class="post-body">${body}</div>
+        <div class="post-tags">${tags}</div>
+        ${calloutHtml}
     `;
 
-    // Typeset any LaTeX ($...$ inline, $$...$$ display) now that the
-    // content is in the DOM.
-    renderMathInElement(postContentContainer, {
+    renderMathInElement(postContainer.querySelector('.post-body'), {
         delimiters: [
             { left: '$$', right: '$$', display: true },
             { left: '$', right: '$', display: false },
@@ -117,8 +92,36 @@ function displayPost(metadata, markdownContent) {
     });
 }
 
-function displayError(message) {
-    postContentContainer.innerHTML = `<p style="color: red; text-align: center;">${message}</p>`;
+function showError(message) {
+    postContainer.innerHTML = `<p class="loading-spinner">${message}</p>`;
 }
 
-loadPost();
+async function init() {
+    const slug = new URLSearchParams(window.location.search).get('slug');
+
+    if (!slug) {
+        showError('No post specified.');
+        return;
+    }
+
+    try {
+        const posts = await loadAllPosts();
+        renderIssueTag(posts);
+
+        const post = posts.find((candidate) => candidate.slug === slug);
+        if (!post) {
+            showError(`Post not found: ${slug}`);
+            return;
+        }
+
+        document.title = `${post.title} — Inspired by Math`;
+        renderPost(post);
+    } catch (error) {
+        console.error('Error during post loading:', error);
+        showError(
+            `An error occurred while loading the post. Check the browser console for details.<br><br>Error: ${error.message}`
+        );
+    }
+}
+
+init();

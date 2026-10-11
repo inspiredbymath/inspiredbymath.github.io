@@ -1,32 +1,27 @@
-import matter from 'gray-matter';
-
-// Staircase Problem Visualization
+const STEP_INSET = 44;
+const BASELINE_PAD = 44;
 
 class StaircaseVisualizer {
     constructor() {
         this.canvas = document.getElementById('staircase-canvas');
         this.ctx = this.canvas.getContext('2d');
-        this.comparisonCanvas = document.getElementById('comparison-canvas');
-        this.comparisonCtx = this.comparisonCanvas.getContext('2d');
         this.steps = 5;
         this.paths = [];
         this.currentPathIndex = 0;
         this.isAnimating = false;
-        this.animationFrame = null;
+        this.timer = null;
 
         this.setupEventListeners();
         this.calculatePaths();
         this.draw();
-        // Journal is hidden; related-article links are disabled.
-        // this.loadRelatedPosts();
     }
 
     setupEventListeners() {
-        document.getElementById('steps-slider').addEventListener('input', (e) => {
-            this.steps = parseInt(e.target.value);
+        document.getElementById('steps-slider').addEventListener('input', (event) => {
+            this.stopAnimation();
+            this.steps = parseInt(event.target.value, 10);
             document.getElementById('steps-value').textContent = this.steps;
             this.currentPathIndex = 0;
-            this.stopAnimation();
             this.calculatePaths();
             this.draw();
         });
@@ -44,503 +39,176 @@ class StaircaseVisualizer {
         });
     }
 
-    // Calculate all possible paths using recursion
     calculatePaths() {
         this.paths = [];
         this.findPaths(0, []);
         this.updateStats();
-        this.displayPathsList();
     }
 
-    findPaths(currentStep, currentPath) {
-        if (currentStep === this.steps) {
-            this.paths.push([...currentPath]);
+    findPaths(position, current) {
+        if (position === this.steps) {
+            this.paths.push([...current]);
             return;
         }
+        if (position > this.steps) return;
 
-        if (currentStep > this.steps) {
-            return;
-        }
+        current.push(1);
+        this.findPaths(position + 1, current);
+        current.pop();
 
-        // Take 1 step
-        currentPath.push(1);
-        this.findPaths(currentStep + 1, currentPath);
-        currentPath.pop();
-
-        // Take 2 steps
-        currentPath.push(2);
-        this.findPaths(currentStep + 2, currentPath);
-        currentPath.pop();
+        current.push(2);
+        this.findPaths(position + 2, current);
+        current.pop();
     }
 
     draw() {
-        // Clear canvas
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        const ctx = this.ctx;
+        const width = this.canvas.width;
+        const height = this.canvas.height;
+        ctx.clearRect(0, 0, width, height);
 
-        // Draw staircase
-        this.drawStaircase();
+        const steps = this.steps;
+        const stepWidth = Math.min(58, (width - 90) / (steps + 1));
+        const stepHeight = Math.min(36, (height - 90) / (steps + 1));
+        const baseline = height - BASELINE_PAD;
 
-        // Draw current path if any
+        // Ground
+        ctx.fillStyle = '#efe7d6';
+        ctx.fillRect(0, baseline, width, height - baseline);
+        ctx.strokeStyle = '#ded6c6';
+        ctx.beginPath();
+        ctx.moveTo(0, baseline);
+        ctx.lineTo(width, baseline);
+        ctx.stroke();
+
+        // Steps
+        for (let i = 0; i <= steps; i++) {
+            const x = STEP_INSET + i * stepWidth;
+            const y = baseline - i * stepHeight;
+
+            ctx.fillStyle = '#f3ecdd';
+            ctx.strokeStyle = '#d8cfba';
+            ctx.lineWidth = 2;
+            ctx.fillRect(x, y - stepHeight, stepWidth, stepHeight);
+            ctx.strokeRect(x, y - stepHeight, stepWidth, stepHeight);
+
+            ctx.fillStyle = '#a89e8b';
+            ctx.font = `500 ${Math.round(stepHeight * 0.5)}px 'IBM Plex Mono', monospace`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(i, x + stepWidth / 2, y - stepHeight / 2);
+        }
+
+        // Current path
         if (this.currentPathIndex > 0 && this.currentPathIndex <= this.paths.length) {
-            this.drawPath(this.paths[this.currentPathIndex - 1]);
+            const path = this.paths[this.currentPathIndex - 1];
+            let position = 0;
+            let fromX = STEP_INSET + stepWidth / 2;
+            let fromY = baseline - stepHeight / 2;
+
+            ctx.fillStyle = '#177f7a';
+            ctx.beginPath();
+            ctx.arc(fromX, fromY, 7, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+
+            for (const stepSize of path) {
+                position += stepSize;
+                const toX = STEP_INSET + position * stepWidth + stepWidth / 2;
+                const toY = baseline - position * stepHeight - stepHeight / 2;
+                const color = stepSize === 1 ? '#2f6fb0' : '#b8442c';
+
+                ctx.strokeStyle = color;
+                ctx.beginPath();
+                ctx.moveTo(fromX, fromY);
+                ctx.lineTo(toX, toY);
+                ctx.stroke();
+
+                ctx.fillStyle = color;
+                ctx.font = "600 13px 'IBM Plex Mono', monospace";
+                ctx.fillText(`+${stepSize}`, (fromX + toX) / 2 + 12, (fromY + toY) / 2 - 8);
+
+                fromX = toX;
+                fromY = toY;
+            }
+
+            ctx.fillStyle = '#b8442c';
+            ctx.beginPath();
+            ctx.arc(fromX, fromY, 7, 0, Math.PI * 2);
+            ctx.fill();
         }
-
-        // Draw comparison visualization
-        this.drawComparison();
-    }
-
-    drawStaircase() {
-        const stepWidth = 60;
-        const stepHeight = 40;
-        const startX = 50;
-        const startY = this.canvas.height - 50;
-
-        // Draw ground
-        this.ctx.fillStyle = '#e5e7eb';
-        this.ctx.fillRect(0, startY, this.canvas.width, 50);
-
-        // Draw each step
-        for (let i = 0; i <= this.steps; i++) {
-            const x = startX + i * stepWidth;
-            const y = startY - i * stepHeight;
-
-            // Step platform
-            this.ctx.fillStyle = '#8b5cf6';
-            this.ctx.strokeStyle = '#5b21b6';
-            this.ctx.lineWidth = 3;
-
-            this.ctx.fillRect(x, y, stepWidth, stepHeight);
-            this.ctx.strokeRect(x, y, stepWidth, stepHeight);
-
-            // Step number
-            this.ctx.fillStyle = 'white';
-            this.ctx.font = 'bold 20px Arial';
-            this.ctx.textAlign = 'center';
-            this.ctx.textBaseline = 'middle';
-            this.ctx.fillText(i, x + stepWidth / 2, y + stepHeight / 2);
-        }
-    }
-
-    drawPath(path) {
-        const stepWidth = 60;
-        const stepHeight = 40;
-        const startX = 50;
-        const startY = this.canvas.height - 50;
-
-        // Draw the path as a line with circles at each step
-        this.ctx.strokeStyle = '#f59e0b';
-        this.ctx.lineWidth = 4;
-        this.ctx.lineCap = 'round';
-        this.ctx.lineJoin = 'round';
-
-        let currentStep = 0;
-        let x = startX + stepWidth / 2;
-        let y = startY + stepHeight / 2;
-
-        this.ctx.beginPath();
-        this.ctx.moveTo(x, y);
-
-        // Draw circle at start
-        this.ctx.fillStyle = '#10b981';
-        this.ctx.beginPath();
-        this.ctx.arc(x, y, 12, 0, Math.PI * 2);
-        this.ctx.fill();
-
-        // Draw path
-        for (let stepSize of path) {
-            currentStep += stepSize;
-            x = startX + currentStep * stepWidth + stepWidth / 2;
-            y = startY - currentStep * stepHeight + stepHeight / 2;
-
-            // Draw arc for the step
-            this.ctx.strokeStyle = stepSize === 1 ? '#3b82f6' : '#ef4444';
-            this.ctx.beginPath();
-            const prevX = startX + (currentStep - stepSize) * stepWidth + stepWidth / 2;
-            const prevY = startY - (currentStep - stepSize) * stepHeight + stepHeight / 2;
-            this.ctx.moveTo(prevX, prevY);
-            this.ctx.lineTo(x, y);
-            this.ctx.stroke();
-
-            // Draw label for step size
-            const midX = (prevX + x) / 2;
-            const midY = (prevY + y) / 2;
-            this.ctx.fillStyle = stepSize === 1 ? '#3b82f6' : '#ef4444';
-            this.ctx.font = 'bold 16px Arial';
-            this.ctx.textAlign = 'center';
-            this.ctx.fillText(`+${stepSize}`, midX, midY - 15);
-        }
-
-        // Draw circle at end
-        this.ctx.fillStyle = '#ef4444';
-        this.ctx.beginPath();
-        this.ctx.arc(x, y, 12, 0, Math.PI * 2);
-        this.ctx.fill();
     }
 
     updateStats() {
-        const totalWays = this.paths.length;
-        const fibIndex = this.steps + 1;
-
-        document.getElementById('total-ways').textContent = totalWays;
-        document.getElementById('fibonacci-info').textContent = `F(${fibIndex}) = ${totalWays}`;
-
-        if (this.currentPathIndex > 0) {
-            const path = this.paths[this.currentPathIndex - 1];
-            const pathStr = path.map(s => `+${s}`).join(' ');
-            document.getElementById('current-path').textContent = `${this.currentPathIndex}/${totalWays}: ${pathStr}`;
-        } else {
-            document.getElementById('current-path').textContent = '-';
-        }
+        const total = this.paths.length;
+        document.getElementById('total-ways').textContent = total;
+        document.getElementById('fibonacci-info').textContent = `F(${this.steps + 1}) = ${total}`;
+        this.updateCurrentPathLabel();
     }
 
-    displayPathsList() {
-        const container = document.getElementById('paths-container');
-        container.innerHTML = '';
+    updateCurrentPathLabel() {
+        const label = document.getElementById('current-path');
 
-        if (this.paths.length > 20) {
-            container.innerHTML = '<p style="color: #666;">Too many paths to display (>20). Use the animation or step-through to view them.</p>';
-            return;
+        if (this.currentPathIndex > 0) {
+            const path = this.paths[this.currentPathIndex - 1]
+                .map((step) => `+${step}`)
+                .join(' ');
+            label.textContent = `${this.currentPathIndex}/${this.paths.length}  ${path}`;
+        } else {
+            label.textContent = '—';
         }
-
-        this.paths.forEach((path, index) => {
-            const pathDiv = document.createElement('div');
-            pathDiv.className = 'path-item';
-            pathDiv.textContent = `${index + 1}. ${path.map(s => `+${s}`).join(' → ')} = ${this.steps}`;
-            container.appendChild(pathDiv);
-        });
     }
 
     showNextPath() {
         if (this.paths.length === 0) return;
 
         this.currentPathIndex = (this.currentPathIndex % this.paths.length) + 1;
-        this.updateStats();
+        this.updateCurrentPathLabel();
         this.draw();
     }
 
-    async animateAllPaths() {
+    animateAllPaths() {
         if (this.isAnimating) {
             this.stopAnimation();
             return;
         }
 
         this.isAnimating = true;
-        document.getElementById('animate-btn').textContent = 'Stop Animation';
+        this.currentPathIndex = 0;
+        document.getElementById('animate-btn').textContent = 'Stop';
 
-        for (let i = 1; i <= this.paths.length; i++) {
-            if (!this.isAnimating) break;
-
-            this.currentPathIndex = i;
-            this.updateStats();
+        let index = 0;
+        const next = () => {
+            index++;
+            if (index > this.paths.length) {
+                this.stopAnimation();
+                return;
+            }
+            this.currentPathIndex = index;
+            this.updateCurrentPathLabel();
             this.draw();
+            this.timer = setTimeout(next, 850);
+        };
 
-            await this.sleep(1000);
-        }
-
-        this.isAnimating = false;
-        document.getElementById('animate-btn').textContent = 'Animate All Paths';
+        this.timer = setTimeout(next, 300);
     }
 
     stopAnimation() {
+        if (this.timer) {
+            clearTimeout(this.timer);
+            this.timer = null;
+        }
         this.isAnimating = false;
-        document.getElementById('animate-btn').textContent = 'Animate All Paths';
-    }
-
-    sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
+        document.getElementById('animate-btn').textContent = 'Animate all paths';
     }
 
     reset() {
-        this.currentPathIndex = 0;
         this.stopAnimation();
-        this.updateStats();
+        this.currentPathIndex = 0;
+        this.updateCurrentPathLabel();
         this.draw();
-    }
-
-    // Comparison visualization methods
-
-    calculatePathsForN(n) {
-        const paths = [];
-        const findPaths = (currentStep, currentPath) => {
-            if (currentStep === n) {
-                paths.push([...currentPath]);
-                return;
-            }
-            if (currentStep > n) return;
-
-            currentPath.push(1);
-            findPaths(currentStep + 1, currentPath);
-            currentPath.pop();
-
-            currentPath.push(2);
-            findPaths(currentStep + 2, currentPath);
-            currentPath.pop();
-        };
-
-        findPaths(0, []);
-        return paths;
-    }
-
-    darkenColor(hexColor) {
-        const colorMap = {
-            '#ef4444': '#dc2626',
-            '#f59e0b': '#d97706',
-            '#10b981': '#059669',
-            '#8b5cf6': '#5b21b6'
-        };
-        return colorMap[hexColor] || '#000000';
-    }
-
-    drawMiniPath(ctx, path, startX, startY, stepWidth, stepHeight) {
-        ctx.strokeStyle = 'rgba(59, 130, 246, 0.3)';
-        ctx.lineWidth = 2;
-        ctx.lineCap = 'round';
-
-        let currentStep = 0;
-        let x = startX + stepWidth / 2;
-        let y = startY + stepHeight / 2;
-
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-
-        for (let stepSize of path) {
-            currentStep += stepSize;
-            x = startX + currentStep * stepWidth + stepWidth / 2;
-            y = startY - currentStep * stepHeight + stepHeight / 2;
-            ctx.lineTo(x, y);
-        }
-
-        ctx.stroke();
-    }
-
-    drawMiniStaircase(ctx, n, offsetX, offsetY, scale, color, showAllPaths = false) {
-        const stepWidth = 50 * scale;
-        const stepHeight = 35 * scale;
-        const startX = offsetX;
-        const startY = offsetY;
-
-        const paths = this.calculatePathsForN(n);
-
-        // Draw staircase steps
-        for (let i = 0; i <= n; i++) {
-            const x = startX + i * stepWidth;
-            const y = startY - i * stepHeight;
-
-            ctx.fillStyle = color;
-            ctx.strokeStyle = this.darkenColor(color);
-            ctx.lineWidth = 2;
-            ctx.fillRect(x, y, stepWidth, stepHeight);
-            ctx.strokeRect(x, y, stepWidth, stepHeight);
-
-            // Step number
-            ctx.fillStyle = 'white';
-            ctx.font = `bold ${14 * scale}px Arial`;
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(i, x + stepWidth / 2, y + stepHeight / 2);
-        }
-
-        // Optionally draw all paths
-        if (showAllPaths) {
-            paths.forEach(path => {
-                this.drawMiniPath(ctx, path, startX, startY, stepWidth, stepHeight);
-            });
-        }
-
-        return {
-            count: paths.length,
-            centerX: startX + (n * stepWidth) / 2,
-            topY: startY - n * stepHeight - 20,
-            bottomY: startY + stepHeight + 10
-        };
-    }
-
-    drawStaircaseLabel(ctx, text, x, y, count) {
-        ctx.fillStyle = '#1f2937';
-        ctx.font = 'bold 16px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText(text, x, y);
-
-        ctx.fillStyle = '#667eea';
-        ctx.font = 'bold 20px Arial';
-        ctx.fillText(`${count} ways`, x, y + 25);
-    }
-
-    drawMathEquation(ctx, info1, info2, info3) {
-        const y = 30;
-        const centerX = this.comparisonCanvas.width / 2;
-
-        ctx.fillStyle = '#1f2937';
-        ctx.font = 'bold 24px Arial';
-        ctx.textAlign = 'center';
-
-        const equation = `${info1.count} + ${info2.count} = ${info3.count}`;
-        ctx.fillText(equation, centerX, y);
-
-        ctx.font = '16px Arial';
-        ctx.fillStyle = '#6b7280';
-        ctx.fillText('ways(N-2) + ways(N-1) = ways(N)', centerX, y + 25);
-    }
-
-    drawCurvedArrow(ctx, x1, y1, x2, y2, color) {
-        ctx.strokeStyle = color;
-        ctx.fillStyle = color;
-        ctx.lineWidth = 2;
-
-        const cpX = (x1 + x2) / 2;
-        const cpY = Math.min(y1, y2) - 20;
-
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.quadraticCurveTo(cpX, cpY, x2, y2);
-        ctx.stroke();
-
-        const angle = Math.atan2(y2 - cpY, x2 - cpX);
-        const arrowSize = 10;
-
-        ctx.beginPath();
-        ctx.moveTo(x2, y2);
-        ctx.lineTo(
-            x2 - arrowSize * Math.cos(angle - Math.PI / 6),
-            y2 - arrowSize * Math.sin(angle - Math.PI / 6)
-        );
-        ctx.lineTo(
-            x2 - arrowSize * Math.cos(angle + Math.PI / 6),
-            y2 - arrowSize * Math.sin(angle + Math.PI / 6)
-        );
-        ctx.closePath();
-        ctx.fill();
-    }
-
-    drawCombinationArrows(ctx, info1, info2, info3) {
-        const arrowY = 70;
-
-        this.drawCurvedArrow(ctx, info1.centerX, arrowY, info3.centerX - 40, arrowY + 20, '#ef4444');
-        this.drawCurvedArrow(ctx, info2.centerX, arrowY, info3.centerX - 20, arrowY + 10, '#f59e0b');
-    }
-
-    drawThreeStaircaseComparison() {
-        const ctx = this.comparisonCtx;
-        const canvasWidth = this.comparisonCanvas.width;
-        const canvasHeight = this.comparisonCanvas.height;
-
-        const scale = Math.min(1.0, 8 / this.steps);
-
-        const spacing = canvasWidth / 4;
-        const baseY = canvasHeight - 80;
-
-        const n2 = this.steps - 2;
-        const info1 = this.drawMiniStaircase(
-            ctx, n2, spacing * 0.5, baseY, scale, '#ef4444', true
-        );
-
-        const n1 = this.steps - 1;
-        const info2 = this.drawMiniStaircase(
-            ctx, n1, spacing * 1.5, baseY, scale, '#f59e0b', true
-        );
-
-        const info3 = this.drawMiniStaircase(
-            ctx, this.steps, spacing * 2.5, baseY, scale, '#10b981', true
-        );
-
-        this.drawStaircaseLabel(ctx, `N-2 = ${n2}`, info1.centerX, info1.bottomY, info1.count);
-        this.drawStaircaseLabel(ctx, `N-1 = ${n1}`, info2.centerX, info2.bottomY, info2.count);
-        this.drawStaircaseLabel(ctx, `N = ${this.steps}`, info3.centerX, info3.bottomY, info3.count);
-
-        this.drawMathEquation(ctx, info1, info2, info3);
-        this.drawCombinationArrows(ctx, info1, info2, info3);
-    }
-
-    drawTwoStaircaseComparison() {
-        const ctx = this.comparisonCtx;
-        const canvasWidth = this.comparisonCanvas.width;
-        const baseY = this.comparisonCanvas.height - 100;
-
-        const spacing = canvasWidth / 3;
-
-        const info1 = this.drawMiniStaircase(ctx, 1, spacing * 0.5, baseY, 1.0, '#f59e0b', true);
-        const info2 = this.drawMiniStaircase(ctx, 2, spacing * 1.5, baseY, 1.0, '#10b981', true);
-
-        this.drawStaircaseLabel(ctx, 'N-1 = 1', info1.centerX, info1.bottomY, info1.count);
-        this.drawStaircaseLabel(ctx, 'N = 2', info2.centerX, info2.bottomY, info2.count);
-
-        ctx.fillStyle = '#1f2937';
-        ctx.font = 'bold 20px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText(`${info1.count} + 1 = ${info2.count}`, canvasWidth / 2, 40);
-
-        ctx.font = '16px Arial';
-        ctx.fillStyle = '#6b7280';
-        ctx.fillText('(N-2 = 0, so we use 1 as the base)', canvasWidth / 2, 65);
-    }
-
-    drawSingleStaircaseComparison() {
-        const ctx = this.comparisonCtx;
-        const centerX = this.comparisonCanvas.width / 2;
-        const baseY = this.comparisonCanvas.height - 100;
-
-        const info = this.drawMiniStaircase(ctx, 1, centerX - 40, baseY, 1.0, '#10b981', true);
-        this.drawStaircaseLabel(ctx, 'N = 1', info.centerX, info.bottomY, info.count);
-
-        ctx.fillStyle = '#6b7280';
-        ctx.font = '18px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('Base case: Only one way to climb 1 step', centerX, 40);
-    }
-
-    drawComparison() {
-        this.comparisonCtx.clearRect(0, 0, this.comparisonCanvas.width, this.comparisonCanvas.height);
-
-        if (this.steps === 1) {
-            this.drawSingleStaircaseComparison();
-            return;
-        }
-        if (this.steps === 2) {
-            this.drawTwoStaircaseComparison();
-            return;
-        }
-
-        this.drawThreeStaircaseComparison();
-    }
-
-    async loadRelatedPosts() {
-        const postFiles = import.meta.glob('./posts/*.md', { query: '?raw', import: 'default' });
-        const container = document.getElementById('related-posts-container');
-        const relatedPosts = [];
-
-        for (const path in postFiles) {
-            const rawContent = await postFiles[path]();
-            const { data } = matter(rawContent);
-
-            if (data.game === 'staircase') {
-                relatedPosts.push({
-                    slug: data.slug,
-                    title: data.title,
-                    excerpt: data.excerpt,
-                });
-            }
-        }
-
-        if (relatedPosts.length > 0) {
-            container.innerHTML = '<h3>Related Articles</h3>';
-            const list = document.createElement('div');
-            list.className = 'related-posts-list';
-
-            relatedPosts.forEach(post => {
-                const postLink = document.createElement('a');
-                postLink.href = `./post.html?slug=${post.slug}`;
-                postLink.className = 'related-post-card';
-                postLink.innerHTML = `
-                    <h4>${post.title}</h4>
-                    <p>${post.excerpt}</p>
-                `;
-                list.appendChild(postLink);
-            });
-
-            container.appendChild(list);
-        }
     }
 }
 
-// Initialize the visualizer when the page loads
 new StaircaseVisualizer();

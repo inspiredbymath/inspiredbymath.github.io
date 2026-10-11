@@ -1,185 +1,215 @@
-/* Professional Blog Styles */
-
-/* Homepage Blog List */
-.featured-posts {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 30px;
+.journal-header {
+  border-bottom: 1px solid var(--rule);
+  padding: 64px 48px 44px;
 }
-
-.post-card {
-    background: var(--surface-color);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+.journal-header h1 {
+  font-family: var(--font-serif);
+  letter-spacing: -0.02em;
+  max-width: 760px;
+  font-size: 52px;
+  font-weight: 400;
+  line-height: 1.05;
 }
-
-.post-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.06);
-    border-color: var(--accent-color);
+.journal-header p {
+  max-width: 600px;
+  color: var(--text);
+  margin-top: 22px;
+  font-size: 17px;
+  line-height: 1.6;
 }
-
-.post-card-content {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+.journal-list {
+  padding: 16px 48px 40px;
 }
-
-.post-card h2 {
-    font-size: 1.4rem;
-    line-height: 1.3;
-    color: var(--primary-color);
-    margin-bottom: 10px;
-    font-weight: 700;
+.journal-row {
+  border-bottom: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  grid-template-columns: 56px 1fr 150px;
+  align-items: baseline;
+  gap: 20px;
+  padding: 30px 16px;
+  transition: background 0.2s;
+  display: grid;
 }
-
-.post-meta {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+.journal-list .journal-row:last-child {
+  border-bottom: none;
 }
-
-.post-excerpt {
-    font-size: 1rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-    margin-bottom: 20px;
-    flex-grow: 1;
+.journal-row:hover {
+  background: var(--surface);
 }
-
-.post-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: auto;
+.journal-row:hover h2 {
+  color: var(--accent);
 }
-
-.post-tag {
-    font-size: 0.75rem;
-    background: var(--background-color);
-    color: var(--text-secondary);
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-weight: 500;
+.journal-row .row-number {
+  font-family: var(--font-serif);
+  color: #c9c0af;
+  font-size: 22px;
 }
-
-/* Single Post Page */
-.post-main {
-    max-width: 740px; /* Optimal reading width */
-    margin: 40px auto;
+.journal-row .row-body h2 {
+  font-family: var(--font-serif);
+  margin: 8px 0;
+  font-size: 27px;
+  font-weight: 500;
+  line-height: 1.15;
+  transition: color 0.2s;
 }
-
+.journal-row .row-body p {
+  color: var(--text);
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  max-width: 560px;
+  font-size: 15px;
+  line-height: 1.55;
+  display: -webkit-box;
+  overflow: hidden;
+}
+.journal-row .row-meta {
+  font-family: var(--font-mono);
+  color: var(--muted);
+  text-align: right;
+  white-space: nowrap;
+  font-size: 11px;
+  line-height: 1.7;
+}
+.post-column {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 56px 24px 72px;
+}
+.post-back {
+  font-family: var(--font-mono);
+  color: var(--muted);
+  margin-bottom: 32px;
+  font-size: 12px;
+  display: inline-block;
+}
 .post-header {
-    margin-bottom: 40px;
-    text-align: center;
+  margin-bottom: 40px;
 }
-
 .post-header h1 {
-    font-size: 2.75rem;
-    line-height: 1.2;
-    color: var(--primary-color);
-    margin-bottom: 15px;
-    font-weight: 800;
-    letter-spacing: -0.02em;
+  font-family: var(--font-serif);
+  letter-spacing: -0.02em;
+  font-size: 46px;
+  font-weight: 400;
+  line-height: 1.08;
 }
-
-.post-header .post-meta {
-    justify-content: center;
-    font-size: 1rem;
+.post-byline {
+  font-family: var(--font-mono);
+  color: var(--muted);
+  border-bottom: 1px solid var(--rule);
+  margin-top: 24px;
+  padding-bottom: 24px;
+  font-size: 12px;
 }
-
 .post-body {
-    font-family: var(--font-sans); /* Or a nice serif if you prefer */
-    font-size: 1.125rem;
-    line-height: 1.75;
-    color: var(--text-primary);
+  font-family: var(--font-sans);
+  color: var(--text-body);
+  font-size: 18px;
+  line-height: 1.75;
 }
-
 .post-body p {
-    margin-bottom: 24px;
+  margin-bottom: 22px;
 }
-
 .post-body h2 {
-    font-size: 1.8rem;
-    color: var(--primary-color);
-    margin-top: 48px;
-    margin-bottom: 16px;
-    font-weight: 700;
+  font-family: var(--font-serif);
+  letter-spacing: -0.01em;
+  margin: 46px 0 14px;
+  font-size: 30px;
+  font-weight: 500;
 }
-
 .post-body h3 {
-    font-size: 1.4rem;
-    color: var(--primary-color);
-    margin-top: 32px;
-    margin-bottom: 12px;
-    font-weight: 600;
+  font-family: var(--font-serif);
+  margin: 36px 0 12px;
+  font-size: 22px;
+  font-weight: 500;
 }
-
-.post-body ul, .post-body ol {
-    margin-bottom: 24px;
-    padding-left: 20px;
+.post-body ul,
+.post-body ol {
+  margin: 0 0 22px 22px;
 }
-
 .post-body li {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
-
+.post-body strong {
+  color: var(--ink);
+}
 .post-body blockquote {
-    border-left: 4px solid var(--accent-color);
-    padding-left: 20px;
-    margin: 32px 0;
-    font-style: italic;
-    color: var(--text-secondary);
-    background: var(--background-color); /* Optional: light background */
-    padding: 20px; /* Adjust if adding background */
-    border-radius: 0 8px 8px 0;
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+  font-family: var(--font-serif);
+  color: var(--text);
+  border-radius: 0 8px 8px 0;
+  margin: 32px 0;
+  padding: 20px 24px;
+  font-size: 19px;
+  font-style: italic;
+  line-height: 1.6;
 }
-
-/* Game CTA Box (Injected into posts) */
-.game-cta-box {
-    background: var(--surface-color);
-    border: 2px solid var(--accent-color);
-    border-radius: 12px;
-    padding: 30px;
-    margin: 40px 0;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.1);
+.post-body .katex-display {
+  margin: 28px 0;
+  padding: 4px 0;
+  overflow: auto hidden;
 }
-
-.game-cta-box h3 {
-    color: var(--primary-color);
-    margin-top: 0;
-    font-size: 1.5rem;
+.post-tags {
+  border-top: 1px solid var(--rule);
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 40px;
+  padding-top: 24px;
+  display: flex;
 }
-
-.game-cta-box p {
-    margin-bottom: 20px;
-    color: var(--text-secondary);
+.post-tags .category-label {
+  color: var(--muted);
 }
-
-.cta-button {
-    display: inline-block;
-    background: var(--accent-color);
-    color: white;
-    padding: 12px 30px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: background-color 0.2s;
+.related-game {
+  background: var(--surface);
+  border: 1px solid var(--rule-card);
+  text-align: center;
+  border-radius: 12px;
+  margin-top: 48px;
+  padding: 32px;
 }
-
-.cta-button:hover {
-    background-color: var(--accent-hover);
+.related-game .kicker {
+  margin-bottom: 12px;
+}
+.related-game h3 {
+  font-family: var(--font-serif);
+  margin-bottom: 10px;
+  font-size: 26px;
+  font-weight: 500;
+}
+.related-game p {
+  color: var(--text);
+  max-width: 440px;
+  margin: 0 auto 22px;
+  font-size: 15px;
+  line-height: 1.6;
+}
+@media (width<=760px) {
+  .journal-header {
+    padding: 40px 24px 32px;
+  }
+  .journal-header h1 {
+    font-size: 36px;
+  }
+  .journal-list {
+    padding: 8px 16px 32px;
+  }
+  .journal-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 24px 8px;
+  }
+  .journal-row .row-number {
+    display: none;
+  }
+  .journal-row .row-meta {
+    text-align: left;
+  }
+  .post-column {
+    padding: 40px 20px 56px;
+  }
+  .post-header h1 {
+    font-size: 32px;
+  }
 }

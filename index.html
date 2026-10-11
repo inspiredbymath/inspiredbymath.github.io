@@ -3,53 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inspired by Math - Math Fun</title>
+    <title>Math Fun — Inspired by Math</title>
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./blog.css">
 </head>
 <body>
-    <nav class="nav-bar">
-        <div class="nav-container">
-            <a href="./" class="nav-logo">Inspired by Math</a>
+    <div class="page">
+        <nav class="nav">
+            <a href="./" class="nav-logo">Inspired by Math<span class="dot">.</span></a>
             <div class="nav-links">
-                <a href="./" class="nav-link active">Math Fun</a>
+                <a href="./" class="active">Math Fun</a>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <div class="container">
-        <header class="main-header">
-            <h1>Math Fun</h1>
-            <p class="subtitle">Hands-on experiments to visualize and understand complex mathematical concepts.</p>
+        <header class="sim-header">
+            <div class="eyebrow">Math Fun</div>
+            <h1>Some ideas are easier to <em>play</em> than to read.</h1>
+            <p>Hands-on experiments that let you feel a mathematical idea before you prove it. Run them as many times as you like and watch the numbers converge.</p>
         </header>
 
-        <main>
-            <section class="games-grid">
-                <a href="./monty-hall.html" class="game-card">
-                    <div class="game-icon">🚗</div>
-                    <h2>The Monty Hall Problem</h2>
-                    <p>Should you switch doors? Test the famous probability paradox that stumped even mathematicians.</p>
-                    <span class="game-tag tag-probability">Probability</span>
-                </a>
-
-                <a href="./prisoners-dilemma.html" class="game-card">
-                    <div class="game-icon">⚔️</div>
-                    <h2>Prisoner's Dilemma</h2>
-                    <p>Cooperate or betray? Explore game theory's most famous scenario and optimal strategies.</p>
-                    <span class="game-tag tag-game-theory">Game Theory</span>
-                </a>
-
-                <a href="./staircase.html" class="game-card">
-                    <div class="game-icon">🪜</div>
-                    <h2>The Staircase Problem</h2>
-                    <p>How many ways can you climb N stairs? Watch the Fibonacci sequence emerge through animated paths!</p>
-                    <span class="game-tag tag-dynamic-programming">Dynamic Programming</span>
-                </a>
-            </section>
+        <main class="sim-list">
+            <a href="./monty-hall.html" class="sim-row">
+                <span class="row-number">01</span>
+                <div class="row-body">
+                    <span class="category-label" style="color: var(--cat-probability);">Probability</span>
+                    <div class="sim-title">The Monty Hall Problem</div>
+                    <p>Should you switch doors? Test the famous probability paradox that stumped even mathematicians — and watch your win rate settle at 2/3.</p>
+                </div>
+                <span class="row-play">Play →</span>
+            </a>
+            <a href="./prisoners-dilemma.html" class="sim-row">
+                <span class="row-number">02</span>
+                <div class="row-body">
+                    <span class="category-label" style="color: var(--cat-game-theory);">Game Theory</span>
+                    <div class="sim-title">Prisoner's Dilemma</div>
+                    <p>Cooperate or betray? Play repeated rounds against classic strategies and discover why "Tit-for-Tat" is so hard to beat.</p>
+                </div>
+                <span class="row-play">Play →</span>
+            </a>
+            <a href="./staircase.html" class="sim-row">
+                <span class="row-number">03</span>
+                <div class="row-body">
+                    <span class="category-label" style="color: var(--accent);">Dynamic Programming</span>
+                    <div class="sim-title">The Staircase Problem</div>
+                    <p>How many ways can you climb N stairs taking 1 or 2 steps at a time? Watch the Fibonacci sequence emerge through animated paths.</p>
+                </div>
+                <span class="row-play">Play →</span>
+            </a>
         </main>
 
-        <footer class="main-footer">
-            <p>&copy; 2026 Inspired by Math. Built with curiosity.</p>
+        <footer class="site-footer">
+            <span>© 2026 Inspired by Math · Built with curiosity</span>
+            <span>MADE FOR STUDENTS, BY A STUDENT</span>
         </footer>
     </div>
 </body>
