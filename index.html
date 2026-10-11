@@ -3,74 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MathFun — A Journal &amp; Playground for Middle + High School Math</title>
-  <script type="module" crossorigin src="/assets/content-Df8tUZl-.js"></script>
-  <script type="module" crossorigin src="/assets/katex.min-CYJG-A9F.js"></script>
-  <script type="module" crossorigin src="/assets/blog-Co-9oCzN.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/katex-CYlHEDRF.css">
+    <title>Math Fun — Inspired by Math</title>
   <link rel="stylesheet" crossorigin href="/assets/style-CNAHMQJH.css">
 </head>
 <body>
     <div class="page">
         <nav class="nav">
-            <a href="./" class="nav-logo">MathFun<span class="dot">.</span></a>
+            <a href="./" class="nav-logo">Inspired by Math<span class="dot">.</span></a>
             <div class="nav-links">
-                <a href="./blog.html">Journal</a>
-                <a href="./simulations.html">Simulations</a>
+                <a href="./" class="active">Math Fun</a>
             </div>
-            <div class="nav-issue" id="issue-tag">ISSUE Nº 01</div>
         </nav>
 
-        <header class="hero">
-            <div class="eyebrow">A journal &amp; playground for middle + high school math</div>
-            <h1>Mathematics, the way it <em>actually</em> feels when it finally clicks.</h1>
-            <p>Competition math, high-school research, using AI responsibly, and the problems I can't stop thinking about — written for fellow students, not textbooks.</p>
-            <div class="hero-actions">
-                <a href="./blog.html" class="btn-primary">Read the journal</a>
-                <a href="./simulations.html" class="btn-ghost">Play a simulation →</a>
-            </div>
+        <header class="sim-header">
+            <div class="eyebrow">Math Fun</div>
+            <h1>Some ideas are easier to <em>play</em> than to read.</h1>
+            <p>Hands-on experiments that let you feel a mathematical idea before you prove it. Run them as many times as you like and watch the numbers converge.</p>
         </header>
 
-        <section class="home-band" id="home-band">
-            <div class="loading-spinner">Loading posts…</div>
-        </section>
-
-        <section class="playground">
-            <div class="playground-header">
-                <h2>From the Playground</h2>
-                <span class="meta-mono">3 INTERACTIVE SIMULATIONS</span>
-            </div>
-            <a href="./monty-hall.html" class="game-row">
+        <main class="sim-list">
+            <a href="./monty-hall.html" class="sim-row">
                 <span class="row-number">01</span>
                 <div class="row-body">
-                    <div class="row-title">The Monty Hall Problem</div>
-                    <div class="row-desc">Should you switch doors? Test the paradox that stumped mathematicians.</div>
+                    <span class="category-label" style="color: var(--cat-probability);">Probability</span>
+                    <div class="sim-title">The Monty Hall Problem</div>
+                    <p>Should you switch doors? Test the famous probability paradox that stumped even mathematicians — and watch your win rate settle at 2/3.</p>
                 </div>
-                <span class="row-tag" style="color: var(--cat-probability);">Probability →</span>
+                <span class="row-play">Play →</span>
             </a>
-            <a href="./prisoners-dilemma.html" class="game-row">
+            <a href="./prisoners-dilemma.html" class="sim-row">
                 <span class="row-number">02</span>
                 <div class="row-body">
-                    <div class="row-title">Prisoner's Dilemma</div>
-                    <div class="row-desc">Cooperate or betray? Explore game theory's most famous standoff.</div>
+                    <span class="category-label" style="color: var(--cat-game-theory);">Game Theory</span>
+                    <div class="sim-title">Prisoner's Dilemma</div>
+                    <p>Cooperate or betray? Play repeated rounds against classic strategies and discover why "Tit-for-Tat" is so hard to beat.</p>
                 </div>
-                <span class="row-tag" style="color: var(--cat-game-theory);">Game Theory →</span>
+                <span class="row-play">Play →</span>
             </a>
-            <a href="./staircase.html" class="game-row">
+            <a href="./staircase.html" class="sim-row">
                 <span class="row-number">03</span>
                 <div class="row-body">
-                    <div class="row-title">The Staircase Problem</div>
-                    <div class="row-desc">How many ways to climb N stairs? Watch Fibonacci emerge.</div>
+                    <span class="category-label" style="color: var(--accent);">Dynamic Programming</span>
+                    <div class="sim-title">The Staircase Problem</div>
+                    <p>How many ways can you climb N stairs taking 1 or 2 steps at a time? Watch the Fibonacci sequence emerge through animated paths.</p>
                 </div>
-                <span class="row-tag" style="color: var(--accent);">Dynamic Programming →</span>
+                <span class="row-play">Play →</span>
             </a>
-        </section>
+        </main>
 
         <footer class="site-footer">
-            <span>© 2026 MathFun · Built with curiosity</span>
+            <span>© 2026 Inspired by Math · Built with curiosity</span>
             <span>MADE FOR STUDENTS, BY A STUDENT</span>
         </footer>
     </div>
-
 </body>
 </html>
